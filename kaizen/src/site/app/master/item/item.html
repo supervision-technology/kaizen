@@ -1,0 +1,154 @@
+<div class="bt border-success">
+    <div class="col-xs-4 br border-success bg-default-light">
+
+        <div class="row" style="height: calc(100vh - 57px) ">
+            <div >
+                <div class="mr20">
+                    <input type="text" class="form-control m10" ng-model="item.code" placeholder="Item Code">
+                </div>
+                <div class="mr20">
+                    <input type="number" class="form-control m10" ng-model="item.barcode" placeholder="Barcode">
+                </div>
+                <div class="mr20">
+                    <input type="text" class="form-control m10" ng-model="item.category" placeholder="category">
+                </div>
+                <div class="mr20">
+                    <input type="text" class="form-control m10" ng-model="item.brand" placeholder="brand">
+                </div>
+                <div class="mr20">
+                    <input type="text" class="form-control m10" ng-model="item.description" placeholder="Item Description">
+                </div>
+                <div class="mr20">
+                    <input type="text" class="form-control m10" ng-model="item.printDescription" placeholder="Print Description">
+                </div>
+                <div class="mr20">
+                    <input type="number" class="form-control m10" ng-model="item.salesPrice" placeholder="Sales Price">
+                </div>
+                <div class="mr20">
+                    <input type="number" class="form-control m10" ng-model="item.costPrice" placeholder="Cost Price">
+                </div>
+                <div class="mr20">
+                    <input type="number" class="form-control m10" ng-model="item.reOrderQty" placeholder="ReOrder Quantity">
+                </div>
+                <div class="mr20">
+                    <input type="text" class="form-control m10" ng-model="item.warranty" placeholder="warranty">
+                </div>
+                <div class="mr20">
+                    <input type="number" class="form-control m10" ng-model="item.discount" placeholder="discount">
+                </div>
+                <div class="mr20">
+                    <div class="col-sm-12"> 
+                        <div class="col-sm-3">
+                            <input type="radio" name="group" checked="" ><br>
+                            General
+                        </div> 
+                        <div class="col-sm-3">
+                            <input type="radio" name="group"><br>
+                            Assembly
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="radio" name="group"><br>
+                            Serial
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="radio" name="group"><br>
+                            Service
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-xs-8 bg-white ">
+        <div class="mt10">
+            <input type="text" class="form-control" placeholder="search.." style="border-radius: 18px">
+        </div>
+
+        <div class="row smart-scroll-y scroll-success mt10" style="height: calc(100vh - 189px);">
+            <div class="col-xs-12">
+
+                <div class="widget bg-white border-success bordered pt0 pb0 mb5 ">
+                    <div class="col-sm-1 pull-left mt10">
+                        <img class="widget-icon" src="../../../images/computer3.jpg" >
+                    </div>
+
+                    <div class="col-sm-4 widget-details ">
+                        <span class="h6 bold">HP LAPTOP GB2 TB1 LONG TEXT GOES HERE LIKE THIS</span>
+                        <span class="label label-success ">WARRANTY</span>
+                        <span class="label label-success ">DISCOUNT</span>
+                    </div>
+
+                    <div class="col-sm-3 h4 pull-left  pr30 ">
+                        <span class="h6 bold">2 X 34000.00<br>{{model.formName}}</span>
+
+                    </div>
+                    <div class="col-sm-2 h4 pull-left text-success bold mt20">
+                        RS:30000.00
+                    </div>
+
+                    <div class="col-sm-1 pull-right fa fa-edit no-padding mt10 widget-icon bg-primary-light">
+                    </div>
+
+                    <div class="col-sm-1 pull-right fa fa-remove mt10 widget-icon bg-danger-light ">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row bt bg-default-dark bt border-success">
+
+            <div class="col-xs-12">
+                <h5>Modal</h5>
+                <div class="tool-button">
+                    <button class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target=".bs-modal-sm">Open Modal</button>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="col-sm-4">
+            <button class="btn btn-default col-sm-12 mt5"> <span class="fa fa-refresh"></span>&nbsp;&nbsp;&nbsp; DISCARD</button>
+            <button class="btn btn-success col-sm-12 mt5"> <span class="fa fa-check"></span>&nbsp; CHECKOUT</button>
+
+        </div>
+        <!-- Modal -->
+        <div class="modal bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">Contact</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Feel free to contact us for any issues you might have with our products.</p>
+                        <div class="row mb25">
+                            <div class="col-xs-6">
+                                <label>Name</label>
+                                <input type="text" class="form-control" placeholder="Name">
+                            </div>
+                            <div class="col-xs-6">
+                                <label>Email</label>
+                                <input type="text" class="form-control" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label>Message</label>
+                                <textarea class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer no-border">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

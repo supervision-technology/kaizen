@@ -1,0 +1,146 @@
+<div class="col-lg-12 bt border-primary" style="height: calc(100vh - 57px)">
+    <div class="row">
+        <div class="col-sm-3 bg-default-light" style="height: calc(100vh - 57px)">
+            <div class="profile-sidebar mt10">
+                <div class="profile-sidebar-item profile-avatar">
+                    <img src="./images/face2.jpg"  alt="" class="bordered"/>
+                    <!--<img src="images/man.png" alt="" class="img-rounded">-->
+                </div>
+                <div class="profile-sidebar-item profile-info">
+                    <span class="h5 bold">Nidura Prageeth Silva</span>
+                    <p>Web Developer</p>
+                    <span class="h5 bold">E.P.F No : 1231311</span>
+                    <div class="center-block mt10">
+                        <label class="label label-primary" style="font-size: 15px">Maintenance Department</label>
+                    </div>
+                </div>
+
+                <!--                <hr class="bg-white">
+                                <hr class="bg-white">-->
+                <!--                <div class="profile-sidebar-item profile-bio">
+                                    <small class="bold text-uppercase">About</small>
+                                    <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Curabitur blandit tempus porttitor. Vestibulum id ligula porta felis euismod semper.</p>
+                                </div>-->
+
+                <hr>
+            </div>
+
+        </div>
+        <div class="col-sm-5 mt10">
+            <section class="profile-timeline composer">
+                <select name="select" class="form-control">
+                    <option>Default</option>
+                    <option>suggestion</option>
+                </select><br>
+                <input class="form-control" placeholder="Title"><br>
+                <textarea placeholder="What's on your mind" rows="3" class="form-control"></textarea>
+
+                <div class="composer-options">
+                    <button class="btn btn-default btn-sm" type="button">
+                        <i class="fa fa-map-marker"></i>
+                    </button>
+                    <button class="btn btn-default btn-sm" type="button">
+                        <i class="fa fa-image"></i>
+                    </button>
+                    <button class="btn btn-default btn-sm" type="button">
+                        <i class="fa fa-video-camera"></i>
+                    </button>
+                    <button class="btn btn-default btn-sm" type="button">
+                        <i class="fa fa-clock-o"></i>
+                    </button>
+                    <!--<button class="btn-primary"></button>-->
+                    <a class="btn-sm btn-icon-icon btn-round btn-primary pull-right"><i class="glyphicon glyphicon-plus"></i></a>
+                </div>
+            </section>
+
+            <div class="smart-scroll-y bordered" style="height: calc(100vh - 330px)">
+                <section class="profile-timeline">
+                    <div class="row">
+                        <a href="#" class="bold">Title : sdadaa adasda asdasda adasd  <label class="pull-right" style="font-size: 10px">May 2015, 19:20</label></a>
+                    </div>
+                    <div class="row">
+                        <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+
+                        <div class="profile-timeline-images clearfix">
+                            <a href="javascript:;" class="image-link-smaller">
+                                <img src="http://placeimg.com/400/300?1" alt="" class="img-responsive">
+                            </a>
+                            <a href="javascript:;" class="image-link-smaller">
+                                <img src="http://placeimg.com/400/300?2" alt="" class="img-responsive">
+                            </a>
+                            <a href="javascript:;" class="image-link-smaller">
+                                <img src="http://placeimg.com/400/300?3" alt="" class="img-responsive">
+                            </a>
+                            <a href="javascript:;" class="image-link-smaller">
+                                <img src="http://placeimg.com/400/300?4" alt="" class="img-responsive">
+                            </a>
+                        </div>
+                    </div>
+                </section>
+                <section class="profile-timeline">
+                    <div class="row">
+                          <a href="#" class="bold">Title : sdadaa adasda asdasda adasd  <label class="pull-right" style="font-size: 10px">May 2015, 19:20</label></a>
+                    </div>
+                    <div class="row">
+                        <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+
+                        <div class="profile-timeline-images clearfix">
+                            <a href="javascript:;" class="image-link-smaller">
+                                <img src="http://placeimg.com/400/300?1" alt="" class="img-responsive">
+                            </a>
+                            <a href="javascript:;" class="image-link-smaller">
+                                <img src="http://placeimg.com/400/300?2" alt="" class="img-responsive">
+                            </a>
+                            <a href="javascript:;" class="image-link-smaller">
+                                <img src="http://placeimg.com/400/300?3" alt="" class="img-responsive">
+                            </a>
+                            <a href="javascript:;" class="image-link-smaller">
+                                <img src="http://placeimg.com/400/300?4" alt="" class="img-responsive">
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="col-sm-4 bl border-primary">
+            <div class="row">
+                <div class="col-sm-12 bg-bluegrey">
+                    <div class="col-md-9">
+                        <h4 class="pull-right mr15">VALUE KAIZEN</h4>
+                    </div>
+                    <div class="col-md-3">
+                        <button ng-click="ui.modalOpen()" class="btn btn-xs btn-primary pull-right" style="margin-top: 7px">Criteria</button>
+                    </div>
+
+                </div>
+            </div>
+            <div style="height: calc(100vh - 305px)" class="mt20">
+                <h6>Cost &nbsp; 30%  <label class="label label-success pull-right">score {{model.cost}}</label></h6>
+                <input type="range" ng-model="model.cost" step="0.5" min="0" max="5">                
+
+                <h6>Utilization &nbsp; 15%  <label class="label label-success pull-right">score {{model.utilization}}</label></h6>
+                <input type="range" value="0" ng-model="model.utilization" step="0.5" min="0" max="5">    
+
+                <h6>Creativity &nbsp; 20% <label class="label label-success pull-right">score {{model.creativity}}</label></h6>
+                <input type="range" value="0" ng-model="model.creativity" step="0.5" min="0" max="5">    
+
+                <h6>Safety &nbsp; 20% <label class="label label-success pull-right">score {{model.safety}}</label></h6>
+                <input type="range" value="0" ng-model="model.safety" step="0.5" min="0" max="5">    
+
+                <h6>Quality &nbsp; 15%<label class="label label-success pull-right">score {{model.quality}}</label></h6>
+                <input type="range" value="0" ng-model="model.quality" step="0.5" min="0" max="5">  
+            </div>
+
+            <div class="col-sm-12 text-center" style="height: 135px">
+                <label style="font-size: 30px;" class="pt30">TOTAL SCORE 100%</label>
+            </div>
+
+            <div class="col-xs-12">
+                <!--<a class="btn btn-lg btn-icon-icon btn-round btn-primary pull-right" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>-->
+                <a class="btn btn-lg btn-icon-icon btn-round btn-success pull-right" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+            </div>
+        </div>
+    </div>
+
+</div>
