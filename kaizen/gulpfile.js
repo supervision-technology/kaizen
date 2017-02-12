@@ -58,7 +58,8 @@ gulp.task('build-js', function () {
         "bower_components/angular-sanitize/angular-sanitize.min.js",
         "bower_components/angular-bootstrap/ui-bootstrap.min.js",
         "bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
-        
+        "bower_components/angular-ui-notification/dist/angular-ui-notification.min.js",
+        "bower_components/bootstrap/dist/js/bootstrap.min.js",
         
         "bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js",
         "bower_components/fastclick/click/fastclick.js"
@@ -95,7 +96,8 @@ gulp.task('build-css', function () {
         'bower_components/bootstrap/dist/css/bootstrap.min.css',
         'bower_components/animate.css/animate.min.css',
         'bower_components/font-awesome/css/font-awesome.min.css',
-        'bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css'
+        'bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css',
+        'bower_components/angular-ui-notification/dist/angular-ui-notification.min.css'
     ])
         .pipe(debug())
         .pipe(concat('vendor.min.css'))

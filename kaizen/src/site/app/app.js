@@ -2,6 +2,7 @@
     //index module
     angular.module("AppModule", [
         "ngRoute",
-        "ui.bootstrap"
+        "ui.bootstrap",
+        "ui-notification"
     ]);
 }());

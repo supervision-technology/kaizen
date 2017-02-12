@@ -1,4 +1,10 @@
 (function () {
+    //constants
+    angular.module("AppModule").constant("systemConfig", {
+        apiUrl: "http://localhost:8080"
+    });
+
+
     angular.module("AppModule")
             .config(function ($routeProvider) {
                 $routeProvider
