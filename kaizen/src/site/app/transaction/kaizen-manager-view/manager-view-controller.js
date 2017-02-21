@@ -64,7 +64,7 @@
 
     //-----------http controller---------
     angular.module("AppModule")
-            .controller("KaizenManagerViewController", function (kaizenManagerViewFactory, $scope, $rootScope, $uibModal, $uibModalStack, Notification) {
+            .controller("KaizenManagerViewController", function (kaizenManagerViewFactory, $base64, $scope, $rootScope, $uibModal, $uibModalStack, Notification) {
                 //data models 
                 $scope.model = {};
 
@@ -230,7 +230,6 @@
                     $rootScope.totalScore = $rootScope.utilization + $rootScope.creativity + $rootScope.rangeValueCost + $rootScope.safety + $rootScope.quality;
 
                 };
-
 
                 //--------------------pop up modal funtions-------------------
                 $scope.ui.modalOpenCost = function () {

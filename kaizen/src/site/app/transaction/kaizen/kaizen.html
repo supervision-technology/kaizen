@@ -39,8 +39,10 @@
             </section>
 
             <div class="composer-options">
-                <input type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)"/>
+                <input type="file" id="file"/>
+                <button ng-click="uploadForm()">upload me</button>
             </div>
+
             <div class="bordered border-default" style="height: 140px">
                 <img src="{{uploadme}}" style="width: 100%; height:100%">
             </div>
@@ -88,7 +90,6 @@
 
             <div class="col-xs-12">
                 <a class="btn btn-lg btn-icon-icon btn-round btn-success pull-right" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
-                <a class="btn btn-lg btn-icon-icon btn-round btn-primary pull-right" ng-click="ui.uploadFile();"><i class="glyphicon glyphicon-upload"></i></a>
             </div>
         </div>
     </div>

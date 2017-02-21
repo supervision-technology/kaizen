@@ -54,7 +54,7 @@
 
     //-----------http controller---------
     angular.module("AppModule")
-            .controller("KaizenController", function (kaizenFactory, $base64, $scope, $rootScope, $uibModal, $uibModalStack, Notification) {
+            .controller("KaizenController", function (kaizenFactory, systemConfig, $base64, $scope, $rootScope, $uibModal, $uibModalStack, Notification) {
 
                 //data models 
                 $scope.model = {};
@@ -68,8 +68,27 @@
                 //current ui mode IDEAL, SELECTED, NEW, EDIT
                 $scope.ui.mode = null;
 
+                $scope.$watch('myFile', function (newFileObj) {
+                    if (newFileObj)
+                        $scope.filename = newFileObj.name;
+                });
+
+                $scope.uploadForm = function () {
+                    var file = document.getElementById("file").files[0];
+                    var url = systemConfig.apiUrl + "/document/upload-image";
 
 
+                    var formData = new FormData();
+                    formData.append("file", file);
+
+                    var xhr = new XMLHttpRequest();
+//                    xhr.upload.addEventListener("progress", uploadProgress, false)
+//                    xhr.addEventListener("load", uploadComplete, false)
+//                    xhr.addEventListener("error", uploadFailed, false)
+//                    xhr.addEventListener("abort", uploadCanceled, false)
+                    xhr.open("POST", url);
+                    xhr.send(formData);
+                };
 
                 //kaizen model
                 $scope.model.kaizen = {
@@ -82,6 +101,11 @@
                     employeeCreativity: 0,
                     employeeSafety: 0,
                     employeeQuality: 0
+                };
+                $scope.model.document = {
+                    indexNo: null,
+                    path: null,
+                    kaizen: null
                 };
 
                 //employee model
@@ -210,7 +234,7 @@
 
                 // upload file
                 $scope.uploadFile = function (files) {
-                    var imageData = $base64.encode(files);
+                    var imageData = $base64.encode(files.path);
                     console.log(imageData);
                 };
 
