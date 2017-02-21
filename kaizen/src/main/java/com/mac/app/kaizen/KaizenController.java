@@ -30,9 +30,20 @@ public class KaizenController {
     public List<TKaizen> allKaizen() {
         return kaizenService.allKaisen();
     }
-    @RequestMapping(value = "/save-kaizen",method = RequestMethod.POST)
-    public TKaizen saveKaizen(@RequestBody TKaizen kaizen){
+
+    @RequestMapping(value = "/save-kaizen", method = RequestMethod.POST)
+    public TKaizen saveKaizen(@RequestBody TKaizen kaizen) {
         return kaizenService.saveKazen(kaizen);
-        
+
+    }
+
+    @RequestMapping(value = "/update-kaizen", method = RequestMethod.POST)
+    public TKaizen updateByManager(@RequestBody TKaizen kaizen) {
+        return kaizenService.kaizenUpdateByManager(kaizen);
+    }
+
+    @RequestMapping(value = "/update-committee-kaizen", method = RequestMethod.POST)
+    public TKaizen updateByCommittee(@RequestBody TKaizen kaizen) {
+        return kaizenService.kaizenUpdateByCommittee(kaizen);
     }
 }

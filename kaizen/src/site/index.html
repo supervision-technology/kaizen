@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Maintenance System</title>
+        <title>Kaizen</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
         <link rel="shortcut icon" href="images/titel_image.png">
@@ -17,51 +17,7 @@
 
     <body ng-app="AppModule">
         <!-- quick launch panel -->
-        <div class="quick-launch-panel">
-            <div class="container">
-                <div class="quick-launcher-inner">
-                    <a href="javascript:;" class="close" data-toggle="quick-launch-panel">×</a>
-                    <div class="css-table-xs">
-                        <div class="col">
-                            <a href="#/transaction/invoice">
-                                <i class="icon-marquee"></i>
-                                <span>Calendar</span>
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="#/master/customer">
-                                <i class="icon-drop"></i>
-                                <span>Gallery</span>
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="app-messages.html">
-                                <i class="icon-mail"></i>
-                                <span>Messages</span>
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="app-social.html">
-                                <i class="icon-speech-bubble"></i>
-                                <span>Social</span>
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="charts-flot.html">
-                                <i class="icon-pie-graph"></i>
-                                <span>Analytics</span>
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="javascript:;">
-                                <i class="icon-esc"></i>
-                                <span>Documentation</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <!-- /quick launch panel -->
 
         <div class="app layout-fixed-header">
@@ -99,14 +55,21 @@
                             <ul class="sub-menu">
                                 <li>
                                     <a href="#/transaction/kaizen">
-                                        <span>Create kaizen</span>
+                                        <span>Create Kaizen</span>
                                     </a>
                                 </li>
                             </ul>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="#/transaction/kaizen-check">
-                                        <span>View kaizen</span>
+                                    <a href="#/transaction/kaizen-manager-view">
+                                        <span>Manager View</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="#/transaction/kaizen-committee-view">
+                                        <span>Committee View</span>
                                     </a>
                                 </li>
                             </ul>
@@ -177,13 +140,13 @@
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right hidden-xs">
-                        <li>
+<!--                        <li>
                             <a href="javascript:;" data-toggle="quick-launch-panel">
                                 <i class="fa fa-circle-thin"></i>
                             </a>
-                        </li>
+                        </li>-->
 
-                        <li>
+<!--                        <li>
                             <a href="javascript:;" data-toggle="dropdown">
                                 <i class="fa fa-bell-o"></i>
                                 <div class="status bg-danger border-danger animated bounce"></div>
@@ -235,7 +198,7 @@
                                     <a href="javascript:;">See all messages</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li>-->
 
                         <li>
                             <a href="javascript:;" data-toggle="dropdown">
@@ -245,18 +208,6 @@
                             <ul class="dropdown-menu">
                                 <li>
                                     <a href="javascript:;">Settings</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;">Upgrade</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;">
-                                        <span class="label bg-danger pull-right">34</span>
-                                        <span>Notifications</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;">Help</a>
                                 </li>
                                 <li>
                                     <a href="signin.html">Logout</a>

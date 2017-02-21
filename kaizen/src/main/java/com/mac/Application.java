@@ -13,10 +13,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Nidura Prageeth
  */
 @SpringBootApplication
-public class MaintenanceApplication {
+public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(MaintenanceApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
 }

@@ -1,0 +1,175 @@
+<div class="bt border-primary">
+
+    <div class="col-lg-7">
+        <div  class="row">
+
+            <div class="br border-primary bg-default-light" style="height: 110px">
+                <form class="form-inline pt15 row">
+                    <div class="col-lg-6">
+                        <label for="date" class="col-sm-4" style="margin-top: 9px">Month : </label>
+                        <input type="date" class="form-control" id="date" style="width: 194px" ng-model="model.date">
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="a" class="col-sm-4"  style="margin-top: 9px">type : </label>
+                        <select name="type" class="form-control" style="width: 194px" ng-model="model.type">
+                            <option>Implemented</option>
+                            <option>suggestion</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-6" style="margin-top: 8px">
+                        <label for="employee" class="col-sm-4"  style="margin-top: 9px" >Employee : </label>
+                        <input type="text" class="form-control" id="employee" ng-model="model.employee"  uib-typeahead="employee as (employee.name) for employee in model.employeeList|filter:$viewValue|limitTo:5">
+                    </div>
+                    <div class="col-lg-6" style="margin-top: 8px">
+                        <label for="department" class="col-sm-4"  style="margin-top: 9px">Department : </label>
+                        <input type="text" class="form-control" id="department">
+                    </div>
+                </form>
+            </div>
+            <div class="br border-primary smart-scroll-y" style="height: calc(100vh - 170px)">
+                <section class="bg-white post-comments"> 
+                    <div class="media pt10 pb5 bb border-default"  ng-repeat="kaizen in model.kaizenList|filter:{reviewStatus:'PENDING'}| filter:{employee:model.employee.indexNo} | filter:{type:model.type} | filter:{introduceDate:model.date}" ng-click="ui.selectkaizen(kaizen.indexNo)" ng-class="ui.selectedDataIndex === kaizen.indexNo ? 'selected' : ''">
+                        <div class="col-lg-12">
+                            <a class="pull-left" href="javascript:;" style="margin-right: 5px"> 
+                                <img class="media-object avatar avatar-sm" data-ng-src="images/face1.jpg" alt="" src="images/avatar.21d1cc35.jpg">
+                            </a> 
+                            <div class="comment-author h6 no-margin pt5">
+                                <label class="pull-right">{{kaizen.introduceDate | date}}</label>
+                                <a href="javascript:;"><strong>{{ui.getEmployee(kaizen.employee).name}}</strong></a> 
+                                <a href="javascript:;"><strong> &nbsp; (EPF NO : {{ui.getEmployee(kaizen.employee).epfNo}} )</strong></a> 
+                            </div>
+                            <h6>{{kaizen.title}}</h6> 
+                        </div> 
+                    </div>
+                </section>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div class="col-lg-5">
+        <div class="pull-right" style="height: 25px">
+            <button type="button" class="btn btn-bitbucket btn-xs pull-right" style="margin-top: 7px" ng-click="ui.modalPictures()">
+                <span class="glyphicon glyphicon-camera" aria-hidden="true" ></span> Pictures
+            </button>
+        </div>
+        <div style="height: 180px">
+            <label class="control-label"  style="padding-top: 10px;">Description</label>
+            <textarea class="form-control" style="height: 140px" ng-model="model.kaizen.description" ng-disabled="true"></textarea>
+        </div>
+
+        <div style="height: calc(100vh - 370px);">
+            <table class="table table-bordered">
+                <thead>
+                <th>Criteria</th>
+                <th>Emp Score</th>
+                <th>Your Score</th>
+                <th>view</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="">Cost&nbsp;(30%)</td>
+                        <td class="text-center">{{model.kaizen.employeeCost}} &nbsp;({{empCost}}%)</td>
+                        <td class="text-center">{{scoreCost}} &nbsp; ({{rangeValueCost}}%)</td>
+                        <td class="text-center"><button ng-click="ui.modalOpenCost()" class="btn btn-xs bg-bluegrey" style="border-radius: 0px">Criteria</button></td>
+                    </tr>
+                    <tr>
+                        <td class="">Utilization&nbsp;(15%)</td>
+                        <td class="text-center">{{model.kaizen.employeeUtilization}} &nbsp;({{empUtilization}}%)</td>
+                        <td class="text-center">{{scoreUtilization}} &nbsp; ({{utilization}}%)</td>
+                        <td class="text-center"><button ng-click="ui.modalOpenUtilization()" class="btn btn-xs bg-bluegrey" style="border-radius: 0px">Criteria</button></td>
+                    </tr>
+                    <tr>
+                        <td class="">Creativity&nbsp;(20%)</td>
+                        <td class="text-center">{{model.kaizen.employeeCreativity}} &nbsp;({{empCreativity}}%)</td>
+                        <td class="text-center"> {{scoreCreativity}} &nbsp; ({{creativity}}%)</td>
+                        <td class="text-center"><button ng-click="ui.modalOpenCreativity()" class="btn btn-xs bg-bluegrey" style="border-radius: 0px">Criteria</button></td>
+                    </tr>
+                    <tr>
+                        <td class="">Safety&nbsp;(20%)</td>
+                        <td class="text-center">{{model.kaizen.employeeSafety}} &nbsp;({{empSafety}}%)</td>
+                        <td class="text-center">{{scoreSafety}} &nbsp; ({{safety}}%) </td>
+                        <td class="text-center"><button ng-click="ui.modalOpenSafety()" class="btn btn-xs bg-bluegrey" style="border-radius: 0px">Criteria</button></td>
+                    </tr>
+                    <tr>
+                        <td class="">Quality&nbsp;(15%)</td>
+                        <td class="text-center">{{model.kaizen.employeeQuality}} &nbsp;({{empQuality}}%)</td>
+                        <td class="text-center">{{scoreQuality}} &nbsp; ({{quality}}%) </td>
+                        <td class="text-center"><button ng-click="ui.modalOpenQuality()" class="btn btn-xs bg-bluegrey" style="border-radius: 0px">Criteria</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--            <div class="col-lg-12">
+                            <div class="row">
+                                Cost <button ng-click="ui.modalOpenCost()" class="btn btn-xs btn-primary pull-right" style="border-radius: 0px">Criteria</button> 
+                                <button class="btn btn-xs btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Score {{scoreCost}}</button>
+                                <button class="btn btn-xs btn-outline pull-right" style="border-radius: 0px; margin-right: 7px; width: 80px">Value {{rangeValueCost}}%</button>
+                                <button class="btn btn-xs btn-outline pull-right" style="margin-right: 7px">Employee Score : 5 </button>
+                                <input type="range" ng-model="scoreCost" step="1" min="0" max="5" ng-disabled="true">               
+                            </div>
+                        </div>
+                        <div class="col-lg-12  mt10">
+                            <div class="row">
+                                Utilization <button ng-click="ui.modalOpenUtilization()" class="btn btn-xs btn-primary pull-right" style="border-radius: 0px">Criteria</button>
+                                <button class="btn btn-xs  btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Score {{scoreUtilization}}</button>
+                                <button class="btn btn-xs btn-outline pull-right" style="border-radius: 0px; margin-right: 7px;width: 80px">Value {{utilization}}%</button>
+                                <button class="btn btn-xs btn-outline pull-right" style="margin-right: 7px">Employee Score : 5 </button>
+                                <input type="range" value="0" ng-model="scoreUtilization" step="1" min="0" max="5" ng-disabled="true">    
+                            </div>
+                        </div>
+                        <div class="col-lg-12  mt10">
+                            <div class="row">
+                                Creativity <button ng-click="ui.modalOpenCreativity()" class="btn btn-xs btn-primary pull-right" style="border-radius: 0px">Criteria</button> 
+                                <button class="btn btn-xs  btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Score {{scoreCreativity}}</button>
+                                <button class="btn btn-xs btn-outline pull-right" style="border-radius: 0px; margin-right: 7px;width: 80px">Value {{creativity}}%</button>
+                                <button class="btn btn-xs btn-outline pull-right" style="margin-right: 7px">Employee Score : 5 </button>
+                                <input type="range" value="0" ng-model="scoreCreativity" step="1" min="0" max="5" ng-disabled="true">    
+                            </div>
+                        </div>
+                        <div class="col-lg-12  mt10">
+                            <div class="row">
+                                Safety <button ng-click="ui.modalOpenSafety()" class="btn btn-xs btn-primary pull-right" style="border-radius: 0px">Criteria</button> 
+                                <button class="btn btn-xs  btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Score {{scoreSafety}}</button>
+                                <button class="btn btn-xs btn-outline pull-right" style="border-radius: 0px; margin-right: 7px;width: 80px">Value {{safety}}%</button>
+                                <button class="btn btn-xs btn-outline pull-right" style="margin-right: 7px">Employee Score : 5 </button>
+                                <input type="range" value="0" ng-model="scoreSafety" step="1" min="0" max="5" ng-disabled="true">    
+                            </div>
+                        </div>
+                        <div class="col-lg-12  mt10">
+                            <div class="row">
+                                Quality <button ng-click="ui.modalOpenQuality()" class="btn btn-xs btn-primary pull-right" style="border-radius: 0px">Criteria</button>
+                                <button class="btn btn-xs  btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Score {{scoreQuality}}</button>
+                                <button class="btn btn-xs btn-outline pull-right" style="border-radius: 0px; margin-right: 7px;width: 80px">Value {{quality}}%</button>
+                                <button class="btn btn-xs btn-outline pull-right" style="margin-right: 7px">Employee Score : 5 </button>
+                                <input type="range" value="0" ng-model="scoreQuality" step="1" min="0" max="5" ng-disabled="true">
+                            </div>
+                        </div>-->
+        </div>
+
+        <div class="col-lg-7 text-center">
+            <div class="row br border-default">
+                <label style="font-size: 16px;" class="pt30">EMPLOYEE SCORE <br>{{empTotalScore}}%</label>
+            </div>
+        </div>
+        <div class="col-lg-5 text-center">
+            <div class="row">
+                <label style="font-size: 16px;" class="pt30">YOUR SCORE <br>{{totalScore}} %</label>
+            </div>
+        </div>
+
+        <div class="pull-right" style="margin-top: 15px">
+            <button type="button" class="btn btn-sm bg-lightblue" style="width: 100px; border-radius: 0px">
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Suggestion
+            </button>
+            <button type="button" class="btn btn-facebook btn-sm" style="width: 100px; border-radius: 0px">
+                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Appreciation
+            </button>
+            <button type="button" class="btn btn-success btn-sm" style="width: 100px; border-radius: 0px" ng-click="ui.save()">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Submit
+            </button>
+        </div>
+    </div>
+
+</div>

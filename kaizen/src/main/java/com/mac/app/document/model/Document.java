@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.app.employee.model;
+package com.mac.app.document.model;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -13,29 +13,34 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 /**
  *
  * @author Nidura Prageeth
  */
 @Entity
-@Table(name = "department")
-public class Department implements Serializable {
+@Table(name = "document")
+public class Document implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer indexNo;
 
     @NotNull
-    @Column(name = "name")
-    private String name;
+    @Column(name = "path")
+    private String path;
 
-    public Department() {
+    @Column(name = "kaizen")
+    private int kaizen;
+
+    public Document() {
     }
 
-    public Department(Integer indexNo, String name) {
+    public Document(Integer indexNo, String path, int kaizen) {
         this.indexNo = indexNo;
-        this.name = name;
+        this.path = path;
+        this.kaizen = kaizen;
     }
 
     public Integer getIndexNo() {
@@ -46,13 +51,22 @@ public class Department implements Serializable {
         this.indexNo = indexNo;
     }
 
-    public String getName() {
-        return name;
+    public String getPath() {
+        return path;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public int getKaizen() {
+        return kaizen;
+    }
+
+    public void setKaizen(int kaizen) {
+        this.kaizen = kaizen;
     }
 
     
+
 }

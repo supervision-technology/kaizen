@@ -42,11 +42,34 @@ public class Employee implements Serializable {
     @Column(name = "type")
     private String type;
 
+    @Column(name = "picture")
+    private String picture;
+
+    
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "department")
     private Department department;
+    
 
     public Employee() {
+        
+    }
+
+    public Employee(Integer indexNo, String name, String epfNo, String type, String picture, Department department) {
+        this.indexNo = indexNo;
+        this.name = name;
+        this.epfNo = epfNo;
+        this.type = type;
+        this.picture = picture;
+        this.department = department;
+    }
+
+    public Integer getIndexNo() {
+        return indexNo;
+    }
+
+    public void setIndexNo(Integer indexNo) {
+        this.indexNo = indexNo;
     }
 
     public String getName() {
@@ -73,6 +96,14 @@ public class Employee implements Serializable {
         this.type = type;
     }
 
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
     public Department getDepartment() {
         return department;
     }
@@ -81,12 +112,7 @@ public class Employee implements Serializable {
         this.department = department;
     }
 
-    public Integer getIndexNo() {
-        return indexNo;
-    }
-
-    public void setIndexNo(Integer indexNo) {
-        this.indexNo = indexNo;
-    }
-
+    
+    
+  
 }

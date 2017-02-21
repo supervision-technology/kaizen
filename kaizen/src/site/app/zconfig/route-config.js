@@ -27,9 +27,13 @@
                             templateUrl: "app/transaction/kaizen/kaizen.html",
                             controller: "KaizenController"
                         })
-                        .when("/transaction/kaizen-check", {
-                            templateUrl: "app/transaction/kaizen-check/kaizen-check.html",
-                            controller: "KaizenCheckController"
+                        .when("/transaction/kaizen-manager-view", {
+                            templateUrl: "app/transaction/kaizen-manager-view/manager-view.html",
+                            controller: "KaizenManagerViewController"
+                        })
+                        .when("/transaction/kaizen-committee-view", {
+                            templateUrl: "app/transaction/kaizen-committee-view/committee-view.html",
+                            controller: "KaizenCommitteeViewController"
                         })
 
                         .otherwise({

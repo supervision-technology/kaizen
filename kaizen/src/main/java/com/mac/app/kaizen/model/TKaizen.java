@@ -64,11 +64,41 @@ public class TKaizen implements Serializable {
 
     @Column(name = "employee_quality")
     private String employeeQuality;
+    
+    @Column(name = "manager_cost")
+    private String managerCost;
+
+    @Column(name = "manager_utilization")
+    private String managerUtilization;
+
+    @Column(name = "manager_creativity")
+    private String managerCreativity;
+
+    @Column(name = "manager_safety")
+    private String managerSafety;
+
+    @Column(name = "manager_quality")
+    private String managerQuality;
+    
+    @Column(name = "committee_cost")
+    private String committeeCost;
+
+    @Column(name = "committee_utilization")
+    private String committeeUtilization;
+
+    @Column(name = "committee_creativity")
+    private String committeeCreativity;
+
+    @Column(name = "committee_safety")
+    private String committeeSafety;
+
+    @Column(name = "committee_quality")
+    private String committeeQuality;
 
     public TKaizen() {
     }
 
-    public TKaizen(Integer indexNo, String title, String description, Date introduceDate, String type, String reviewStatus, int employee, String employeeCost, String employeeUtilization, String employeeCreativity, String employeeSafety, String employeeQuality) {
+    public TKaizen(Integer indexNo, String title, String description, Date introduceDate, String type, String reviewStatus, int employee, String employeeCost, String employeeUtilization, String employeeCreativity, String employeeSafety, String employeeQuality, String managerCost, String managerUtilization, String managerCreativity, String managerSafety, String managerQuality, String committeeCost, String committeeUtilization, String committeeCreativity, String committeeSafety, String committeeQuality) {
         this.indexNo = indexNo;
         this.title = title;
         this.description = description;
@@ -81,7 +111,18 @@ public class TKaizen implements Serializable {
         this.employeeCreativity = employeeCreativity;
         this.employeeSafety = employeeSafety;
         this.employeeQuality = employeeQuality;
+        this.managerCost = managerCost;
+        this.managerUtilization = managerUtilization;
+        this.managerCreativity = managerCreativity;
+        this.managerSafety = managerSafety;
+        this.managerQuality = managerQuality;
+        this.committeeCost = committeeCost;
+        this.committeeUtilization = committeeUtilization;
+        this.committeeCreativity = committeeCreativity;
+        this.committeeSafety = committeeSafety;
+        this.committeeQuality = committeeQuality;
     }
+    
 
     public Integer getIndexNo() {
         return indexNo;
@@ -179,9 +220,89 @@ public class TKaizen implements Serializable {
         this.employeeQuality = employeeQuality;
     }
 
-    @Override
-    public String toString() {
-        return "TKaizen{" + "indexNo=" + indexNo + ", title=" + title + ", description=" + description + ", introduceDate=" + introduceDate + ", type=" + type + ", reviewStatus=" + reviewStatus + ", employee=" + employee + ", employeeCost=" + employeeCost + ", employeeUtilization=" + employeeUtilization + ", employeeCreativity=" + employeeCreativity + ", employeeSafety=" + employeeSafety + ", employeeQuality=" + employeeQuality + '}';
+    public String getManagerCost() {
+        return managerCost;
     }
 
+    public void setManagerCost(String managerCost) {
+        this.managerCost = managerCost;
+    }
+
+    public String getManagerUtilization() {
+        return managerUtilization;
+    }
+
+    public void setManagerUtilization(String managerUtilization) {
+        this.managerUtilization = managerUtilization;
+    }
+
+    public String getManagerCreativity() {
+        return managerCreativity;
+    }
+
+    public void setManagerCreativity(String managerCreativity) {
+        this.managerCreativity = managerCreativity;
+    }
+
+    public String getManagerSafety() {
+        return managerSafety;
+    }
+
+    public void setManagerSafety(String managerSafety) {
+        this.managerSafety = managerSafety;
+    }
+
+    public String getManagerQuality() {
+        return managerQuality;
+    }
+
+    public void setManagerQuality(String managerQuality) {
+        this.managerQuality = managerQuality;
+    }
+
+    public String getCommitteeCost() {
+        return committeeCost;
+    }
+
+    public void setCommitteeCost(String committeeCost) {
+        this.committeeCost = committeeCost;
+    }
+
+    public String getCommitteeUtilization() {
+        return committeeUtilization;
+    }
+
+    public void setCommitteeUtilization(String committeeUtilization) {
+        this.committeeUtilization = committeeUtilization;
+    }
+
+    public String getCommitteeCreativity() {
+        return committeeCreativity;
+    }
+
+    public void setCommitteeCreativity(String committeeCreativity) {
+        this.committeeCreativity = committeeCreativity;
+    }
+
+    public String getCommitteeSafety() {
+        return committeeSafety;
+    }
+
+    public void setCommitteeSafety(String committeeSafety) {
+        this.committeeSafety = committeeSafety;
+    }
+
+    public String getCommitteeQuality() {
+        return committeeQuality;
+    }
+
+    public void setCommitteeQuality(String committeeQuality) {
+        this.committeeQuality = committeeQuality;
+    }
+
+    @Override
+    public String toString() {
+        return "TKaizen{" + "indexNo=" + indexNo + ", title=" + title + ", description=" + description + ", introduceDate=" + introduceDate + ", type=" + type + ", reviewStatus=" + reviewStatus + ", employee=" + employee + ", employeeCost=" + employeeCost + ", employeeUtilization=" + employeeUtilization + ", employeeCreativity=" + employeeCreativity + ", employeeSafety=" + employeeSafety + ", employeeQuality=" + employeeQuality + ", managerCost=" + managerCost + ", managerUtilization=" + managerUtilization + ", managerCreativity=" + managerCreativity + ", managerSafety=" + managerSafety + ", managerQuality=" + managerQuality + ", committeeCost=" + committeeCost + ", committeeUtilization=" + committeeUtilization + ", committeeCreativity=" + committeeCreativity + ", committeeSafety=" + committeeSafety + ", committeeQuality=" + committeeQuality + '}';
+    }
+    
 }

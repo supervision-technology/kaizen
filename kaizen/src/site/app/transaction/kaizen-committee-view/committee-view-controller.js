@@ -3,9 +3,21 @@
 
     //----------http factory-----------
     angular.module("AppModule")
-            .factory("kaizenFactory", function ($http, systemConfig) {
+            .factory("kaizenCommitteeViewFactory", function ($http, systemConfig) {
                 var factory = {};
 
+
+                //load kaizen
+                factory.loadKaizen = function (callback) {
+                    var url = systemConfig.apiUrl + "/kaizen";
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+
+                            });
+                };
 
                 //load employee
                 factory.loadEmployee = function (callback) {
@@ -19,9 +31,11 @@
                             });
                 };
 
+
+
                 //save kaizen
                 factory.saveKaizen = function (summary, callback, errorCallback) {
-                    var url = systemConfig.apiUrl + "/kaizen/save-kaizen";
+                    var url = systemConfig.apiUrl + "/kaizen/update-committee-kaizen";
 
                     $http.post(url, summary)
                             .success(function (data, status, headers) {
@@ -34,29 +48,15 @@
                             });
                 };
 
-                factory.uploadFile = function (fd, callback, errorCallback) {
-                    var url = systemConfig.apiUrl + "/kaizen/upload-file";
-
-                    $http.post(url, fd, {
-                        withCredentials: true,
-                        headers: {'Content-Type': undefined},
-                        transformRequest: angular.identity
-                    }).success("...all right!...")
-                            .error("..damn!...");
-
-
-                };
-
                 return factory;
             });
 
-
-    //-----------http controller---------
     angular.module("AppModule")
-            .controller("KaizenController", function (kaizenFactory, $scope, $rootScope, $uibModal, $uibModalStack, Notification) {
+            .controller("KaizenCommitteeViewController", function (kaizenCommitteeViewFactory, $scope, $rootScope, $uibModal, $uibModalStack, Notification) {
 
                 //data models 
                 $scope.model = {};
+
 
                 //ui models
                 $scope.ui = {};
@@ -64,11 +64,9 @@
                 //http models
                 $scope.http = {};
 
+
                 //current ui mode IDEAL, SELECTED, NEW, EDIT
                 $scope.ui.mode = null;
-
-
-
 
                 //kaizen model
                 $scope.model.kaizen = {
@@ -83,64 +81,36 @@
                     employeeQuality: 0
                 };
 
-                //employee model
-                $scope.model.employee = {
-                    name: null,
-                    epfNo: null,
-                    department: null,
-                    type: null
+                //manager kaizen model
+                $scope.model.managerkaizen = {
+                    indexNo: null,
+                    managerCost: 0,
+                    managerUtilization: 0,
+                    managerCreativity: 0,
+                    managerSafety: 0,
+                    managerQuality: 0
                 };
 
-                //----------------model function------------------
+                //committee kaizen model
+                $scope.model.committeekaizen = {
+                    indexNo: null,
+                    committeeCost: 0,
+                    committeeUtilization: 0,
+                    committeeCreativity: 0,
+                    committeeSafety: 0,
+                    committeeQuality: 0
+                };
 
-                //reset model
+
+
+                //-----------model function--------------
                 $scope.model.reset = function () {
-                    $scope.model.kaizen = {
-                        title: null,
-                        description: null,
-                        type: null,
-                        employee: null,
-                        employeeCost: 0,
-                        employeeUtilization: 0,
-                        employeeCreativity: 0,
-                        employeeSafety: 0,
-                        employeeQuality: 0
-                    };
-                    $rootScope.scoreCost = 0;
-                    $rootScope.scoreUtilization = 0;
-                    $rootScope.scoreCreativity = 0;
-                    $rootScope.scoreSafety = 0;
-                    $rootScope.scoreQuality = 0;
-                    $scope.model.employee.epfNo = null;
+
                 };
-
-                $scope.model.resetEmployee = function () {
-                    $scope.model.employee = {
-                        name: null,
-                        epfNo: null,
-                        department: null,
-                        type: null
-                    };
-                    $scope.model.kaizen.employee = null;
-                };
-
-                $scope.$watch('model.employee.epfNo', function (val) {
-                    if (val === "") {
-                        $scope.model.resetEmployee();
-                    }
-                }, true);
-
-                $scope.$watch('model.kaizen.employee', function (val) {
-                    if (val === "") {
-                        $scope.model.resetEmployee();
-                    }
-                }, true);
-
 
                 //validate model
                 $scope.validateInput = function () {
-                    if ($scope.model.kaizen.title
-                            && $scope.model.kaizen.description
+                    if ($rootScope.kaizenIndex != null
                             && $rootScope.scoreCost > 0
                             && $rootScope.scoreCreativity > 0
                             && $rootScope.scoreQuality > 0
@@ -157,23 +127,21 @@
                 //--------------http funtion---------------
                 //save model
                 $scope.http.saveKaizen = function () {
-                    $scope.model.kaizen.employeeCost = $rootScope.scoreCost;
-                    $scope.model.kaizen.employeeUtilization = $rootScope.scoreUtilization;
-                    $scope.model.kaizen.employeeCreativity = $rootScope.scoreCreativity;
-                    $scope.model.kaizen.employeeSafety = $rootScope.scoreSafety;
-                    $scope.model.kaizen.employeeQuality = $rootScope.scoreQuality;
-                    $scope.model.kaizen.employee = $rootScope.employee;
-                    $scope.model.kaizen.type = $rootScope.type;
-                    var details = $scope.model.kaizen;
+                    $scope.model.committeekaizen.indexNo = $rootScope.kaizenIndex;
+                    $scope.model.committeekaizen.committeeCost = $rootScope.scoreCost;
+                    $scope.model.committeekaizen.committeeUtilization = $rootScope.scoreUtilization;
+                    $scope.model.committeekaizen.committeeCreativity = $rootScope.scoreCreativity;
+                    $scope.model.committeekaizen.committeeSafety = $rootScope.scoreSafety;
+                    $scope.model.committeekaizen.committeeQuality = $rootScope.scoreQuality;
+
+                    var details = $scope.model.committeekaizen;
                     var detailJSON = JSON.stringify(details);
                     console.log(detailJSON);
-                    kaizenFactory.saveKaizen(
+                    kaizenCommitteeViewFactory.saveKaizen(
                             detailJSON,
                             function (data) {
-//                                console.log(data);
-                                Notification.success(data.indexNo + " - " + "Kaizen Saved Successfully.");
-                                $scope.model.reset();
-
+                                Notification.success(data.indexNo + " - " + " finshed Successfully.");
+//                                $scope.model.reset();
                             },
                             function (data) {
                                 Notification.error(data.message);
@@ -183,30 +151,9 @@
 
 
                 //----------------ui funtion--------------
-                $scope.ui.setImplemented = function (name) {
-                    $rootScope.type = name;
-                };
 
-                $scope.ui.setSuggestion = function (name) {
-                    $rootScope.type = name;
-                };
-
-
-                //save function 
-                $scope.ui.save = function () {
-                    if ($scope.validateInput()) {
-                        $scope.http.saveKaizen();
-                    } else {
-                        Notification.error("Please input details");
-                    }
-                };
-
-                // upload file
-                $scope.uploadFile = function (files) {
-                    var fd = new FormData();
-                    //Take the first selected file
-                    fd.append("file", files[0]);
-                    kaizenFactory.uploadFile(fd);
+                $scope.ui.selectkaizen = function (indexNo) {
+                    $scope.ui.selectedDataIndex = indexNo;
                 };
 
                 // range slider funtion
@@ -253,7 +200,7 @@
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
                         templateUrl: 'app/transaction/kaizen/cost-popup.html',
-                        controller: 'KaizenController',
+                        controller: 'KaizenCommitteeViewController',
                         size: 'lg',
                         windowClass: 'zindex'
                     });
@@ -265,7 +212,7 @@
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
                         templateUrl: 'app/transaction/kaizen/utilization-popup.html',
-                        controller: 'KaizenController',
+                        controller: 'KaizenCommitteeViewController',
                         size: 'lg',
                         windowClass: 'zindex'
                     });
@@ -277,7 +224,7 @@
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
                         templateUrl: 'app/transaction/kaizen/creativity-popup.html',
-                        controller: 'KaizenController',
+                        controller: 'KaizenCommitteeViewController',
                         size: 'lg',
                         windowClass: 'zindex'
                     });
@@ -289,7 +236,7 @@
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
                         templateUrl: 'app/transaction/kaizen/safety-popup.html',
-                        controller: 'KaizenController',
+                        controller: 'KaizenCommitteeViewController',
                         size: 'lg',
                         windowClass: 'zindex'
                     });
@@ -301,9 +248,20 @@
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
                         templateUrl: 'app/transaction/kaizen/quality-popup.html',
-                        controller: 'KaizenController',
+                        controller: 'KaizenCommitteeViewController',
                         size: 'lg',
                         windowClass: 'zindex'
+                    });
+                };
+
+                $scope.ui.modalPictures = function () {
+                    $uibModal.open({
+                        animation: true,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: 'app/transaction/kaizen/pictures-popup.html',
+                        controller: 'KaizenCommitteeViewController',
+                        size: 'xs'
                     });
                 };
 
@@ -311,37 +269,78 @@
                     $uibModalStack.dismissAll();
                 };
 
-                $scope.ui.selectEmployee = function (employee) {
-                    $rootScope.employee= employee.indexNo;
-                    $scope.model.employee.epfNo = employee.epfNo;
-                    $scope.model.employee.name = employee.name;
-                    $scope.model.employee.department = employee.department.name + " " + "Department";
-                    $scope.model.employee.type = "(" + employee.type + ")";
-                };
-
-                $scope.ui.keyEvent = function (e) {
-                    var code = e ? e.keyCode || e.which : 13;
-                    if (code === 13) {
-                        $scope.ui.EmployeeByEpfNo($scope.model.employee.epfNo);
-                    }
-                };
-
-                $scope.ui.EmployeeByEpfNo = function (epfNo) {
-                    angular.forEach($scope.model.employeeList, function (value) {
-                        if (value.epfNo === epfNo) {
-                            $scope.model.employee.epfNo = value.epfNo;
-                            $scope.model.employee.name = value.name;
-                            $scope.model.kaizen.employee = value.name;
-                            $scope.model.employee.department = value.department.name + " " + "Department";
-                            $scope.model.employee.type = "(" + value.type + ")";
+                $scope.ui.selectkaizen = function (indexNo) {
+                    $scope.ui.selectedDataIndex = indexNo;
+                    angular.forEach($scope.model.kaizenList, function (value) {
+                        if (value.indexNo === indexNo) {
+                            $rootScope.kaizenIndex = indexNo;
+                            $scope.model.kaizen.description = value.description;
+                            $scope.model.kaizen.employeeCost = value.employeeCost;
+                            $scope.model.kaizen.employeeUtilization = value.employeeUtilization;
+                            $scope.model.kaizen.employeeCreativity = value.employeeCreativity;
+                            $scope.model.kaizen.employeeSafety = value.employeeSafety;
+                            $scope.model.kaizen.employeeQuality = value.employeeQuality;
+                            $scope.model.managerkaizen.managerCost = value.managerCost;
+                            $scope.model.managerkaizen.managerUtilization = value.managerUtilization;
+                            $scope.model.managerkaizen.managerCreativity = value.managerCreativity;
+                            $scope.model.managerkaizen.managerSafety = value.managerSafety;
+                            $scope.model.managerkaizen.managerQuality = value.managerQuality;
+                            $scope.ui.employeeScore();
+                            $scope.ui.managerScore();
                         }
                     });
                 };
 
+                $scope.ui.employeeScore = function () {
+                    $scope.empCost = 30 / 5 * $scope.model.kaizen.employeeCost;
+                    $scope.empUtilization = 15 / 5 * $scope.model.kaizen.employeeUtilization;
+                    $scope.empCreativity = 20 / 5 * $scope.model.kaizen.employeeCreativity;
+                    $scope.empSafety = 20 / 5 * $scope.model.kaizen.employeeSafety;
+                    $scope.empQuality = 15 / 5 * $scope.model.kaizen.employeeQuality;
+
+                    $scope.empTotalScore = $scope.empCost + $scope.empUtilization + $scope.empCreativity + $scope.empSafety + $scope.empQuality;
+                };
+
+                $scope.ui.managerScore = function () {
+                    $scope.mangCost = 30 / 5 * $scope.model.managerkaizen.managerCost;
+                    $scope.mangUtilization = 15 / 5 * $scope.model.managerkaizen.managerUtilization;
+                    $scope.mangCreativity = 20 / 5 * $scope.model.managerkaizen.managerCreativity;
+                    $scope.mangSafety = 20 / 5 * $scope.model.managerkaizen.managerSafety;
+                    $scope.mangQuality = 15 / 5 * $scope.model.managerkaizen.managerQuality;
+
+                    $scope.mangTotalScore = $scope.mangCost + $scope.mangUtilization + $scope.mangCreativity + $scope.mangSafety + $scope.mangQuality;
+                };
+
+
+                $scope.ui.getEmployee = function (indexNo) {
+                    var employee = null;
+                    angular.forEach($scope.model.employeeList, function (value) {
+                        if (value.indexNo === indexNo) {
+                            employee = value;
+                            return;
+                        }
+                    });
+                    return employee;
+                };
+
+                $scope.ui.save = function () {
+                    if ($scope.validateInput()) {
+                        $scope.http.saveKaizen();
+                    } else {
+                        Notification.error("Please input details");
+                    }
+
+                };
+
+
                 $scope.ui.init = function () {
+                    //laod kaizen
+                    kaizenCommitteeViewFactory.loadKaizen(function (data) {
+                        $scope.model.kaizenList = data;
+                    });
 
                     //load employee
-                    kaizenFactory.loadEmployee(function (data) {
+                    kaizenCommitteeViewFactory.loadEmployee(function (data) {
                         $scope.model.employeeList = data;
                     });
 
@@ -379,12 +378,16 @@
                         $rootScope.scoreQuality = 0;
                     }
 
-                    if (!$rootScope.type) {
-                        $rootScope.type = "Implemented";
-                    }
+                    $scope.model.type = "Implemented";
+                    $scope.empTotalScore = 0;
+                    $scope.mangTotalScore = 0;
                 };
 
                 $scope.ui.init();
 
             });
+
+
 }());
+
+
