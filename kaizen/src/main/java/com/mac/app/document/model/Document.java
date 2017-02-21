@@ -29,7 +29,7 @@ public class Document implements Serializable {
 
     @NotNull
     @Column(name = "path")
-    private String path;
+    private byte[] path;
 
     @Column(name = "kaizen")
     private int kaizen;
@@ -37,7 +37,7 @@ public class Document implements Serializable {
     public Document() {
     }
 
-    public Document(Integer indexNo, String path, int kaizen) {
+    public Document(Integer indexNo, byte[] path, int kaizen) {
         this.indexNo = indexNo;
         this.path = path;
         this.kaizen = kaizen;
@@ -51,11 +51,11 @@ public class Document implements Serializable {
         this.indexNo = indexNo;
     }
 
-    public String getPath() {
+    public byte[] getPath() {
         return path;
     }
 
-    public void setPath(String path) {
+    public void setPath(byte[] path) {
         this.path = path;
     }
 
@@ -67,6 +67,8 @@ public class Document implements Serializable {
         this.kaizen = kaizen;
     }
 
+   
+    
     
 
 }

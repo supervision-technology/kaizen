@@ -6,6 +6,9 @@
 package com.mac.app.document;
 
 import com.mac.app.document.model.Document;
+import com.mac.app.kaizen.model.TKaizen;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,11 @@ public class DocumentService {
 
     public List<Document> allDocument() {
         return documentRepository.findAll();
+    }
+
+    public void saveImage(Document document) {
+        document.setKaizen(1);
+        documentRepository.save(document);
     }
 
 }

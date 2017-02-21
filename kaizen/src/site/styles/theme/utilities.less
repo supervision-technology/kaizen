@@ -583,3 +583,45 @@ input[type=range]:focus::-ms-fill-upper {
     z-index: 99000 !important;
 }
 
+.example-animate-container {
+    background:white;
+    border:1px solid black;
+    list-style:none;
+    margin:0;
+    padding:0 10px;
+}
+
+.animate-repeat {
+    line-height:30px;
+    list-style:none;
+    box-sizing:border-box;
+}
+
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter,
+.animate-repeat.ng-leave {
+    -webkit-transition: 550ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 550ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 550ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 550ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 550ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    position: relative;
+    display: block;
+}
+
+.animate-repeat.ng-leave.ng-leave-active,
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter {
+    opacity: 0;
+    top: -50px;
+    height: 0px;
+}
+
+.animate-repeat.ng-leave,
+.animate-repeat.ng-move.ng-move-active,
+.animate-repeat.ng-enter.ng-enter-active {
+    opacity: 1;
+    top: 0;
+    height: 30px;
+}
+

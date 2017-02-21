@@ -3,6 +3,8 @@
     angular.module("AppModule", [
         "ngRoute",
         "ui.bootstrap",
-        "ui-notification"
+        "ui-notification",
+        "ngAnimate",
+        "base64"
     ]);
 }());

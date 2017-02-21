@@ -105,7 +105,58 @@
 
                 //-----------model function--------------
                 $scope.model.reset = function () {
+                    $scope.model.kaizen = {
+                        title: null,
+                        description: null,
+                        type: null,
+                        employee: null,
+                        employeeCost: 0,
+                        employeeUtilization: 0,
+                        employeeCreativity: 0,
+                        employeeSafety: 0,
+                        employeeQuality: 0
+                    };
+                    $scope.model.managerkaizen = {
+                        indexNo: null,
+                        managerCost: 0,
+                        managerUtilization: 0,
+                        managerCreativity: 0,
+                        managerSafety: 0,
+                        managerQuality: 0
+                    };
+                    $scope.model.committeekaizen = {
+                        indexNo: null,
+                        committeeCost: 0,
+                        committeeUtilization: 0,
+                        committeeCreativity: 0,
+                        committeeSafety: 0,
+                        committeeQuality: 0
+                    };
+                    $rootScope.scoreCost = 0;
+                    $rootScope.scoreUtilization = 0;
+                    $rootScope.scoreCreativity = 0;
+                    $rootScope.scoreSafety = 0;
+                    $rootScope.scoreQuality = 0;
+                    $scope.empCost = 0;
+                    $scope.empUtilization = 0;
+                    $scope.empCreativity = 0;
+                    $scope.empSafety = 0;
+                    $scope.empQuality = 0;
+                    $scope.mangCost = 0;
+                    $scope.mangUtilization = 0;
+                    $scope.mangCreativity = 0;
+                    $scope.mangSafety = 0;
+                    $scope.mangQuality = 0;
+                    $rootScope.rangeValueCost = 0;
+                    $rootScope.utilization = 0;
+                    $rootScope.creativity = 0;
+                    $rootScope.safety = 0;
+                    $rootScope.quality = 0;
+                    
 
+                    $scope.empTotalScore = 0;
+                    $scope.mangTotalScore = 0;
+                    $rootScope.totalScore = 0;
                 };
 
                 //validate model
@@ -127,6 +178,8 @@
                 //--------------http funtion---------------
                 //save model
                 $scope.http.saveKaizen = function () {
+                    var id = -1;
+
                     $scope.model.committeekaizen.indexNo = $rootScope.kaizenIndex;
                     $scope.model.committeekaizen.committeeCost = $rootScope.scoreCost;
                     $scope.model.committeekaizen.committeeUtilization = $rootScope.scoreUtilization;
@@ -141,7 +194,13 @@
                             detailJSON,
                             function (data) {
                                 Notification.success(data.indexNo + " - " + " finshed Successfully.");
-//                                $scope.model.reset();
+                                for (var i = 0; i < $scope.model.kaizenList.length; i++) {
+                                    if ($scope.model.kaizenList[i].indexNo === data.indexNo) {
+                                        id = i;
+                                    }
+                                }
+                                $scope.model.kaizenList.splice(id, 1);
+                                $scope.model.reset();
                             },
                             function (data) {
                                 Notification.error(data.message);

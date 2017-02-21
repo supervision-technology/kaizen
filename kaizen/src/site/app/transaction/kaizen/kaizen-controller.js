@@ -34,17 +34,18 @@
                             });
                 };
 
-                factory.uploadFile = function (fd, callback, errorCallback) {
-                    var url = systemConfig.apiUrl + "/kaizen/upload-file";
+                factory.uploadFile = function (summary, callback, errorCallback) {
+                    var url = systemConfig.apiUrl + "/document/save-image";
 
-                    $http.post(url, fd, {
-                        withCredentials: true,
-                        headers: {'Content-Type': undefined},
-                        transformRequest: angular.identity
-                    }).success("...all right!...")
-                            .error("..damn!...");
-
-
+                    $http.post(url, summary)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+                                if (errorCallback) {
+                                    errorCallback(data);
+                                }
+                            });
                 };
 
                 return factory;
@@ -53,7 +54,7 @@
 
     //-----------http controller---------
     angular.module("AppModule")
-            .controller("KaizenController", function (kaizenFactory, $scope, $rootScope, $uibModal, $uibModalStack, Notification) {
+            .controller("KaizenController", function (kaizenFactory, $base64, $scope, $rootScope, $uibModal, $uibModalStack, Notification) {
 
                 //data models 
                 $scope.model = {};
@@ -111,7 +112,14 @@
                     $rootScope.scoreCreativity = 0;
                     $rootScope.scoreSafety = 0;
                     $rootScope.scoreQuality = 0;
+                    $rootScope.rangeValueCost = 0;
+                    $rootScope.utilization = 0;
+                    $rootScope.creativity = 0;
+                    $rootScope.safety = 0;
+                    $rootScope.quality = 0;
+
                     $scope.model.employee.epfNo = null;
+
                 };
 
                 $scope.model.resetEmployee = function () {
@@ -164,13 +172,12 @@
                     $scope.model.kaizen.employeeQuality = $rootScope.scoreQuality;
                     $scope.model.kaizen.employee = $rootScope.employee;
                     $scope.model.kaizen.type = $rootScope.type;
+
                     var details = $scope.model.kaizen;
                     var detailJSON = JSON.stringify(details);
-                    console.log(detailJSON);
                     kaizenFactory.saveKaizen(
                             detailJSON,
                             function (data) {
-//                                console.log(data);
                                 Notification.success(data.indexNo + " - " + "Kaizen Saved Successfully.");
                                 $scope.model.reset();
 
@@ -203,11 +210,10 @@
 
                 // upload file
                 $scope.uploadFile = function (files) {
-                    var fd = new FormData();
-                    //Take the first selected file
-                    fd.append("file", files[0]);
-                    kaizenFactory.uploadFile(fd);
+                    var imageData = $base64.encode(files);
+                    console.log(imageData);
                 };
+
 
                 // range slider funtion
                 $scope.ui.costChange = function (score) {
@@ -312,7 +318,7 @@
                 };
 
                 $scope.ui.selectEmployee = function (employee) {
-                    $rootScope.employee= employee.indexNo;
+                    $rootScope.employee = employee.indexNo;
                     $scope.model.employee.epfNo = employee.epfNo;
                     $scope.model.employee.name = employee.name;
                     $scope.model.employee.department = employee.department.name + " " + "Department";

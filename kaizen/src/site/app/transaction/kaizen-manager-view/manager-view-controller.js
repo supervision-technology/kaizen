@@ -104,7 +104,43 @@
                 // ------------------model funtions-------------------
 
                 $scope.model.reset = function () {
+                    $scope.model.managerkaizen = {
+                        indexNo: null,
+                        managerCost: 0,
+                        managerUtilization: 0,
+                        managerCreativity: 0,
+                        managerSafety: 0,
+                        managerQuality: 0
+                    };
+                    $scope.model.kaizen = {
+                        title: null,
+                        description: null,
+                        type: null,
+                        employee: null,
+                        employeeCost: 0,
+                        employeeUtilization: 0,
+                        employeeCreativity: 0,
+                        employeeSafety: 0,
+                        employeeQuality: 0
+                    };
+                    $rootScope.scoreCost = 0;
+                    $rootScope.scoreUtilization = 0;
+                    $rootScope.scoreCreativity = 0;
+                    $rootScope.scoreSafety = 0;
+                    $rootScope.scoreQuality = 0;
+                    $scope.empCost = 0;
+                    $scope.empUtilization = 0;
+                    $scope.empCreativity = 0;
+                    $scope.empSafety = 0;
+                    $scope.empQuality = 0;
+                    $rootScope.rangeValueCost = 0;
+                    $rootScope.utilization = 0;
+                    $rootScope.creativity = 0;
+                    $rootScope.safety = 0;
+                    $rootScope.quality = 0;
 
+                    $rootScope.totalScore = 0;
+                    $scope.empTotalScore = 0;
                 };
 
                 //validate model
@@ -126,6 +162,8 @@
                 //--------------http funtion---------------
                 //save model
                 $scope.http.saveKaizen = function () {
+                    var id = -1;
+
                     $scope.model.managerkaizen.indexNo = $rootScope.kaizenIndex;
                     $scope.model.managerkaizen.managerCost = $rootScope.scoreCost;
                     $scope.model.managerkaizen.managerUtilization = $rootScope.scoreUtilization;
@@ -140,8 +178,13 @@
                             detailJSON,
                             function (data) {
                                 Notification.success(data.indexNo + " - " + " Saved Successfully.");
-                                $scope.model.kaizenList.splice(data.indexNo, 1);
-//                                $scope.model.reset();
+                                for (var i = 0; i < $scope.model.kaizenList.length; i++) {
+                                    if ($scope.model.kaizenList[i].indexNo === data.indexNo) {
+                                        id = i;
+                                    }
+                                }
+                                $scope.model.kaizenList.splice(id, 1);
+                                $scope.model.reset();
                             },
                             function (data) {
                                 Notification.error(data.message);
@@ -312,7 +355,12 @@
                     } else {
                         Notification.error("Please input details");
                     }
+                };
 
+
+                $scope.ui.convertImage = function (blob) {
+                    console.log(blob);
+                    return 'data:image/png;base64,' + blob;
                 };
 
                 $scope.ui.init = function () {

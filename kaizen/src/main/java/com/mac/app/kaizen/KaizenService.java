@@ -5,7 +5,11 @@
  */
 package com.mac.app.kaizen;
 
+import com.mac.app.document.DocumentRepository;
+import com.mac.app.document.model.Document;
 import com.mac.app.kaizen.model.TKaizen;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +28,9 @@ public class KaizenService {
     @Autowired
     private KaizenRepository kaizenRepository;
 
+    @Autowired
+    private DocumentRepository documentRepository;
+
     private static final String KAIZEN_PENDING = "PENDING";
     private static final String MANAGER_VIEW = "MANAGER_VIEW";
     private static final String COMMITTEE_VIEW = "COMMITTEE_VIEW";
@@ -35,7 +42,29 @@ public class KaizenService {
     public TKaizen saveKazen(TKaizen kaizen) {
         kaizen.setIntroduceDate(new Date());
         kaizen.setReviewStatus(KAIZEN_PENDING);
-        return kaizenRepository.save(kaizen);
+
+        TKaizen kaizen1 = kaizenRepository.save(kaizen);
+
+        //save image into database
+        File file = new File("D:\\mypic.jpg");
+        byte[] bFile = new byte[(int) file.length()];
+
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            //convert file into array of bytes
+            fileInputStream.read(bFile);
+            fileInputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Document document = new Document();
+        document.setPath(bFile);
+        document.setKaizen(kaizen1.getIndexNo());
+
+        documentRepository.save(document);
+
+        return kaizen1;
     }
 
     public TKaizen kaizenUpdateByManager(TKaizen kaizen) {
@@ -61,5 +90,4 @@ public class KaizenService {
         kaizen1.setReviewStatus(COMMITTEE_VIEW);
         return kaizenRepository.save(kaizen1);
     }
-
 }

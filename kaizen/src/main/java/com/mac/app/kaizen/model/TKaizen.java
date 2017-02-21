@@ -94,6 +94,7 @@ public class TKaizen implements Serializable {
 
     @Column(name = "committee_quality")
     private String committeeQuality;
+    
 
     public TKaizen() {
     }

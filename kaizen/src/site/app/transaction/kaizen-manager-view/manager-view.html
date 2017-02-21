@@ -34,7 +34,7 @@
                                 <img class="media-object avatar avatar-sm" data-ng-src="images/face1.jpg" alt="" src="images/avatar.21d1cc35.jpg">
                             </a> 
                             <div class="comment-author h6 no-margin pt5">
-                                <label class="pull-right">{{kaizen.introduceDate | date}}</label>
+                                <label class="pull-right">{{kaizen.introduceDate| date:mediumDate}}</label>
                                 <a href="javascript:;"><strong>{{ui.getEmployee(kaizen.employee).name}}</strong></a> 
                                 <a href="javascript:;"><strong> &nbsp; (EPF NO : {{ui.getEmployee(kaizen.employee).epfNo}} )</strong></a> 
                             </div>
@@ -56,8 +56,18 @@
             </button>
         </div>
         <div style="height: 180px">
-            <label class="control-label"  style="padding-top: 10px;">Description</label>
-            <textarea class="form-control" style="height: 140px" ng-model="model.kaizen.description" ng-disabled="true"></textarea>
+            <!--            <label class="control-label"  style="padding-top: 10px;">Description</label>
+                        <textarea class="form-control" style="height: 140px" ng-model="model.kaizen.description" ng-disabled="true"></textarea>-->
+            <table border="1">
+                <tbody>
+                    <tr ng-repeat="document in model.documents">
+                        <!--            <td><img src="{{ui.convertImage(document.path)}}" height="50px" width="50px"></td>-->
+                        <td><img data-ng-src="{{'data:image/png;base64,'+ document.path}}" height="50px" width="50px" /></td>
+                    </tr>
+                </tbody>
+            </table>
+
+
         </div>
 
         <div style="height: calc(100vh - 370px);">

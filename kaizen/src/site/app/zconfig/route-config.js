@@ -8,17 +8,7 @@
     angular.module("AppModule")
             .config(function ($routeProvider) {
                 $routeProvider
-
-                        //  master
-//                        .when("/master/item", {
-//                            templateUrl: "app/master/item/item.html",
-//                            controller: "ItemController"
-//                        })
                         //  Transaction
-//                        .when("/transaction/grn", {
-//                            templateUrl: "app/transaction/grn/grn.html",
-//                            controller: "GrnController"
-//                        })
                         .when("/transaction/job", {
                             templateUrl: "app/transaction/job/job.html",
                             controller: "JobController"
@@ -34,6 +24,12 @@
                         .when("/transaction/kaizen-committee-view", {
                             templateUrl: "app/transaction/kaizen-committee-view/committee-view.html",
                             controller: "KaizenCommitteeViewController"
+                        })
+                        
+                        //master
+                        .when("/master/employee-registration", {
+                            templateUrl: "app/master/employee/employee-registration.html"
+//                            controller: "JobController"
                         })
 
                         .otherwise({

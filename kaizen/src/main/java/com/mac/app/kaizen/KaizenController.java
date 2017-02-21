@@ -5,6 +5,7 @@
  */
 package com.mac.app.kaizen;
 
+import com.mac.app.document.model.Document;
 import com.mac.app.kaizen.model.TKaizen;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,8 @@ public class KaizenController {
     @RequestMapping(value = "/save-kaizen", method = RequestMethod.POST)
     public TKaizen saveKaizen(@RequestBody TKaizen kaizen) {
         return kaizenService.saveKazen(kaizen);
-
     }
+
 
     @RequestMapping(value = "/update-kaizen", method = RequestMethod.POST)
     public TKaizen updateByManager(@RequestBody TKaizen kaizen) {
@@ -46,4 +47,5 @@ public class KaizenController {
     public TKaizen updateByCommittee(@RequestBody TKaizen kaizen) {
         return kaizenService.kaizenUpdateByCommittee(kaizen);
     }
+
 }

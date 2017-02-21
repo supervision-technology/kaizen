@@ -56,6 +56,8 @@ gulp.task('build-js', function () {
         "bower_components/angular-route/angular-route.min.js",
         "bower_components/angular-animate/angular-animate.min.js",
         "bower_components/angular-sanitize/angular-sanitize.min.js",
+        "bower_components/angular-base64/angular-base64.js",
+        
         "bower_components/angular-bootstrap/ui-bootstrap.min.js",
         "bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
         "bower_components/angular-ui-notification/dist/angular-ui-notification.min.js",
@@ -174,7 +176,7 @@ gulp.task('serve-css', ['build-css'], function (done) {
     done();
 });
 
-gulp.task('watch', function () {
+gulp.task   ('watch', function () {
     gulp.watch('src/site/**/*.html', ['serve-html']);
     gulp.watch('src/site/**/*.js', ['serve-js']);
     gulp.watch(['src/site/**/*.css', 'src/site/**/*.scss'], ['serve-css']);
