@@ -43,28 +43,28 @@ public class KaizenService {
         kaizen.setIntroduceDate(new Date());
         kaizen.setReviewStatus(KAIZEN_PENDING);
 
-        TKaizen kaizen1 = kaizenRepository.save(kaizen);
+        return kaizenRepository.save(kaizen);
 
         //save image into database
-        File file = new File("D:\\mypic.jpg");
-        byte[] bFile = new byte[(int) file.length()];
-
-        try {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            //convert file into array of bytes
-            fileInputStream.read(bFile);
-            fileInputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        Document document = new Document();
-        document.setPath(bFile);
-        document.setKaizen(kaizen1.getIndexNo());
-
-        documentRepository.save(document);
-
-        return kaizen1;
+//        File file = new File("D:\\mypic.jpg");
+//        byte[] bFile = new byte[(int) file.length()];
+//
+//        try {
+//            FileInputStream fileInputStream = new FileInputStream(file);
+//            //convert file into array of bytes
+//            fileInputStream.read(bFile);
+//            fileInputStream.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        Document document = new Document();
+//        document.setPath(bFile);
+//        document.setKaizen(kaizen1.getIndexNo());
+//
+//        documentRepository.save(document);
+//
+//        return kaizen1;
     }
 
     public TKaizen kaizenUpdateByManager(TKaizen kaizen) {

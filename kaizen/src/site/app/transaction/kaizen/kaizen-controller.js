@@ -65,27 +65,66 @@
                 //http models
                 $scope.http = {};
 
+                $scope.imageModel = [];
+
                 //current ui mode IDEAL, SELECTED, NEW, EDIT
                 $scope.ui.mode = null;
 
-                $scope.$watch('myFile', function (newFileObj) {
-                    if (newFileObj)
-                        $scope.filename = newFileObj.name;
-                });
+//                $scope.$watch('myFile', function (newFileObj) {
+//                    if (newFileObj)
+//                        $scope.filename = newFileObj.name;
+//                });
 
-                $scope.uploadForm = function () {
+                $scope.imageUpload = function (event) {
+                    //FileList object
+                    var files = event.target.files;
+
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i];
+                        var reader = new FileReader();
+                        reader.onload = $scope.imageIsLoaded;
+                        reader.readAsDataURL(file);
+                    }
+                };
+
+                $scope.imageIsLoaded = function (e) {
+                    $scope.$apply(function () {
+                        $scope.imageModel.push(e.target.result);
+                    });
+                };
+
+                $scope.uploadForm = function (index) {
+               
+//                    for (var i = 0, i = input.files.length; i += 1) {
+//                        file = input.files[i];
+
+//                        fdata.append(file.name, file);
+//                    }
+//                    var files = $scope.imageModel;
+//
+//                    for (var i = 0; i < files.length; i++) {
+//                        var file = files[i];
+//                        var reader = new FileReader();
+//                        reader.readAsArrayBuffer();
+//                        console.log(file);
+//                        var url = systemConfig.apiUrl + "/document/upload-image/" + index;
+//
+//                        var formData = new FormData();
+//                        formData.append("file", file);
+////
+//                        var xhr = new XMLHttpRequest();
+//                        xhr.open("POST", url);
+//                        xhr.send(formData);
+//                    }
                     var file = document.getElementById("file").files[0];
-                    var url = systemConfig.apiUrl + "/document/upload-image";
+                    console.log(file);
+                    var url = systemConfig.apiUrl + "/document/upload-image/" + index;
 
 
                     var formData = new FormData();
                     formData.append("file", file);
-
+//
                     var xhr = new XMLHttpRequest();
-//                    xhr.upload.addEventListener("progress", uploadProgress, false)
-//                    xhr.addEventListener("load", uploadComplete, false)
-//                    xhr.addEventListener("error", uploadFailed, false)
-//                    xhr.addEventListener("abort", uploadCanceled, false)
                     xhr.open("POST", url);
                     xhr.send(formData);
                 };
@@ -203,6 +242,7 @@
                             detailJSON,
                             function (data) {
                                 Notification.success(data.indexNo + " - " + "Kaizen Saved Successfully.");
+                                $scope.uploadForm(data.indexNo);
                                 $scope.model.reset();
 
                             },
@@ -233,10 +273,10 @@
                 };
 
                 // upload file
-                $scope.uploadFile = function (files) {
-                    var imageData = $base64.encode(files.path);
-                    console.log(imageData);
-                };
+//                $scope.uploadFile = function (files) {
+//                    var imageData = $base64.encode(files.path);
+//                    console.log(imageData);
+//                };
 
 
                 // range slider funtion

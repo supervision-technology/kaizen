@@ -77,6 +77,8 @@
                 //current ui mode IDEAL, SELECTED, NEW, EDIT
                 $scope.ui.mode = null;
 
+                $rootScope.images = [];
+
                 //kaizen model
                 $scope.model.kaizen = {
                     title: null,
@@ -293,15 +295,25 @@
                 };
 
                 $scope.ui.modalPictures = function () {
-                    $uibModal.open({
-                        animation: true,
-                        ariaLabelledBy: 'modal-title',
-                        ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/transaction/kaizen/pictures-popup.html',
-                        controller: 'KaizenManagerViewController',
-                        size: 'xs'
+                    angular.forEach($scope.model.documents, function (value) {
+                        if (value.kaizen === $rootScope.kaizenIndex) {
+                            $rootScope.images.push(value);
+//                            $uibModal.open({
+//                                animation: true,
+//                                ariaLabelledBy: 'modal-title',
+//                                ariaDescribedBy: 'modal-body',
+//                                templateUrl: 'app/transaction/kaizen/pictures-popup.html',
+//                                controller: 'KaizenManagerViewController',
+//                                size: 'xs'
+//                            });
+                        }
                     });
+
+
                 };
+
+
+                console.log($rootScope.images);
 
 
                 $scope.ui.close = function () {
@@ -333,7 +345,6 @@
 
                     $scope.empTotalScore = $scope.empCost + $scope.empUtilization + $scope.empCreativity + $scope.empSafety + $scope.empQuality;
 
-                    console.log($scope.empTotalScore);
                 };
 
 
@@ -357,12 +368,14 @@
                 };
 
 
-                $scope.ui.convertImage = function (blob) {
-                    console.log(blob);
-                    return 'data:image/png;base64,' + blob;
-                };
+//                $scope.ui.convertImage = function (blob) {
+//                    console.log(blob);
+//                    return 'data:image/png;base64,' + blob;
+//                };
 
                 $scope.ui.init = function () {
+
+
                     //laod kaizen
                     kaizenManagerViewFactory.loadKaizen(function (data) {
                         $scope.model.kaizenList = data;

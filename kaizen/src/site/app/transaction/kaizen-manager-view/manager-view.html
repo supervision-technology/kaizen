@@ -36,7 +36,7 @@
                             <div class="comment-author h6 no-margin pt5">
                                 <label class="pull-right">{{kaizen.introduceDate| date:mediumDate}}</label>
                                 <a href="javascript:;"><strong>{{ui.getEmployee(kaizen.employee).name}}</strong></a> 
-                                <a href="javascript:;"><strong> &nbsp; (EPF NO : {{ui.getEmployee(kaizen.employee).epfNo}} )</strong></a> 
+                                <a href="javascript:;"><strong> &nbsp; (EPF NO : {{ui.getEmployee(kaizen.employee).epfNo}} ){{kaizen.indexNo}}</strong></a> 
                             </div>
                             <h6>{{kaizen.title}}</h6> 
                         </div> 
@@ -52,20 +52,20 @@
     <div class="col-lg-5">
         <div class="pull-right" style="height: 25px">
             <button type="button" class="btn btn-bitbucket btn-xs pull-right" style="margin-top: 7px" ng-click="ui.modalPictures()">
-                <span class="glyphicon glyphicon-camera" aria-hidden="true" ></span> Pictures
+                <span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Pictures
             </button>
         </div>
         <div style="height: 180px">
-            <!--            <label class="control-label"  style="padding-top: 10px;">Description</label>
-                        <textarea class="form-control" style="height: 140px" ng-model="model.kaizen.description" ng-disabled="true"></textarea>-->
-            <table border="1">
+            <label class="control-label"  style="padding-top: 10px;">Description</label>
+            <textarea class="form-control" style="height: 140px" ng-model="model.kaizen.description" ng-disabled="true"></textarea>
+<!--            <table border="1">
                 <tbody>
                     <tr ng-repeat="document in model.documents">
-                        <!--            <td><img src="{{ui.convertImage(document.path)}}" height="50px" width="50px"></td>-->
+                                    <td><img src="{{ui.convertImage(document.path)}}" height="50px" width="50px"></td>
                         <td><img data-ng-src="{{'data:image/png;base64,'+ document.path}}" height="50px" width="50px" /></td>
                     </tr>
                 </tbody>
-            </table>
+            </table>-->
 
 
         </div>

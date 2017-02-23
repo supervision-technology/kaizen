@@ -31,7 +31,6 @@ public class DocumentService {
     }
 
     public void saveImage(Document document) {
-        document.setKaizen(1);
         documentRepository.save(document);
     }
 
