@@ -70,65 +70,6 @@
                 //current ui mode IDEAL, SELECTED, NEW, EDIT
                 $scope.ui.mode = null;
 
-//                $scope.$watch('myFile', function (newFileObj) {
-//                    if (newFileObj)
-//                        $scope.filename = newFileObj.name;
-//                });
-
-                $scope.imageUpload = function (event) {
-                    //FileList object
-                    var files = event.target.files;
-
-                    for (var i = 0; i < files.length; i++) {
-                        var file = files[i];
-                        var reader = new FileReader();
-                        reader.onload = $scope.imageIsLoaded;
-                        reader.readAsDataURL(file);
-                    }
-                };
-
-                $scope.imageIsLoaded = function (e) {
-                    $scope.$apply(function () {
-                        $scope.imageModel.push(e.target.result);
-                    });
-                };
-
-                $scope.uploadForm = function (index) {
-               
-//                    for (var i = 0, i = input.files.length; i += 1) {
-//                        file = input.files[i];
-
-//                        fdata.append(file.name, file);
-//                    }
-//                    var files = $scope.imageModel;
-//
-//                    for (var i = 0; i < files.length; i++) {
-//                        var file = files[i];
-//                        var reader = new FileReader();
-//                        reader.readAsArrayBuffer();
-//                        console.log(file);
-//                        var url = systemConfig.apiUrl + "/document/upload-image/" + index;
-//
-//                        var formData = new FormData();
-//                        formData.append("file", file);
-////
-//                        var xhr = new XMLHttpRequest();
-//                        xhr.open("POST", url);
-//                        xhr.send(formData);
-//                    }
-                    var file = document.getElementById("file").files[0];
-                    console.log(file);
-                    var url = systemConfig.apiUrl + "/document/upload-image/" + index;
-
-
-                    var formData = new FormData();
-                    formData.append("file", file);
-//
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("POST", url);
-                    xhr.send(formData);
-                };
-
                 //kaizen model
                 $scope.model.kaizen = {
                     title: null,
@@ -175,12 +116,7 @@
                     $rootScope.scoreCreativity = 0;
                     $rootScope.scoreSafety = 0;
                     $rootScope.scoreQuality = 0;
-                    $rootScope.rangeValueCost = 0;
-                    $rootScope.utilization = 0;
-                    $rootScope.creativity = 0;
-                    $rootScope.safety = 0;
-                    $rootScope.quality = 0;
-
+                    $rootScope.totalScore = 0;
                     $scope.model.employee.epfNo = null;
 
                 };
@@ -211,13 +147,7 @@
                 //validate model
                 $scope.validateInput = function () {
                     if ($scope.model.kaizen.title
-                            && $scope.model.kaizen.description
-                            && $rootScope.scoreCost > 0
-                            && $rootScope.scoreCreativity > 0
-                            && $rootScope.scoreQuality > 0
-                            && $rootScope.scoreSafety > 0
-                            && $rootScope.scoreUtilization > 0
-                            ) {
+                            && $scope.model.kaizen.description) {
                         return true;
                     } else {
                         return false;
@@ -254,13 +184,13 @@
 
 
                 //----------------ui funtion--------------
-                $scope.ui.setImplemented = function (name) {
-                    $rootScope.type = name;
-                };
-
-                $scope.ui.setSuggestion = function (name) {
-                    $rootScope.type = name;
-                };
+//                $scope.ui.setImplemented = function (name) {
+//                    $rootScope.type = name;
+//                };
+//
+//                $scope.ui.setSuggestion = function (name) {
+//                    $rootScope.type = name;
+//                };
 
 
                 //save function 
@@ -273,10 +203,36 @@
                 };
 
                 // upload file
-//                $scope.uploadFile = function (files) {
-//                    var imageData = $base64.encode(files.path);
-//                    console.log(imageData);
-//                };
+                $scope.imageUpload = function (event) {
+                    //FileList object
+                    var files = event.target.files;
+
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i];
+                        var reader = new FileReader();
+                        reader.onload = $scope.imageIsLoaded;
+                        reader.readAsDataURL(file);
+                    }
+                };
+
+                $scope.imageIsLoaded = function (e) {
+                    $scope.$apply(function () {
+                        $scope.imageModel.push(e.target.result);
+                    });
+                };
+
+                $scope.uploadForm = function (index) {
+                    var file = document.getElementById("file").files[0];
+                    var url = systemConfig.apiUrl + "/document/upload-image/" + index;
+
+
+                    var formData = new FormData();
+                    formData.append("file", file);
+//
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", url);
+                    xhr.send(formData);
+                };
 
 
                 // range slider funtion
@@ -306,15 +262,13 @@
                 };
 
                 $scope.ui.totalScore = function () {
-                    $rootScope.rangeValueCost = 30 / 5 * $rootScope.scoreCost;
+                    $rootScope.cost = 30 / 5 * $rootScope.scoreCost;
                     $rootScope.utilization = 15 / 5 * $rootScope.scoreUtilization;
                     $rootScope.creativity = 20 / 5 * $rootScope.scoreCreativity;
                     $rootScope.safety = 20 / 5 * $rootScope.scoreSafety;
                     $rootScope.quality = 15 / 5 * $rootScope.scoreQuality;
 
-                    $rootScope.totalScore = $rootScope.utilization + $rootScope.creativity + $rootScope.rangeValueCost + $rootScope.safety + $rootScope.quality;
-
-                    console.log($rootScope.totalScore);
+                    $rootScope.totalScore = $rootScope.utilization + $rootScope.creativity + $rootScope.cost + $rootScope.safety + $rootScope.quality;
                 };
 
                 $scope.ui.modalOpenCost = function () {
@@ -322,7 +276,7 @@
                         animation: true,
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/transaction/kaizen/cost-popup.html',
+                        templateUrl: 'app/transaction/kaizen/dialog/cost-popup.html',
                         controller: 'KaizenController',
                         size: 'lg',
                         windowClass: 'zindex'
@@ -334,7 +288,7 @@
                         animation: true,
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/transaction/kaizen/utilization-popup.html',
+                        templateUrl: 'app/transaction/kaizen/dialog/utilization-popup.html',
                         controller: 'KaizenController',
                         size: 'lg',
                         windowClass: 'zindex'
@@ -346,7 +300,7 @@
                         animation: true,
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/transaction/kaizen/creativity-popup.html',
+                        templateUrl: 'app/transaction/kaizen/dialog/creativity-popup.html',
                         controller: 'KaizenController',
                         size: 'lg',
                         windowClass: 'zindex'
@@ -358,7 +312,7 @@
                         animation: true,
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/transaction/kaizen/safety-popup.html',
+                        templateUrl: 'app/transaction/kaizen/dialog/safety-popup.html',
                         controller: 'KaizenController',
                         size: 'lg',
                         windowClass: 'zindex'
@@ -370,7 +324,7 @@
                         animation: true,
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/transaction/kaizen/quality-popup.html',
+                        templateUrl: 'app/transaction/kaizen/dialog/quality-popup.html',
                         controller: 'KaizenController',
                         size: 'lg',
                         windowClass: 'zindex'
@@ -409,7 +363,6 @@
                 };
 
                 $scope.ui.init = function () {
-
                     //load employee
                     kaizenFactory.loadEmployee(function (data) {
                         $scope.model.employeeList = data;
@@ -421,29 +374,14 @@
                     if (!$rootScope.scoreCost) {
                         $rootScope.scoreCost = 0;
                     }
-                    if (!$rootScope.rangeValueCost) {
-                        $rootScope.rangeValueCost = 0;
-                    }
                     if (!$rootScope.scoreUtilization) {
                         $rootScope.scoreUtilization = 0;
-                    }
-                    if (!$rootScope.utilization) {
-                        $rootScope.utilization = 0;
                     }
                     if (!$rootScope.scoreCreativity) {
                         $rootScope.scoreCreativity = 0;
                     }
-                    if (!$rootScope.creativity) {
-                        $rootScope.creativity = 0;
-                    }
                     if (!$rootScope.scoreSafety) {
                         $rootScope.scoreSafety = 0;
-                    }
-                    if (!$rootScope.safety) {
-                        $rootScope.safety = 0;
-                    }
-                    if (!$rootScope.quality) {
-                        $rootScope.quality = 0;
                     }
                     if (!$rootScope.scoreQuality) {
                         $rootScope.scoreQuality = 0;

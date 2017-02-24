@@ -1,0 +1,162 @@
+<div class="bt border-primary">
+
+    <div class="col-lg-7">
+        <div  class="row">
+            <div class="bg-default-light" style="height: 110px">
+                <form class="form-inline pt15">
+                    <div class="col-lg-6">
+                        <label for="date" class="col-sm-4" style="margin-top: 9px">Month : </label>
+                        <input type="date" class="form-control" id="date" style="width: 194px" ng-model="model.date">
+                    </div>
+                    <!--                    <div class="col-lg-6">
+                                            <label for="a" class="col-sm-4"  style="margin-top: 9px">type : </label>
+                                            <select name="type" class="form-control" style="width: 194px" ng-model="model.type">
+                                                <option>Implemented</option>
+                                                <option>suggestion</option>
+                                            </select>
+                                        </div>-->
+                    <div class="col-lg-6">
+                        <label for="employee" class="col-sm-4" style="margin-top: 9px" >Employee : </label>
+                        <input type="text" class="form-control" id="employee" ng-model="model.employee"  uib-typeahead="employee as (employee.name) for employee in model.employeeList|filter:$viewValue|limitTo:5">
+                    </div>
+                    <div class="col-lg-6" style="margin-top: 8px">
+                        <label for="department" class="col-sm-4"  style="margin-top: 9px">Department : </label>
+                        <input type="text" class="form-control" id="department">
+                    </div>
+                    <div class="col-lg-6" style="margin-top: 14px;">
+                        <label for="employee" class="col-sm-4"></label>
+                        <label><input type="radio" name="radio" ng-click="ui.selectPending()" checked="">PENDING</label>
+                        <label><input type="radio" name="radio" ng-click="ui.selectComplete()" >COMPLETE</label>
+                    </div>
+                </form>
+            </div>
+
+            <div class="br border-default smart-scroll-y" style="height: calc(100vh - 166px)" ng-show="model.kaizenList.length">
+                <section class="bg-white post-comments"> 
+                    <div class="media pt10 pb5 bb border-default"  ng-repeat="kaizen in model.kaizenList| filter:{employee:model.employee.indexNo} | filter:{introduceDate:model.date}" ng-click="ui.selectkaizen(kaizen.indexNo)" ng-class="ui.selectedDataIndex === kaizen.indexNo ? 'selected' : ''">
+                        <div class="col-lg-12">
+                            <a class="pull-left" href="javascript:;" style="margin-right: 5px"> 
+                                <img class="media-object avatar avatar-sm" data-ng-src="images/face1.jpg" alt="" src="images/avatar.21d1cc35.jpg">
+                            </a> 
+                            <div class="comment-author h6 no-margin pt5">
+                                <label class="pull-right">{{kaizen.introduceDate| date:mediumDate}}</label>
+                                <a href="javascript:;"><strong>{{ui.getEmployee(kaizen.employee).name}}</strong></a> 
+                                <a href="javascript:;"><strong> &nbsp; (EPF NO : {{ui.getEmployee(kaizen.employee).epfNo}} )</strong></a> 
+                            </div>
+                            <h6>{{kaizen.title}}</h6> 
+                        </div> 
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-lg-12 placeholder bordered border-default" style="height: calc(100vh - 166px)"  ng-hide="model.kaizenList.length">
+                <h1 class="text-center mt200" style="">KAIZEN IS EMPTY :(</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="mt5">
+            <button type="button" class="btn btn-bitbucket btn-xs pull-right" style="border-radius: 0px" ng-click="ui.modalPictures()" data-target=".picture-modal" data-toggle="modal">
+                <span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Images
+            </button>
+            <label class="pull-left">Description</label>
+        </div>
+        
+        <div class="bordered border-default smart-scroll-y mb5" style="height: 140px; margin-top: 35px;">
+            <p style="padding: 5px">{{model.kaizen.description}}</p>
+        </div>
+
+        <div style="height: calc(100vh - 377px);">
+            <table class="table table-bordered">
+                <thead>
+                <th>Criteria</th>
+                <th>Employee Score</th>
+                <th>Manager Score</th>
+                <th class="text-center">view</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="">Cost</td>
+                        <td class="text-center">{{model.kaizen.employeeCost}}</td>
+                        <td class="text-center">{{ManagerScoreCost}}</td>
+                        <td class="text-center"><button ng-click="ui.modalOpenCost()" class="btn btn-xs bg-bluegrey" style="border-radius: 0px">Criteria</button></td>
+                    </tr>
+                    <tr>
+                        <td class="">Utilization</td>
+                        <td class="text-center">{{model.kaizen.employeeUtilization}}</td>
+                        <td class="text-center">{{ManagerScoreUtilization}}</td>
+                        <td class="text-center"><button ng-click="ui.modalOpenUtilization()" class="btn btn-xs bg-bluegrey" style="border-radius: 0px">Criteria</button></td>
+                    </tr>
+                    <tr>
+                        <td class="">Creativity</td>
+                        <td class="text-center">{{model.kaizen.employeeCreativity}}</td>
+                        <td class="text-center"> {{ManagerScoreCreativity}}</td>
+                        <td class="text-center"><button ng-click="ui.modalOpenCreativity()" class="btn btn-xs bg-bluegrey" style="border-radius: 0px">Criteria</button></td>
+                    </tr>
+                    <tr>
+                        <td class="">Safety</td>
+                        <td class="text-center">{{model.kaizen.employeeSafety}}</td>
+                        <td class="text-center">{{ManagerScoreSafety}}</td>
+                        <td class="text-center"><button ng-click="ui.modalOpenSafety()" class="btn btn-xs bg-bluegrey" style="border-radius: 0px">Criteria</button></td>
+                    </tr>
+                    <tr>
+                        <td class="">Quality</td>
+                        <td class="text-center">{{model.kaizen.employeeQuality}}</td>
+                        <td class="text-center">{{ManagerScoreQuality}}</td>
+                        <td class="text-center"><button ng-click="ui.modalOpenQuality()" class="btn btn-xs bg-bluegrey" style="border-radius: 0px">Criteria</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-lg-7 text-center">
+            <div class="row br border-default">
+                <label style="font-size: 16px;" class="pt30">EMPLOYEE SCORE <br>{{empTotalScore}}%</label>
+            </div>
+        </div>
+        <div class="col-lg-5 text-center">
+            <div class="row">
+                <label style="font-size: 16px;" class="pt30">MANAGER SCORE <br>{{managerTotalScore}} %</label>
+            </div>
+        </div>
+
+        <div class="pull-right" style="margin-top: 8px">
+            <button type="button" class="btn btn-sm btn-dropbox" style="width: 135px; border-radius: 0px; height: 47px;">
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Suggestion
+            </button>
+            <button type="button" class="btn btn-facebook btn-sm" style="width: 135px; border-radius: 0px; height: 47px;">
+                Send an <br>Appreciation Mail
+            </button>
+            <button type="button" class="btn btn-success btn-sm" style="width: 135px; border-radius: 0px; height: 47px;" ng-click="ui.save()">
+                Submit for <br> Kaizen Committee
+            </button>
+        </div>
+    </div>
+
+    <div tabindex="-1" role="dialog"  class="modal picture-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 class="modal-title text-center">Pictures</h3>
+                </div>
+                <div class="modal-body">
+                    <table>
+                        <tbody>
+                            <tr ng-repeat="image in ui.images">
+                                <td><img data-ng-src="{{'data:image/png;base64,'+ image.path}}" height="200px" width="200px" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <div class="modal-footer no-border" >
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

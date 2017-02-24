@@ -77,7 +77,9 @@
                 //current ui mode IDEAL, SELECTED, NEW, EDIT
                 $scope.ui.mode = null;
 
-                $rootScope.images = [];
+                $scope.ui.images = [];
+
+                $scope.model.kaizenList = [];
 
                 //kaizen model
                 $scope.model.kaizen = {
@@ -125,35 +127,32 @@
                         employeeSafety: 0,
                         employeeQuality: 0
                     };
-                    $rootScope.scoreCost = 0;
-                    $rootScope.scoreUtilization = 0;
-                    $rootScope.scoreCreativity = 0;
-                    $rootScope.scoreSafety = 0;
-                    $rootScope.scoreQuality = 0;
+                    $rootScope.ManagerScoreCost = 0;
+                    $rootScope.ManagerScoreUtilization = 0;
+                    $rootScope.ManagerScoreCreativity = 0;
+                    $rootScope.ManagerScoreSafety = 0;
+                    $rootScope.ManagerScoreQuality = 0;
                     $scope.empCost = 0;
                     $scope.empUtilization = 0;
                     $scope.empCreativity = 0;
                     $scope.empSafety = 0;
                     $scope.empQuality = 0;
-                    $rootScope.rangeValueCost = 0;
-                    $rootScope.utilization = 0;
-                    $rootScope.creativity = 0;
-                    $rootScope.safety = 0;
-                    $rootScope.quality = 0;
-
-                    $rootScope.totalScore = 0;
+                    $rootScope.managerTotalScore = 0;
                     $scope.empTotalScore = 0;
+                };
+
+                $scope.ui.resetRootScope = function () {
+                    $rootScope.ManagerScoreCost = 0;
+                    $rootScope.ManagerScoreUtilization = 0;
+                    $rootScope.ManagerScoreCreativity = 0;
+                    $rootScope.ManagerScoreSafety = 0;
+                    $rootScope.ManagerScoreQuality = 0;
                 };
 
                 //validate model
                 $scope.validateInput = function () {
                     if ($rootScope.kaizenIndex != null
-                            && $rootScope.scoreCost > 0
-                            && $rootScope.scoreCreativity > 0
-                            && $rootScope.scoreQuality > 0
-                            && $rootScope.scoreSafety > 0
-                            && $rootScope.scoreUtilization > 0
-                            ) {
+                            && $rootScope.managerTotalScore > 70) {
                         return true;
                     } else {
                         return false;
@@ -167,11 +166,11 @@
                     var id = -1;
 
                     $scope.model.managerkaizen.indexNo = $rootScope.kaizenIndex;
-                    $scope.model.managerkaizen.managerCost = $rootScope.scoreCost;
-                    $scope.model.managerkaizen.managerUtilization = $rootScope.scoreUtilization;
-                    $scope.model.managerkaizen.managerCreativity = $rootScope.scoreCreativity;
-                    $scope.model.managerkaizen.managerSafety = $rootScope.scoreSafety;
-                    $scope.model.managerkaizen.managerQuality = $rootScope.scoreQuality;
+                    $scope.model.managerkaizen.managerCost = $rootScope.ManagerScoreCost;
+                    $scope.model.managerkaizen.managerUtilization = $rootScope.ManagerScoreUtilization;
+                    $scope.model.managerkaizen.managerCreativity = $rootScope.ManagerScoreCreativity;
+                    $scope.model.managerkaizen.managerSafety = $rootScope.ManagerScoreSafety;
+                    $scope.model.managerkaizen.managerQuality = $rootScope.ManagerScoreQuality;
 
                     var details = $scope.model.managerkaizen;
                     var detailJSON = JSON.stringify(details);
@@ -198,38 +197,38 @@
 
                 // range slider funtion
                 $scope.ui.costChange = function (score) {
-                    $rootScope.scoreCost = score;
-                    $scope.ui.totalScore();
+                    $rootScope.ManagerScoreCost = score;
+                    $scope.ui.managerTotalScore();
                 };
 
                 $scope.ui.utilizationChange = function (score) {
-                    $rootScope.scoreUtilization = score;
-                    $scope.ui.totalScore();
+                    $rootScope.ManagerScoreUtilization = score;
+                    $scope.ui.managerTotalScore();
                 };
 
                 $scope.ui.creativityChange = function (score) {
-                    $rootScope.scoreCreativity = score;
-                    $scope.ui.totalScore();
+                    $rootScope.ManagerScoreCreativity = score;
+                    $scope.ui.managerTotalScore();
                 };
 
                 $scope.ui.safetyChange = function (score) {
-                    $rootScope.scoreSafety = score;
-                    $scope.ui.totalScore();
+                    $rootScope.ManagerScoreSafety = score;
+                    $scope.ui.managerTotalScore();
                 };
 
                 $scope.ui.qualityChange = function (score) {
-                    $rootScope.scoreQuality = score;
-                    $scope.ui.totalScore();
+                    $rootScope.ManagerScoreQuality = score;
+                    $scope.ui.managerTotalScore();
                 };
 
-                $scope.ui.totalScore = function () {
-                    $rootScope.rangeValueCost = 30 / 5 * $rootScope.scoreCost;
-                    $rootScope.utilization = 15 / 5 * $rootScope.scoreUtilization;
-                    $rootScope.creativity = 20 / 5 * $rootScope.scoreCreativity;
-                    $rootScope.safety = 20 / 5 * $rootScope.scoreSafety;
-                    $rootScope.quality = 15 / 5 * $rootScope.scoreQuality;
+                $scope.ui.managerTotalScore = function () {
+                    $rootScope.rangeValueCost = 30 / 5 * $rootScope.ManagerScoreCost;
+                    $rootScope.utilization = 15 / 5 * $rootScope.ManagerScoreUtilization;
+                    $rootScope.creativity = 20 / 5 * $rootScope.ManagerScoreCreativity;
+                    $rootScope.safety = 20 / 5 * $rootScope.ManagerScoreSafety;
+                    $rootScope.quality = 15 / 5 * $rootScope.ManagerScoreQuality;
 
-                    $rootScope.totalScore = $rootScope.utilization + $rootScope.creativity + $rootScope.rangeValueCost + $rootScope.safety + $rootScope.quality;
+                    $rootScope.managerTotalScore = $rootScope.utilization + $rootScope.creativity + $rootScope.rangeValueCost + $rootScope.safety + $rootScope.quality;
 
                 };
 
@@ -239,7 +238,7 @@
                         animation: true,
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/transaction/kaizen/cost-popup.html',
+                        templateUrl: 'app/transaction/manager/dialog/cost-popup.html',
                         controller: 'KaizenManagerViewController',
                         size: 'lg',
                         windowClass: 'zindex'
@@ -251,7 +250,7 @@
                         animation: true,
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/transaction/kaizen/utilization-popup.html',
+                        templateUrl: 'app/transaction/manager/dialog/utilization-popup.html',
                         controller: 'KaizenManagerViewController',
                         size: 'lg',
                         windowClass: 'zindex'
@@ -263,7 +262,7 @@
                         animation: true,
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/transaction/kaizen/creativity-popup.html',
+                        templateUrl: 'app/transaction/manager/dialog/creativity-popup.html',
                         controller: 'KaizenManagerViewController',
                         size: 'lg',
                         windowClass: 'zindex'
@@ -275,7 +274,7 @@
                         animation: true,
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/transaction/kaizen/safety-popup.html',
+                        templateUrl: 'app/transaction/manager/dialog/safety-popup.html',
                         controller: 'KaizenManagerViewController',
                         size: 'lg',
                         windowClass: 'zindex'
@@ -287,7 +286,7 @@
                         animation: true,
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/transaction/kaizen/quality-popup.html',
+                        templateUrl: 'app/transaction/manager/dialog/quality-popup.html',
                         controller: 'KaizenManagerViewController',
                         size: 'lg',
                         windowClass: 'zindex'
@@ -297,23 +296,10 @@
                 $scope.ui.modalPictures = function () {
                     angular.forEach($scope.model.documents, function (value) {
                         if (value.kaizen === $rootScope.kaizenIndex) {
-                            $rootScope.images.push(value);
-//                            $uibModal.open({
-//                                animation: true,
-//                                ariaLabelledBy: 'modal-title',
-//                                ariaDescribedBy: 'modal-body',
-//                                templateUrl: 'app/transaction/kaizen/pictures-popup.html',
-//                                controller: 'KaizenManagerViewController',
-//                                size: 'xs'
-//                            });
+                            $scope.ui.images.push(value);
                         }
                     });
-
-
                 };
-
-
-                console.log($rootScope.images);
 
 
                 $scope.ui.close = function () {
@@ -331,8 +317,47 @@
                             $scope.model.kaizen.employeeCreativity = value.employeeCreativity;
                             $scope.model.kaizen.employeeSafety = value.employeeSafety;
                             $scope.model.kaizen.employeeQuality = value.employeeQuality;
+
+                            if (value.managerCost === null) {
+                                $scope.ui.resetRootScope();
+                            } else {
+                                $rootScope.ManagerScoreCost = value.managerCost;
+                                $rootScope.ManagerScoreUtilization = value.managerUtilization;
+                                $rootScope.ManagerScoreCreativity = value.managerCreativity;
+                                $rootScope.ManagerScoreSafety = value.managerSafety;
+                                $rootScope.ManagerScoreQuality = value.managerQuality;
+                                $scope.ui.managerTotalScore();
+                            }
+
+
                             $scope.ui.employeeScore();
                         }
+                    });
+                };
+
+                $scope.ui.selectComplete = function () {
+                    $scope.model.kaizenList = [];
+                    kaizenManagerViewFactory.loadKaizen(function (data) {
+                        angular.forEach(data, function (value) {
+                            if (value.managerComplete === "MANAGER_COMPLETE") {
+                                $scope.model.kaizenList.push(value);
+                            }
+                        });
+
+                    });
+                };
+
+                $scope.ui.selectPending = function () {
+                    $scope.model.kaizenList = [];
+                    $scope.ui.resetRootScope();
+
+                    kaizenManagerViewFactory.loadKaizen(function (data) {
+                        angular.forEach(data, function (value) {
+                            if (value.reviewStatus === "PENDING") {
+                                $scope.model.kaizenList.push(value);
+                            }
+                        });
+
                     });
                 };
 
@@ -367,18 +392,15 @@
                     }
                 };
 
-
-//                $scope.ui.convertImage = function (blob) {
-//                    console.log(blob);
-//                    return 'data:image/png;base64,' + blob;
-//                };
-
                 $scope.ui.init = function () {
-
-
                     //laod kaizen
                     kaizenManagerViewFactory.loadKaizen(function (data) {
-                        $scope.model.kaizenList = data;
+                        angular.forEach(data, function (value) {
+                            if (value.reviewStatus === "PENDING") {
+                                $scope.model.kaizenList.push(value);
+                            }
+                        });
+
                     });
 
                     //load employee
@@ -394,38 +416,26 @@
                     $scope.model.type = "Implemented";
                     $scope.empTotalScore = 0;
 
-                    if (!$rootScope.totalScore) {
-                        $rootScope.totalScore = 0;
+                    if (!$rootScope.managerTotalScore) {
+                        $rootScope.managerTotalScore = 0;
                     }
-                    if (!$rootScope.scoreCost) {
-                        $rootScope.scoreCost = 0;
+                    if (!$rootScope.ManagerScoreCost) {
+                        $rootScope.ManagerScoreCost = 0;
                     }
-                    if (!$rootScope.rangeValueCost) {
-                        $rootScope.rangeValueCost = 0;
+                    if (!$rootScope.ManagerScoreUtilization) {
+                        $rootScope.ManagerScoreUtilization = 0;
                     }
-                    if (!$rootScope.scoreUtilization) {
-                        $rootScope.scoreUtilization = 0;
+
+                    if (!$rootScope.ManagerScoreCreativity) {
+                        $rootScope.ManagerScoreCreativity = 0;
                     }
-                    if (!$rootScope.utilization) {
-                        $rootScope.utilization = 0;
+
+                    if (!$rootScope.ManagerScoreSafety) {
+                        $rootScope.ManagerScoreSafety = 0;
                     }
-                    if (!$rootScope.scoreCreativity) {
-                        $rootScope.scoreCreativity = 0;
-                    }
-                    if (!$rootScope.creativity) {
-                        $rootScope.creativity = 0;
-                    }
-                    if (!$rootScope.scoreSafety) {
-                        $rootScope.scoreSafety = 0;
-                    }
-                    if (!$rootScope.safety) {
-                        $rootScope.safety = 0;
-                    }
-                    if (!$rootScope.quality) {
-                        $rootScope.quality = 0;
-                    }
-                    if (!$rootScope.scoreQuality) {
-                        $rootScope.scoreQuality = 0;
+
+                    if (!$rootScope.ManagerScoreQuality) {
+                        $rootScope.ManagerScoreQuality = 0;
                     }
                 };
 

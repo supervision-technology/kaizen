@@ -31,6 +31,18 @@
                             });
                 };
 
+                //load document
+                factory.loadDocument = function (callback) {
+                    var url = systemConfig.apiUrl + "/document";
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+
+                            });
+                };
+
 
 
                 //save kaizen
@@ -67,6 +79,10 @@
 
                 //current ui mode IDEAL, SELECTED, NEW, EDIT
                 $scope.ui.mode = null;
+
+                $scope.model.kaizenList = [];
+
+                $scope.ui.images = [];
 
                 //kaizen model
                 $scope.model.kaizen = {
@@ -132,11 +148,11 @@
                         committeeSafety: 0,
                         committeeQuality: 0
                     };
-                    $rootScope.scoreCost = 0;
-                    $rootScope.scoreUtilization = 0;
-                    $rootScope.scoreCreativity = 0;
-                    $rootScope.scoreSafety = 0;
-                    $rootScope.scoreQuality = 0;
+                    $rootScope.CommitteeScoreCost = 0;
+                    $rootScope.CommitteeScoreUtilization = 0;
+                    $rootScope.CommitteeScoreCreativity = 0;
+                    $rootScope.CommitteeScoreSafety = 0;
+                    $rootScope.CommitteeScoreQuality = 0;
                     $scope.empCost = 0;
                     $scope.empUtilization = 0;
                     $scope.empCreativity = 0;
@@ -147,27 +163,23 @@
                     $scope.mangCreativity = 0;
                     $scope.mangSafety = 0;
                     $scope.mangQuality = 0;
-                    $rootScope.rangeValueCost = 0;
-                    $rootScope.utilization = 0;
-                    $rootScope.creativity = 0;
-                    $rootScope.safety = 0;
-                    $rootScope.quality = 0;
-                    
 
                     $scope.empTotalScore = 0;
                     $scope.mangTotalScore = 0;
-                    $rootScope.totalScore = 0;
+                    $rootScope.CommitteeTotalScore = 0;
+                };
+
+                $scope.ui.resetRootScope = function () {
+                    $rootScope.CommitteeScoreCost = 0;
+                    $rootScope.CommitteeScoreUtilization = 0;
+                    $rootScope.CommitteeScoreCreativity = 0;
+                    $rootScope.CommitteeScoreSafety = 0;
+                    $rootScope.CommitteeScoreQuality = 0;
                 };
 
                 //validate model
                 $scope.validateInput = function () {
-                    if ($rootScope.kaizenIndex != null
-                            && $rootScope.scoreCost > 0
-                            && $rootScope.scoreCreativity > 0
-                            && $rootScope.scoreQuality > 0
-                            && $rootScope.scoreSafety > 0
-                            && $rootScope.scoreUtilization > 0
-                            ) {
+                    if ($rootScope.kaizenIndex != null) {
                         return true;
                     } else {
                         return false;
@@ -181,11 +193,11 @@
                     var id = -1;
 
                     $scope.model.committeekaizen.indexNo = $rootScope.kaizenIndex;
-                    $scope.model.committeekaizen.committeeCost = $rootScope.scoreCost;
-                    $scope.model.committeekaizen.committeeUtilization = $rootScope.scoreUtilization;
-                    $scope.model.committeekaizen.committeeCreativity = $rootScope.scoreCreativity;
-                    $scope.model.committeekaizen.committeeSafety = $rootScope.scoreSafety;
-                    $scope.model.committeekaizen.committeeQuality = $rootScope.scoreQuality;
+                    $scope.model.committeekaizen.committeeCost = $rootScope.CommitteeScoreCost;
+                    $scope.model.committeekaizen.committeeUtilization = $rootScope.CommitteeScoreUtilization;
+                    $scope.model.committeekaizen.committeeCreativity = $rootScope.CommitteeScoreCreativity;
+                    $scope.model.committeekaizen.committeeSafety = $rootScope.CommitteeScoreSafety;
+                    $scope.model.committeekaizen.committeeQuality = $rootScope.CommitteeScoreQuality;
 
                     var details = $scope.model.committeekaizen;
                     var detailJSON = JSON.stringify(details);
@@ -210,47 +222,40 @@
 
 
                 //----------------ui funtion--------------
-
-                $scope.ui.selectkaizen = function (indexNo) {
-                    $scope.ui.selectedDataIndex = indexNo;
-                };
-
                 // range slider funtion
                 $scope.ui.costChange = function (score) {
-                    $rootScope.scoreCost = score;
-                    $scope.ui.totalScore();
+                    $rootScope.CommitteeScoreCost = score;
+                    $scope.ui.CommitteeTotalScore();
                 };
 
                 $scope.ui.utilizationChange = function (score) {
-                    $rootScope.scoreUtilization = score;
-                    $scope.ui.totalScore();
+                    $rootScope.CommitteeScoreUtilization = score;
+                    $scope.ui.CommitteeTotalScore();
                 };
 
                 $scope.ui.creativityChange = function (score) {
-                    $rootScope.scoreCreativity = score;
-                    $scope.ui.totalScore();
+                    $rootScope.CommitteeScoreCreativity = score;
+                    $scope.ui.CommitteeTotalScore();
                 };
 
                 $scope.ui.safetyChange = function (score) {
-                    $rootScope.scoreSafety = score;
-                    $scope.ui.totalScore();
+                    $rootScope.CommitteeScoreSafety = score;
+                    $scope.ui.CommitteeTotalScore();
                 };
 
                 $scope.ui.qualityChange = function (score) {
-                    $rootScope.scoreQuality = score;
-                    $scope.ui.totalScore();
+                    $rootScope.CommitteeScoreQuality = score;
+                    $scope.ui.CommitteeTotalScore();
                 };
 
-                $scope.ui.totalScore = function () {
-                    $rootScope.rangeValueCost = 30 / 5 * $rootScope.scoreCost;
-                    $rootScope.utilization = 15 / 5 * $rootScope.scoreUtilization;
-                    $rootScope.creativity = 20 / 5 * $rootScope.scoreCreativity;
-                    $rootScope.safety = 20 / 5 * $rootScope.scoreSafety;
-                    $rootScope.quality = 15 / 5 * $rootScope.scoreQuality;
+                $scope.ui.CommitteeTotalScore = function () {
+                    $rootScope.rangeValueCost = 30 / 5 * $rootScope.CommitteeScoreCost;
+                    $rootScope.utilization = 15 / 5 * $rootScope.CommitteeScoreUtilization;
+                    $rootScope.creativity = 20 / 5 * $rootScope.CommitteeScoreCreativity;
+                    $rootScope.safety = 20 / 5 * $rootScope.CommitteeScoreSafety;
+                    $rootScope.quality = 15 / 5 * $rootScope.CommitteeScoreQuality;
 
-                    $rootScope.totalScore = $rootScope.utilization + $rootScope.creativity + $rootScope.rangeValueCost + $rootScope.safety + $rootScope.quality;
-
-                    console.log($rootScope.totalScore);
+                    $rootScope.CommitteeTotalScore = $rootScope.utilization + $rootScope.creativity + $rootScope.rangeValueCost + $rootScope.safety + $rootScope.quality;
                 };
 
                 $scope.ui.modalOpenCost = function () {
@@ -258,7 +263,7 @@
                         animation: true,
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/transaction/kaizen/cost-popup.html',
+                        templateUrl: 'app/transaction/committee/dialog/cost-popup.html',
                         controller: 'KaizenCommitteeViewController',
                         size: 'lg',
                         windowClass: 'zindex'
@@ -270,7 +275,7 @@
                         animation: true,
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/transaction/kaizen/utilization-popup.html',
+                        templateUrl: 'app/transaction/committee/dialog/utilization-popup.html',
                         controller: 'KaizenCommitteeViewController',
                         size: 'lg',
                         windowClass: 'zindex'
@@ -282,7 +287,7 @@
                         animation: true,
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/transaction/kaizen/creativity-popup.html',
+                        templateUrl: 'app/transaction/committee/dialog/creativity-popup.html',
                         controller: 'KaizenCommitteeViewController',
                         size: 'lg',
                         windowClass: 'zindex'
@@ -294,7 +299,7 @@
                         animation: true,
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/transaction/kaizen/safety-popup.html',
+                        templateUrl: 'app/transaction/committee/dialog/safety-popup.html',
                         controller: 'KaizenCommitteeViewController',
                         size: 'lg',
                         windowClass: 'zindex'
@@ -306,7 +311,7 @@
                         animation: true,
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/transaction/kaizen/quality-popup.html',
+                        templateUrl: 'app/transaction/committee/dialog/quality-popup.html',
                         controller: 'KaizenCommitteeViewController',
                         size: 'lg',
                         windowClass: 'zindex'
@@ -314,13 +319,10 @@
                 };
 
                 $scope.ui.modalPictures = function () {
-                    $uibModal.open({
-                        animation: true,
-                        ariaLabelledBy: 'modal-title',
-                        ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/transaction/kaizen/pictures-popup.html',
-                        controller: 'KaizenCommitteeViewController',
-                        size: 'xs'
+                    angular.forEach($scope.model.documents, function (value) {
+                        if (value.kaizen === $rootScope.kaizenIndex) {
+                            $scope.ui.images.push(value);
+                        }
                     });
                 };
 
@@ -344,9 +346,46 @@
                             $scope.model.managerkaizen.managerCreativity = value.managerCreativity;
                             $scope.model.managerkaizen.managerSafety = value.managerSafety;
                             $scope.model.managerkaizen.managerQuality = value.managerQuality;
+
+                            if (value.committeeCost === null) {
+                                $scope.ui.resetRootScope();
+                            } else {
+                                $rootScope.CommitteeScoreCost = value.committeeCost;
+                                $rootScope.CommitteeScoreUtilization = value.committeeUtilization;
+                                $rootScope.CommitteeScoreCreativity = value.committeeCreativity;
+                                $rootScope.CommitteeScoreSafety = value.committeeSafety;
+                                $rootScope.CommitteeScoreQuality = value.committeeQuality;
+                                $scope.ui.CommitteeTotalScore();
+                            }
+
                             $scope.ui.employeeScore();
                             $scope.ui.managerScore();
+
                         }
+                    });
+                };
+
+                $scope.ui.selectComplete = function () {
+                    $scope.model.kaizenList = [];
+                    kaizenCommitteeViewFactory.loadKaizen(function (data) {
+                        angular.forEach(data, function (value) {
+                            if (value.reviewStatus === "COMMITTEE_VIEW") {
+                                $scope.model.kaizenList.push(value);
+                            }
+                        });
+
+                    });
+                };
+
+                $scope.ui.selectPending = function () {
+                    $scope.model.kaizenList = [];
+                    $scope.ui.resetRootScope();
+                    kaizenCommitteeViewFactory.loadKaizen(function (data) {
+                        angular.forEach(data, function (value) {
+                            if (value.reviewStatus === "MANAGER_VIEW") {
+                                $scope.model.kaizenList.push(value);
+                            }
+                        });
                     });
                 };
 
@@ -395,7 +434,11 @@
                 $scope.ui.init = function () {
                     //laod kaizen
                     kaizenCommitteeViewFactory.loadKaizen(function (data) {
-                        $scope.model.kaizenList = data;
+                        angular.forEach(data, function (value) {
+                            if (value.reviewStatus === "MANAGER_VIEW") {
+                                $scope.model.kaizenList.push(value);
+                            }
+                        });
                     });
 
                     //load employee
@@ -403,38 +446,28 @@
                         $scope.model.employeeList = data;
                     });
 
-                    if (!$rootScope.totalScore) {
-                        $rootScope.totalScore = 0;
+                    //load document
+                    kaizenCommitteeViewFactory.loadDocument(function (data) {
+                        $scope.model.documents = data;
+                    });
+
+                    if (!$rootScope.CommitteeTotalScore) {
+                        $rootScope.CommitteeTotalScore = 0;
                     }
-                    if (!$rootScope.scoreCost) {
-                        $rootScope.scoreCost = 0;
+                    if (!$rootScope.CommitteeScoreCost) {
+                        $rootScope.CommitteeScoreCost = 0;
                     }
-                    if (!$rootScope.rangeValueCost) {
-                        $rootScope.rangeValueCost = 0;
+                    if (!$rootScope.CommitteeScoreUtilization) {
+                        $rootScope.CommitteeScoreUtilization = 0;
                     }
-                    if (!$rootScope.scoreUtilization) {
-                        $rootScope.scoreUtilization = 0;
+                    if (!$rootScope.CommitteeScoreCreativity) {
+                        $rootScope.CommitteeScoreCreativity = 0;
                     }
-                    if (!$rootScope.utilization) {
-                        $rootScope.utilization = 0;
+                    if (!$rootScope.CommitteeScoreSafety) {
+                        $rootScope.CommitteeScoreSafety = 0;
                     }
-                    if (!$rootScope.scoreCreativity) {
-                        $rootScope.scoreCreativity = 0;
-                    }
-                    if (!$rootScope.creativity) {
-                        $rootScope.creativity = 0;
-                    }
-                    if (!$rootScope.scoreSafety) {
-                        $rootScope.scoreSafety = 0;
-                    }
-                    if (!$rootScope.safety) {
-                        $rootScope.safety = 0;
-                    }
-                    if (!$rootScope.quality) {
-                        $rootScope.quality = 0;
-                    }
-                    if (!$rootScope.scoreQuality) {
-                        $rootScope.scoreQuality = 0;
+                    if (!$rootScope.CommitteeScoreQuality) {
+                        $rootScope.CommitteeScoreQuality = 0;
                     }
 
                     $scope.model.type = "Implemented";

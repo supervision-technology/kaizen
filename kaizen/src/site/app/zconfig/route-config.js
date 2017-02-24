@@ -18,11 +18,11 @@
                             controller: "KaizenController"
                         })
                         .when("/transaction/kaizen-manager-view", {
-                            templateUrl: "app/transaction/kaizen-manager-view/manager-view.html",
+                            templateUrl: "app/transaction/manager/manager-view.html",
                             controller: "KaizenManagerViewController"
                         })
                         .when("/transaction/kaizen-committee-view", {
-                            templateUrl: "app/transaction/kaizen-committee-view/committee-view.html",
+                            templateUrl: "app/transaction/committee/committee-view.html",
                             controller: "KaizenCommitteeViewController"
                         })
                         

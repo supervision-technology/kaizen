@@ -8,7 +8,7 @@
                 </div>
                 <div class="profile-sidebar-item profile-info">
                     <span class="h5 bold">{{model.employee.name}}</span>
-                    <p>{{model.employee.type}}</p>
+                    <!--<p>{{model.employee.type}}</p>-->
                     <div class="center-block mt10">
                         <label class="label bg-bluegrey" style="font-size: 15px">{{model.employee.department}}</label>
                     </div>
@@ -18,14 +18,14 @@
         </div>
         <div class="col-sm-5 mt10">
             <section class="profile-timeline composer" style="height: 230px">
-                <div class="btn-group mb15" data-toggle="buttons">
-                    <label class="btn btn-primary active" ng-click="ui.setImplemented('Implemented')">
-                        <input type="radio" name="options" id="option2" > Implemented
-                    </label>
-                    <label class="btn btn-primary"  ng-click="ui.setSuggestion('Suggestion')">
-                        <input type="radio" name="options" id="option3"> Suggestion
-                    </label>
-                </div><br>
+                <!--                <div class="btn-group mb15" data-toggle="buttons">
+                                    <label class="btn btn-primary active" ng-click="ui.setImplemented('Implemented')">
+                                        <input type="radio" name="options" id="option2" > Implemented
+                                    </label>
+                                    <label class="btn btn-primary"  ng-click="ui.setSuggestion('Suggestion')">
+                                        <input type="radio" name="options" id="option3"> Suggestion
+                                    </label>
+                                </div><br>-->
                 <div class="row">
                     <div class="col-sm-5">
                         <input type="text" class="form-control mb5" placeholder="Emp No" ng-model="model.employee.epfNo"  ng-keypress="ui.keyEvent($event);">
@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <input class="form-control mb5" placeholder="Title" ng-model="model.kaizen.title">
-                <textarea placeholder="Description" rows="3" class="form-control" ng-model="model.kaizen.description"></textarea>
+                <textarea placeholder="Description" rows="3" class="form-control" style="height: 120px" ng-model="model.kaizen.description"></textarea>
             </section>
 
             <div class="composer-options">
@@ -49,10 +49,10 @@
 
             <div class="bordered border-default" style="height: 130px" >
                 <!--<div>-->
-                <table class="table">
+                <table>
                     <tbody>
                     <td ng-repeat="step in imageModel">
-                        <div style="width: 100px; height: 120px;">
+                        <div style="width: 100px; height: 120px; margin-top: 5px;margin-left: 5px">
                             <img src="{{step}}" style="width: 100px; height: 120px;">
                         </div>
                     </td>
@@ -69,22 +69,16 @@
 
             <div class="bordered border-default" style="height: 130px" >
                 <!--<div>-->
-<!--                <table class="table">
-                    <tbody>
-                    <td ng-repeat="step in imageModel">
-                        <div style="width: 100px; height: 120px;">
-                            <img src="{{step}}" style="width: 100px; height: 120px;">
-                        </div>
-                    </td>
-                    </tbody>
-                </table>-->
+                <!--                <table class="table">
+                                    <tbody>
+                                    <td ng-repeat="step in imageModel">
+                                        <div style="width: 100px; height: 120px;">
+                                            <img src="{{step}}" style="width: 100px; height: 120px;">
+                                        </div>
+                                    </td>
+                                    </tbody>
+                                </table>-->
             </div>
-
-
-
-            <!--<div class="col-lg-12 placeholder bordered border-default" style="height: calc(100vh - 320px);" ng-show="true">-->
-            <!--<h1 class="text-center" style="margin-top: 110px">PLEASE ADD PICTURES TO DISPLAY :(</h1>-->
-            <!--</div>-->
         </div>
 
         <div class="col-sm-4 bl border-primary">
@@ -94,30 +88,31 @@
                 </div>
             </div>
             <!--<label class="label label-success pull-right" style="height: 20px">score {{model.kaizen.employeeCost}}</label>-->
-            <div style="height: calc(100vh - 310px)" class="mt20" ng-init="onLoadValueKaizer()">
-                <h6>Cost &nbsp; 30%  <button ng-click="ui.modalOpenCost()" class="btn btn-xs btn-primary pull-right" style="border-radius: 0px">Criteria</button> <button class="btn btn-xs btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Score {{scoreCost}}</button><button class="btn btn-xs btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Value {{rangeValueCost}}%</button></h6>
+            <div style="height: calc(100vh - 319px)" class="mt20" ng-init="onLoadValueKaizer()">
+                <h6>Cost  <button ng-click="ui.modalOpenCost()" class="btn btn-xs btn-primary pull-right" style="border-radius: 0px">Criteria</button> <button class="btn btn-xs btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Score {{scoreCost}}</button></h6>
                 <input type="range" ng-model="scoreCost" step="1" min="0" max="5" ng-disabled="true" style="margin-bottom: 20px">                
 
-                <h6>Utilization 15%  <button ng-click="ui.modalOpenUtilization()" class="btn btn-xs btn-primary pull-right" style="border-radius: 0px">Criteria</button> <button class="btn btn-xs  btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Score {{scoreUtilization}}</button><button class="btn btn-xs btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Value {{utilization}}%</button></h6>
+                <h6>Utilization <button ng-click="ui.modalOpenUtilization()" class="btn btn-xs btn-primary pull-right" style="border-radius: 0px">Criteria</button> <button class="btn btn-xs  btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Score {{scoreUtilization}}</button></h6>
                 <input type="range" value="0" ng-model="scoreUtilization" step="1" min="0" max="5" ng-disabled="true" style="margin-bottom: 20px">    
 
-                <h6>Creativity &nbsp; 20% <button ng-click="ui.modalOpenCreativity()" class="btn btn-xs btn-primary pull-right" style="border-radius: 0px">Criteria</button> <button class="btn btn-xs  btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Score {{scoreCreativity}}</button><button class="btn btn-xs btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Value {{creativity}}%</button></h6>
+                <h6>Creativity <button ng-click="ui.modalOpenCreativity()" class="btn btn-xs btn-primary pull-right" style="border-radius: 0px">Criteria</button> <button class="btn btn-xs  btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Score {{scoreCreativity}}</button></h6>
                 <input type="range" value="0" ng-model="scoreCreativity" step="1" min="0" max="5" ng-disabled="true" style="margin-bottom: 20px">    
 
-                <h6>Safety &nbsp; 20% <button ng-click="ui.modalOpenSafety()" class="btn btn-xs btn-primary pull-right" style="border-radius: 0px">Criteria</button> <button class="btn btn-xs  btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Score {{scoreSafety}}</button><button class="btn btn-xs btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Value {{safety}}%</button></h6>
+                <h6>Safety <button ng-click="ui.modalOpenSafety()" class="btn btn-xs btn-primary pull-right" style="border-radius: 0px">Criteria</button> <button class="btn btn-xs  btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Score {{scoreSafety}}</button></h6>
                 <input type="range" value="0" ng-model="scoreSafety" step="1" min="0" max="5" ng-disabled="true" style="margin-bottom: 20px">    
 
-                <h6>Quality &nbsp; 15%<button ng-click="ui.modalOpenQuality()" class="btn btn-xs btn-primary pull-right" style="border-radius: 0px">Criteria</button> <button class="btn btn-xs  btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Score {{scoreQuality}}</button><button class="btn btn-xs btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Value {{quality}}%</button></h6>
+                <h6>Quality<button ng-click="ui.modalOpenQuality()" class="btn btn-xs btn-primary pull-right" style="border-radius: 0px">Criteria</button> <button class="btn btn-xs  btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Score {{scoreQuality}}</button></h6>
                 <input type="range" value="0" ng-model="scoreQuality" step="1" min="0" max="5" ng-disabled="true" style="margin-bottom: 20px">  
             </div>
 
-            <div class="col-sm-12 text-center" style="height: 135px">
+            <div class="col-sm-12 text-center" style="height: 165px">
                 <label style="font-size: 30px;" class="pt30">TOTAL SCORE <br>{{totalScore}} %</label>
             </div>
 
-            <div class="col-xs-12">
-                <a class="btn btn-lg btn-icon-icon btn-round btn-success pull-right" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
-            </div>
+            <button type="button" class="btn btn-success btn-sm pull-right" style="width: 100px; border-radius: 0px" ng-click="ui.save()">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Submit
+            </button>
+            <!--<a class="btn btn-sm btn-success pull-right" ng-click="ui.save();"><i class="glyphicon glyphicon-ok">Submit</i></a>-->
         </div>
     </div>
 </div>

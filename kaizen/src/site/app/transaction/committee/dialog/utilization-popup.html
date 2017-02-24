@@ -1,0 +1,49 @@
+<div class="modal-header">
+    <a class="btn btn-danger btn-xs glyphicon glyphicon-remove pull-right" ng-click="ui.close();"><i class="glyphicon glyphicon-remove"></i></a>
+    <h3 class="modal-title">Utilization Criteria</h3>
+</div>
+<div class="modal-body" style="height: 500px">
+    <div class="col-lg-12">
+        <div style="margin-bottom: 40px">
+            <label class="pull-right label label-primary" style="font-size: 25px">Score {{CommitteeScoreUtilization}}</label>
+            <!--<label class="pull-right label label-default" style="font-size: 25px">Value {{utilization}}%</label>-->
+        </div>
+
+        <div class="mt20 mb30">
+            <h6>Utilization</h6>
+            <!--<button class="btn btn-lg btn-success pull-right" style="border-radius: 0px; margin-right: 7px">Score {{model.kaizen.employeeCost}}</button>-->
+            <input type="range" ng-model="CommitteeScoreUtilization" step="1" min="0" max="5" ng-change="ui.utilizationChange(CommitteeScoreUtilization)">                
+            <span class="badge bg-orange">0</span><span class="badge bg-orange" style="margin-left: 147px">1</span>
+            <span class="badge bg-orange" style="margin-left: 138px">2</span><span class="badge bg-orange" style="margin-left: 144px">3</span>
+            <span class="badge bg-orange" style="margin-left: 140px">4</span><span class="badge bg-orange" style="margin-left: 142px">5</span>
+        </div>
+
+        <div class="mb30">
+            <label>Description</label>
+            <textarea class="form-control" style="height: 120px"></textarea>
+        </div>
+
+        <table class="table table-sm table-bordered">
+            <thead>
+            <th class="bg-bluegrey">Score</th>
+            <th>0</th>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="bg-default-light">Utilization</td>
+                    <td>None</td>
+                    <td>Able to use a part of them in the department</td>
+                    <td>Able to use all of them in the department (Able to share)</td>
+                    <td>Able to integrate with other department processes</td>
+                    <td>Able to use within LA group <label style="font-size: 10px">(LA Naiwala,LA Vietnam)</label></td>
+                    <td>Able to use at MAS level</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

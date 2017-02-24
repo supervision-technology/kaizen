@@ -46,6 +46,19 @@ public class TKaizen implements Serializable {
 
     @Column(name = "review_status")
     private String reviewStatus;
+    
+    
+    @Column(name = "employee_complete")
+    private String employeeComplete;
+    
+    @Column(name = "manager_complete")
+    private String managerComplete;
+   
+    @Column(name = "appreciation")
+    private String appreciation;
+    
+    @Column(name = "suggestion")
+    private String suggestion;
 
     @Column(name = "employee")
     private int employee;
@@ -99,13 +112,17 @@ public class TKaizen implements Serializable {
     public TKaizen() {
     }
 
-    public TKaizen(Integer indexNo, String title, String description, Date introduceDate, String type, String reviewStatus, int employee, String employeeCost, String employeeUtilization, String employeeCreativity, String employeeSafety, String employeeQuality, String managerCost, String managerUtilization, String managerCreativity, String managerSafety, String managerQuality, String committeeCost, String committeeUtilization, String committeeCreativity, String committeeSafety, String committeeQuality) {
+    public TKaizen(Integer indexNo, String title, String description, Date introduceDate, String type, String reviewStatus, String employeeComplete, String managerComplete, String appreciation, String suggestion, int employee, String employeeCost, String employeeUtilization, String employeeCreativity, String employeeSafety, String employeeQuality, String managerCost, String managerUtilization, String managerCreativity, String managerSafety, String managerQuality, String committeeCost, String committeeUtilization, String committeeCreativity, String committeeSafety, String committeeQuality) {
         this.indexNo = indexNo;
         this.title = title;
         this.description = description;
         this.introduceDate = introduceDate;
         this.type = type;
         this.reviewStatus = reviewStatus;
+        this.employeeComplete = employeeComplete;
+        this.managerComplete = managerComplete;
+        this.appreciation = appreciation;
+        this.suggestion = suggestion;
         this.employee = employee;
         this.employeeCost = employeeCost;
         this.employeeUtilization = employeeUtilization;
@@ -123,7 +140,6 @@ public class TKaizen implements Serializable {
         this.committeeSafety = committeeSafety;
         this.committeeQuality = committeeQuality;
     }
-    
 
     public Integer getIndexNo() {
         return indexNo;
@@ -171,6 +187,38 @@ public class TKaizen implements Serializable {
 
     public void setReviewStatus(String reviewStatus) {
         this.reviewStatus = reviewStatus;
+    }
+
+    public String getEmployeeComplete() {
+        return employeeComplete;
+    }
+
+    public void setEmployeeComplete(String employeeComplete) {
+        this.employeeComplete = employeeComplete;
+    }
+
+    public String getManagerComplete() {
+        return managerComplete;
+    }
+
+    public void setManagerComplete(String managerComplete) {
+        this.managerComplete = managerComplete;
+    }
+
+    public String getAppreciation() {
+        return appreciation;
+    }
+
+    public void setAppreciation(String appreciation) {
+        this.appreciation = appreciation;
+    }
+
+    public String getSuggestion() {
+        return suggestion;
+    }
+
+    public void setSuggestion(String suggestion) {
+        this.suggestion = suggestion;
     }
 
     public int getEmployee() {
@@ -300,10 +348,12 @@ public class TKaizen implements Serializable {
     public void setCommitteeQuality(String committeeQuality) {
         this.committeeQuality = committeeQuality;
     }
-
-    @Override
-    public String toString() {
-        return "TKaizen{" + "indexNo=" + indexNo + ", title=" + title + ", description=" + description + ", introduceDate=" + introduceDate + ", type=" + type + ", reviewStatus=" + reviewStatus + ", employee=" + employee + ", employeeCost=" + employeeCost + ", employeeUtilization=" + employeeUtilization + ", employeeCreativity=" + employeeCreativity + ", employeeSafety=" + employeeSafety + ", employeeQuality=" + employeeQuality + ", managerCost=" + managerCost + ", managerUtilization=" + managerUtilization + ", managerCreativity=" + managerCreativity + ", managerSafety=" + managerSafety + ", managerQuality=" + managerQuality + ", committeeCost=" + committeeCost + ", committeeUtilization=" + committeeUtilization + ", committeeCreativity=" + committeeCreativity + ", committeeSafety=" + committeeSafety + ", committeeQuality=" + committeeQuality + '}';
-    }
     
+    
+    
+    
+    
+
+    
+ 
 }

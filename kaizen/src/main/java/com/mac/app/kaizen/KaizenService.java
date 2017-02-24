@@ -34,6 +34,9 @@ public class KaizenService {
     private static final String KAIZEN_PENDING = "PENDING";
     private static final String MANAGER_VIEW = "MANAGER_VIEW";
     private static final String COMMITTEE_VIEW = "COMMITTEE_VIEW";
+    private static final String EMPLOYEE_COMPLETE = "EMPLOYEE_COMPLETE";
+    private static final String MANAGER_COMPLETE = "MANAGER_COMPLETE";
+    
 
     public List<TKaizen> allKaisen() {
         return kaizenRepository.findAll();
@@ -42,6 +45,7 @@ public class KaizenService {
     public TKaizen saveKazen(TKaizen kaizen) {
         kaizen.setIntroduceDate(new Date());
         kaizen.setReviewStatus(KAIZEN_PENDING);
+        kaizen.setEmployeeComplete(EMPLOYEE_COMPLETE);
 
         return kaizenRepository.save(kaizen);
 
@@ -76,6 +80,7 @@ public class KaizenService {
         kaizen1.setManagerSafety(kaizen.getManagerSafety());
         kaizen1.setManagerUtilization(kaizen.getManagerUtilization());
         kaizen1.setReviewStatus(MANAGER_VIEW);
+        kaizen1.setManagerComplete(MANAGER_COMPLETE);
         return kaizenRepository.save(kaizen1);
     }
 

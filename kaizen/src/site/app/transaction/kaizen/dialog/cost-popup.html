@@ -1,0 +1,48 @@
+<div class="modal-header">
+    <a class="btn btn-danger btn-xs glyphicon glyphicon-remove pull-right" ng-click="ui.close();"><i class="glyphicon glyphicon-remove"></i></a>
+    <h3 class="modal-title">Cost Criteria</h3>
+</div>
+<div class="modal-body" style="height: 500px">
+    <div class="col-lg-12">
+        <div style="margin-bottom: 40px">
+            <label class="pull-right label label-primary" style="font-size: 25px">Score {{scoreCost}}</label>
+            <!--<label class="pull-right label label-default" style="font-size: 25px">Value {{rangeValueCost}}%</label>-->
+        </div>
+
+        <div class="mt20 mb30">
+            <h6>Cost</h6>
+            <input type="range" ng-model="scoreCost" step="1" min="0" max="5" ng-change="ui.costChange(scoreCost)">                
+            <span class="badge bg-orange">0</span><span class="badge bg-orange" style="margin-left: 147px">1</span>
+            <span class="badge bg-orange" style="margin-left: 138px">2</span><span class="badge bg-orange" style="margin-left: 144px">3</span>
+            <span class="badge bg-orange" style="margin-left: 140px">4</span><span class="badge bg-orange" style="margin-left: 142px">5</span>
+        </div>
+
+        <div class="mb30">
+            <label>Description</label>
+            <textarea class="form-control" style="height: 120px"></textarea>
+        </div>
+
+        <table class="table table-sm table-bordered">
+            <thead>
+            <th class="bg-bluegrey">Score</th>
+            <th>0</th>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="bg-default-light">Cost Reduction/ Saving</td>
+                    <td>None</td>
+                    <td>0 – $5000</td>
+                    <td>$ 5000  - $10,000</td>
+                    <td>$10,000 - $15,000</td>
+                    <td>$15,000 - $20,000</td>
+                    <td>More than $20,000</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
