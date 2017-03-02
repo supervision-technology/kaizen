@@ -1,8 +1,12 @@
 (function () {
     //constants
-    angular.module("AppModule").constant("systemConfig", {
-        apiUrl: "http://localhost:8080"
-    });
+    angular.module("appModule")
+            .constant("systemConfig", {
+                apiUrl:
+                        location.hostname === 'localhost'
+                        ? "http://localhost:8080"
+                        : location.protocol + "//" + location.hostname
+            });
 
 
     angular.module("AppModule")
@@ -25,7 +29,7 @@
                             templateUrl: "app/transaction/committee/committee-view.html",
                             controller: "KaizenCommitteeViewController"
                         })
-                        
+
                         //master
                         .when("/master/employee-registration", {
                             templateUrl: "app/master/employee/employee-registration.html"
