@@ -1,12 +1,14 @@
 (function () {
     //constants
-    angular.module("appModule")
+    angular.module("AppModule")
             .constant("systemConfig", {
                 apiUrl:
                         location.hostname === 'localhost'
                         ? "http://localhost:8080"
                         : location.protocol + "//" + location.hostname
             });
+
+
 
 
     angular.module("AppModule")

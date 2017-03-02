@@ -141,13 +141,6 @@
                     $scope.empTotalScore = 0;
                 };
 
-                $scope.ui.resetRootScope = function () {
-                    $rootScope.ManagerScoreCost = 0;
-                    $rootScope.ManagerScoreUtilization = 0;
-                    $rootScope.ManagerScoreCreativity = 0;
-                    $rootScope.ManagerScoreSafety = 0;
-                    $rootScope.ManagerScoreQuality = 0;
-                };
 
                 //validate model
                 $scope.validateInput = function () {
@@ -317,19 +310,12 @@
                             $scope.model.kaizen.employeeCreativity = value.employeeCreativity;
                             $scope.model.kaizen.employeeSafety = value.employeeSafety;
                             $scope.model.kaizen.employeeQuality = value.employeeQuality;
-
-                            if (value.managerCost === null) {
-                                $scope.ui.resetRootScope();
-                            } else {
-                                $rootScope.ManagerScoreCost = value.managerCost;
-                                $rootScope.ManagerScoreUtilization = value.managerUtilization;
-                                $rootScope.ManagerScoreCreativity = value.managerCreativity;
-                                $rootScope.ManagerScoreSafety = value.managerSafety;
-                                $rootScope.ManagerScoreQuality = value.managerQuality;
-                                $scope.ui.managerTotalScore();
-                            }
-
-
+                            $rootScope.ManagerScoreCost = value.employeeCost;
+                            $rootScope.ManagerScoreUtilization = value.employeeUtilization;
+                            $rootScope.ManagerScoreCreativity = value.employeeCreativity;
+                            $rootScope.ManagerScoreSafety = value.employeeSafety;
+                            $rootScope.ManagerScoreQuality = value.employeeQuality;
+                            $scope.ui.managerTotalScore();
                             $scope.ui.employeeScore();
                         }
                     });
@@ -337,6 +323,8 @@
 
                 $scope.ui.selectComplete = function () {
                     $scope.model.kaizenList = [];
+                    $scope.model.reset();
+                    $scope.ui.selectedDataIndex = null;
                     kaizenManagerViewFactory.loadKaizen(function (data) {
                         angular.forEach(data, function (value) {
                             if (value.managerComplete === "MANAGER_COMPLETE") {
@@ -349,7 +337,8 @@
 
                 $scope.ui.selectPending = function () {
                     $scope.model.kaizenList = [];
-                    $scope.ui.resetRootScope();
+                    $scope.ui.selectedDataIndex = null;
+                    $scope.model.reset();
 
                     kaizenManagerViewFactory.loadKaizen(function (data) {
                         angular.forEach(data, function (value) {

@@ -169,13 +169,13 @@
                     $rootScope.CommitteeTotalScore = 0;
                 };
 
-                $scope.ui.resetRootScope = function () {
-                    $rootScope.CommitteeScoreCost = 0;
-                    $rootScope.CommitteeScoreUtilization = 0;
-                    $rootScope.CommitteeScoreCreativity = 0;
-                    $rootScope.CommitteeScoreSafety = 0;
-                    $rootScope.CommitteeScoreQuality = 0;
-                };
+//                $scope.ui.resetRootScope = function () {
+//                    $rootScope.CommitteeScoreCost = 0;
+//                    $rootScope.CommitteeScoreUtilization = 0;
+//                    $rootScope.CommitteeScoreCreativity = 0;
+//                    $rootScope.CommitteeScoreSafety = 0;
+//                    $rootScope.CommitteeScoreQuality = 0;
+//                };
 
                 //validate model
                 $scope.validateInput = function () {
@@ -346,18 +346,12 @@
                             $scope.model.managerkaizen.managerCreativity = value.managerCreativity;
                             $scope.model.managerkaizen.managerSafety = value.managerSafety;
                             $scope.model.managerkaizen.managerQuality = value.managerQuality;
-
-                            if (value.committeeCost === null) {
-                                $scope.ui.resetRootScope();
-                            } else {
-                                $rootScope.CommitteeScoreCost = value.committeeCost;
-                                $rootScope.CommitteeScoreUtilization = value.committeeUtilization;
-                                $rootScope.CommitteeScoreCreativity = value.committeeCreativity;
-                                $rootScope.CommitteeScoreSafety = value.committeeSafety;
-                                $rootScope.CommitteeScoreQuality = value.committeeQuality;
-                                $scope.ui.CommitteeTotalScore();
-                            }
-
+                            $rootScope.CommitteeScoreCost = value.managerCost;
+                            $rootScope.CommitteeScoreUtilization = value.managerUtilization;
+                            $rootScope.CommitteeScoreCreativity = value.managerCreativity;
+                            $rootScope.CommitteeScoreSafety = value.managerSafety;
+                            $rootScope.CommitteeScoreQuality = value.managerQuality;
+                            $scope.ui.CommitteeTotalScore();
                             $scope.ui.employeeScore();
                             $scope.ui.managerScore();
 
@@ -367,6 +361,7 @@
 
                 $scope.ui.selectComplete = function () {
                     $scope.model.kaizenList = [];
+                    $scope.model.reset();
                     kaizenCommitteeViewFactory.loadKaizen(function (data) {
                         angular.forEach(data, function (value) {
                             if (value.reviewStatus === "COMMITTEE_VIEW") {
@@ -379,7 +374,7 @@
 
                 $scope.ui.selectPending = function () {
                     $scope.model.kaizenList = [];
-                    $scope.ui.resetRootScope();
+                    $scope.model.reset();
                     kaizenCommitteeViewFactory.loadKaizen(function (data) {
                         angular.forEach(data, function (value) {
                             if (value.reviewStatus === "MANAGER_VIEW") {
