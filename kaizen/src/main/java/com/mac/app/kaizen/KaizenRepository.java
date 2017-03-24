@@ -6,6 +6,7 @@
 package com.mac.app.kaizen;
 
 import com.mac.app.kaizen.model.TKaizen;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -13,5 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Nidura Prageeth
  */
 public interface KaizenRepository extends JpaRepository<TKaizen, Integer>{
+
+    public List<TKaizen> findByEmployee(Integer indexNo);
     
 }

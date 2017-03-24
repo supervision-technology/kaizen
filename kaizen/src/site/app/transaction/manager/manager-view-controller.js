@@ -10,7 +10,7 @@
 
                 //load kaizen
                 factory.loadKaizen = function (callback) {
-                    var url = systemConfig.apiUrl + "/kaizen";
+                    var url = systemConfig.apiUrl + "/api/kaizen";
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -22,7 +22,19 @@
 
                 //load employee
                 factory.loadEmployee = function (callback) {
-                    var url = systemConfig.apiUrl + "/employee";
+                    var url = systemConfig.apiUrl + "/api/employee";
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+
+                            });
+                };
+
+                //load department
+                factory.loadDepartment = function (callback) {
+                    var url = systemConfig.apiUrl + "/api/employee/all-department";
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -34,7 +46,7 @@
 
                 //load document
                 factory.loadDocument = function (callback) {
-                    var url = systemConfig.apiUrl + "/document";
+                    var url = systemConfig.apiUrl + "/api/document";
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -44,9 +56,11 @@
                             });
                 };
 
+
+
                 //save kaizen
                 factory.saveKaizen = function (summary, callback, errorCallback) {
-                    var url = systemConfig.apiUrl + "/kaizen/update-kaizen";
+                    var url = systemConfig.apiUrl + "/api/kaizen/update-kaizen";
 
                     $http.post(url, summary)
                             .success(function (data, status, headers) {
@@ -64,7 +78,7 @@
 
     //-----------http controller---------
     angular.module("AppModule")
-            .controller("KaizenManagerViewController", function (kaizenManagerViewFactory, $base64, $scope, $rootScope, $uibModal, $uibModalStack, Notification) {
+            .controller("KaizenManagerViewController", function ($http, systemConfig, kaizenManagerViewFactory, $base64, $scope, $filter, $rootScope, $uibModal, $uibModalStack, Notification) {
                 //data models 
                 $scope.model = {};
 
@@ -80,6 +94,8 @@
                 $scope.ui.images = [];
 
                 $scope.model.kaizenList = [];
+
+
 
                 //kaizen model
                 $scope.model.kaizen = {
@@ -286,20 +302,31 @@
                     });
                 };
 
+
                 $scope.ui.modalPictures = function () {
-                    angular.forEach($scope.model.documents, function (value) {
-                        if (value.kaizen === $rootScope.kaizenIndex) {
-                            $scope.ui.images.push(value);
-                        }
-                    });
+                    if ($scope.ui.images.length === 0) {
+                        angular.forEach($scope.model.documents, function (value) {
+                            if (value.kaizen === $rootScope.kaizenIndex) {
+                                var url = systemConfig.apiUrl + "/api/document/download-image/" + value.path + "/";
+
+                                $http.get(url, {responseType: "arraybuffer"})
+                                        .success(function (data, status, headers) {
+                                            var data = btoa(String.fromCharCode.apply(null, new Uint8Array(data)));
+                                            $scope.ui.images.push('data:image/png;base64,' + data);
+                                        })
+                                        .error(function (data, status, headers) {
+                                        });
+                            }
+                        });
+                    }
                 };
-
-
+                
                 $scope.ui.close = function () {
                     $uibModalStack.dismissAll();
                 };
 
                 $scope.ui.selectkaizen = function (indexNo) {
+                    $scope.ui.images = [];
                     $scope.ui.selectedDataIndex = indexNo;
                     angular.forEach($scope.model.kaizenList, function (value) {
                         if (value.indexNo === indexNo) {
@@ -319,6 +346,7 @@
                             $scope.ui.employeeScore();
                         }
                     });
+
                 };
 
                 $scope.ui.selectComplete = function () {
@@ -381,7 +409,43 @@
                     }
                 };
 
+                $scope.ui.filterValue = function (obj) {
+                    return $filter('date')(obj.introduceDate, 'MM/yyyy') === $filter('date')($scope.model.date, 'MM/yyyy');
+                };
+
+
+                $scope.onSelect = function ($item, $model, $label) {
+                    var url = systemConfig.apiUrl + "/kaizen/department-kaizen/" + $model.indexNo;
+
+                    $http.get(url)
+                            .success(function (data) {
+                                $scope.model.kaizenList = [];
+                                angular.forEach(data, function (value) {
+                                    if (value.reviewStatus === "PENDING") {
+                                        $scope.model.kaizenList.push(value);
+                                    }
+                                });
+                            });
+                };
+
+                $scope.$watch('model.department', function (val) {
+                    if (val === "") {
+                        $scope.model.kaizenList = [];
+                        kaizenManagerViewFactory.loadKaizen(function (data) {
+                            angular.forEach(data, function (value) {
+                                if (value.reviewStatus === "PENDING") {
+                                    $scope.model.kaizenList.push(value);
+                                }
+                            });
+                        });
+                    }
+                }, true);
+
                 $scope.ui.init = function () {
+
+                    //set date
+                    $scope.model.date = new Date();
+
                     //laod kaizen
                     kaizenManagerViewFactory.loadKaizen(function (data) {
                         angular.forEach(data, function (value) {
@@ -389,12 +453,16 @@
                                 $scope.model.kaizenList.push(value);
                             }
                         });
-
                     });
 
                     //load employee
                     kaizenManagerViewFactory.loadEmployee(function (data) {
                         $scope.model.employeeList = data;
+                    });
+
+                    //load Department
+                    kaizenManagerViewFactory.loadDepartment(function (data) {
+                        $scope.model.departmentList = data;
                     });
 
                     //load document

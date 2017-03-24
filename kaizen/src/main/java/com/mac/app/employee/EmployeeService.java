@@ -5,6 +5,7 @@
  */
 package com.mac.app.employee;
 
+import com.mac.app.employee.model.Department;
 import com.mac.app.employee.model.Employee;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,24 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Autowired
+    private DepartmentRepository departmentRepository;
+
     public List<Employee> allEmployee() {
         return employeeRepository.findAll();
     }
-;
+
+    public Employee saveEmployee(Employee employee) {
+        return employeeRepository.save(employee);
+    }
+
+    public void deleteEmployee(Integer indexNo) {
+        employeeRepository.delete(indexNo);
+    }
+
+    // department methods
+    public List<Department> allDepartment() {
+        return departmentRepository.findAll();
+    }
+
 }

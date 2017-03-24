@@ -38,46 +38,51 @@
                 <textarea placeholder="Description" rows="3" class="form-control" style="height: 120px" ng-model="model.kaizen.description"></textarea>
             </section>
 
-            <div class="composer-options">
+            <div class="composer-options" style="margin-bottom: 40px">
                 <div class="row col-sm-5">
-                    <input type="file" id="file" ng-model-instant onchange="angular.element(this).scope().imageUpload(event)" multiple>
+                    <label class="btn btn-xs btn-instagram btn-flat" for="file">
+                        <span class="glyphicon glyphicon-folder-open mr2"></span><input type="file" id="file" ng-model-instant  onchange="angular.element(this).scope().imageUpload(event,'before')" multiple style="display: none">
+                        browse
+                    </label>
                 </div>
                 <label class="pull-right">BEFORE PICTURE</label>
-            </div><br>
-
-            <!--<button ng-click="uploadForm(1)">upload me</button>-->
+            </div>
 
             <div class="bordered border-default" style="height: 130px" >
                 <!--<div>-->
                 <table>
                     <tbody>
-                    <td ng-repeat="step in imageModel">
-                        <div style="width: 100px; height: 120px; margin-top: 5px;margin-left: 5px">
-                            <img src="{{step}}" style="width: 100px; height: 120px;">
+                    <td ng-repeat="image in imageModel">
+                        <div style="width: 110px; height: 120px; margin-top: 5px;margin-left: 5px">
+                            <button class="btn btn-xs btn-danger btn-flat pull-right" ng-click="removeImage($index)"><span class="glyphicon glyphicon-remove"></span></button>
+                            <img src="{{image}}" style="width: 100%; height: 95px;border: 1px solid #cccccc; ">
                         </div>
                     </td>
                     </tbody>
                 </table>
             </div>
 
-            <div class="composer-options mt15">
+            <div class="composer-options mt15" style="margin-bottom: 40px">
                 <div class=" row col-sm-5">
-                    <input type="file" >
+                    <label class="btn btn-xs btn-instagram btn-flat" for="file">
+                        <span class="glyphicon glyphicon-folder-open mr2"></span><input type="file" id="file" ng-model-instant onchange="angular.element(this).scope().imageUpload(event,'after')" multiple style="display: none">
+                        browse
+                    </label>
                 </div>
                 <label class="pull-right">AFTER PICTURE</label>
-            </div><br>
+            </div>
 
             <div class="bordered border-default" style="height: 130px" >
-                <!--<div>-->
-                <!--                <table class="table">
-                                    <tbody>
-                                    <td ng-repeat="step in imageModel">
-                                        <div style="width: 100px; height: 120px;">
-                                            <img src="{{step}}" style="width: 100px; height: 120px;">
-                                        </div>
-                                    </td>
-                                    </tbody>
-                                </table>-->
+                <table>
+                    <tbody>
+                    <td ng-repeat="images in afterImageModel">
+                        <div style="width: 110px; height: 120px; margin-top: 5px;margin-left: 5px">
+                            <button class="btn btn-xs btn-danger btn-flat pull-right" ng-click="removeImage($index)"><span class="glyphicon glyphicon-remove"></span></button>
+                            <img src="{{images}}" style="width: 100%; height: 95px;border: 1px solid #cccccc; ">
+                        </div>
+                    </td>
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -89,19 +94,19 @@
             </div>
             <!--<label class="label label-success pull-right" style="height: 20px">score {{model.kaizen.employeeCost}}</label>-->
             <div style="height: calc(100vh - 319px)" class="mt20" ng-init="onLoadValueKaizer()">
-                <h6>Cost  <button ng-click="ui.modalOpenCost()" class="btn btn-xs btn-primary pull-right" style="border-radius: 0px">Criteria</button> <button class="btn btn-xs btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Score {{scoreCost}}</button></h6>
+                <h6>Cost  <button ng-click="ui.modalOpenCost()" class="btn btn-xs btn-primary btn-flat pull-right">Criteria</button> <button class="btn btn-xs btn-outline btn-flat pull-right" style="margin-right: 7px">Score {{scoreCost}}</button></h6>
                 <input type="range" ng-model="scoreCost" step="1" min="0" max="5" ng-disabled="true" style="margin-bottom: 20px">                
 
-                <h6>Utilization <button ng-click="ui.modalOpenUtilization()" class="btn btn-xs btn-primary pull-right" style="border-radius: 0px">Criteria</button> <button class="btn btn-xs  btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Score {{scoreUtilization}}</button></h6>
+                <h6>Utilization <button ng-click="ui.modalOpenUtilization()" class="btn btn-xs btn-primary btn-flat pull-right">Criteria</button> <button class="btn btn-xs  btn-outline btn-flat pull-right" style="margin-right: 7px">Score {{scoreUtilization}}</button></h6>
                 <input type="range" value="0" ng-model="scoreUtilization" step="1" min="0" max="5" ng-disabled="true" style="margin-bottom: 20px">    
 
-                <h6>Creativity <button ng-click="ui.modalOpenCreativity()" class="btn btn-xs btn-primary pull-right" style="border-radius: 0px">Criteria</button> <button class="btn btn-xs  btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Score {{scoreCreativity}}</button></h6>
+                <h6>Creativity <button ng-click="ui.modalOpenCreativity()" class="btn btn-xs btn-primary btn-flat pull-right">Criteria</button> <button class="btn btn-xs  btn-outline btn-flat pull-right" style="margin-right: 7px">Score {{scoreCreativity}}</button></h6>
                 <input type="range" value="0" ng-model="scoreCreativity" step="1" min="0" max="5" ng-disabled="true" style="margin-bottom: 20px">    
 
-                <h6>Safety <button ng-click="ui.modalOpenSafety()" class="btn btn-xs btn-primary pull-right" style="border-radius: 0px">Criteria</button> <button class="btn btn-xs  btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Score {{scoreSafety}}</button></h6>
+                <h6>Safety <button ng-click="ui.modalOpenSafety()" class="btn btn-xs btn-primary btn-flat pull-right">Criteria</button> <button class="btn btn-xs  btn-outline btn-flat pull-right" style="margin-right: 7px">Score {{scoreSafety}}</button></h6>
                 <input type="range" value="0" ng-model="scoreSafety" step="1" min="0" max="5" ng-disabled="true" style="margin-bottom: 20px">    
 
-                <h6>Quality<button ng-click="ui.modalOpenQuality()" class="btn btn-xs btn-primary pull-right" style="border-radius: 0px">Criteria</button> <button class="btn btn-xs  btn-outline pull-right" style="border-radius: 0px; margin-right: 7px">Score {{scoreQuality}}</button></h6>
+                <h6>Quality<button ng-click="ui.modalOpenQuality()" class="btn btn-xs btn-primary btn-flat pull-right">Criteria</button> <button class="btn btn-xs  btn-outline btn-flat pull-right" style="margin-right: 7px">Score {{scoreQuality}}</button></h6>
                 <input type="range" value="0" ng-model="scoreQuality" step="1" min="0" max="5" ng-disabled="true" style="margin-bottom: 20px">  
             </div>
 
@@ -109,10 +114,9 @@
                 <label style="font-size: 30px;" class="pt30">TOTAL SCORE <br>{{totalScore}} %</label>
             </div>
 
-            <button type="button" class="btn btn-success btn-sm pull-right" style="width: 100px; border-radius: 0px" ng-click="ui.save()">
+            <button type="button" class="btn btn-success btn-sm btn-flat pull-right" style="width: 100px;" ng-click="ui.save()">
                 <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Submit
             </button>
-            <!--<a class="btn btn-sm btn-success pull-right" ng-click="ui.save();"><i class="glyphicon glyphicon-ok">Submit</i></a>-->
         </div>
     </div>
 </div>

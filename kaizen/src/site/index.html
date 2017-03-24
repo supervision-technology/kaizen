@@ -15,13 +15,8 @@
 
     </head>
 
-    <body ng-app="AppModule">
-        <!-- quick launch panel -->
-
-        <!-- /quick launch panel -->
-
+    <body ng-app="AppModule" ng-controller="IndexController">
         <div class="app layout-fixed-header">
-
             <!-- sidebar panel -->
             <div class="sidebar-panel offscreen-left">
 
@@ -52,21 +47,21 @@
                                 <i class="fa fa-list-alt"></i>
                                 <span>Transaction</span>
                             </a>
-                            <ul class="sub-menu">
+                            <ul class="sub-menu" ng-show="UserMode === 'manager' || UserMode === 'employee'">
                                 <li>
                                     <a href="#/transaction/kaizen">
                                         <span>Create Kaizen</span>
                                     </a>
                                 </li>
                             </ul>
-                            <ul class="sub-menu">
+                            <ul class="sub-menu" ng-show="UserMode === 'manager'">
                                 <li>
                                     <a href="#/transaction/kaizen-manager-view">
                                         <span>Manager View</span>
                                     </a>
                                 </li>
                             </ul>
-                            <ul class="sub-menu">
+                            <ul class="sub-menu" ng-show="UserMode === 'committee'">
                                 <li>
                                     <a href="#/transaction/kaizen-committee-view">
                                         <span>Committee View</span>
@@ -76,7 +71,7 @@
                         </li>
                         <!-- /transaction-->
                         <!-- master -->
-<!--                        <li>
+                        <li ng-show="UserMode === 'manager'">
                             <a href="javascript:;">
                                 <i class="fa fa-cubes"></i>
                                 <span>Master </span>
@@ -88,7 +83,7 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>-->
+                        </li>
                         <!-- /master-->
                     </ul>
                     <!-- /forms -->
@@ -131,20 +126,20 @@
                         <!-- /toggle chat sidebar small screen-->
                     </div>
 
-<!--                    <ul class="nav navbar-nav hidden-xs">
-
-                        <li class="mt10">
-                            <ol class="breadcrumb">
-                                <li>
-                                    <a href="javascript:;"><i class="fa fa-home mr5"></i>Dashboard</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;"><i class="fa fa-toggle-on mr5"></i>Ui Elements</a>
-                                </li>
-                                <li class="active ng-binding">General Bootstrap Elements</li>
-                            </ol>
-                        </li>
-                    </ul>-->
+                    <!--                    <ul class="nav navbar-nav hidden-xs">
+                    
+                                            <li class="mt10">
+                                                <ol class="breadcrumb">
+                                                    <li>
+                                                        <a href="javascript:;"><i class="fa fa-home mr5"></i>Dashboard</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:;"><i class="fa fa-toggle-on mr5"></i>Ui Elements</a>
+                                                    </li>
+                                                    <li class="active ng-binding">General Bootstrap Elements</li>
+                                                </ol>
+                                            </li>
+                                        </ul>-->
 
                     <ul class="nav navbar-nav navbar-right hidden-xs">
                         <!--                        <li>
@@ -210,14 +205,14 @@
                         <li>
                             <a href="javascript:;" data-toggle="dropdown">
                                 <img src="images/face3.jpg" class="header-avatar img-circle ml10" alt="user" title="user">
-                                <span class="pull-left">Nidura123</span>
+                                <span class="pull-left">{{userName}}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="javascript:;">Settings</a>
+                                    <a>Settings</a>
                                 </li>
                                 <li>
-                                    <a href="signin.html">Logout</a>
+                                    <a ng-click="logout()">Logout</a>
                                 </li>
                             </ul>
 
@@ -230,7 +225,7 @@
                 <!-- main area -->
                 <div class="main-content no-padding bg-white no-margin" ng-view>
 
-                </div>
+                </div><!--
                 <!-- /main area -->
             </div>
             <!-- /content panel -->          

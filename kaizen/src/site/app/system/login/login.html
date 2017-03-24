@@ -1,0 +1,31 @@
+<div class="login">
+    <div class="login-window">
+        <div class="login-form">
+            <div class="login-header">
+                <label class="text-primary">Login to your account</label>
+            </div>
+
+            <div class="login-input">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input type="text" class="form-control" ng-model="model.user.name" placeholder="user name" >
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input  type="password" class="form-control"  ng-model="model.user.password" placeholder="password">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="login-footer border-dark-top background-dark">
+                <a type="button" class="btn btn-lg btn-block btn-primary " ng-click="ui.login();">Log In</a>
+            </div>
+
+        </div>
+    </div>
+</div>

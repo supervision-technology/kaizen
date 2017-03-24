@@ -14,6 +14,15 @@
     angular.module("AppModule")
             .config(function ($routeProvider) {
                 $routeProvider
+
+                        .when("/", {
+                            templateUrl: "app/system/login/login.html",
+                            controller: "LoginController"
+                        })
+
+                        .when("/home", {
+                            templateUrl: "app/system/home/home.html"
+                        })
                         //  Transaction
                         .when("/transaction/job", {
                             templateUrl: "app/transaction/job/job.html",
@@ -34,12 +43,31 @@
 
                         //master
                         .when("/master/employee-registration", {
-                            templateUrl: "app/master/employee/employee-registration.html"
-//                            controller: "JobController"
+                            templateUrl: "app/master/employee/employee-registration.html",
+                            controller: "employeeController"
                         })
 
                         .otherwise({
                             redirectTo: "/"
                         });
             });
+
+    angular.module("AppModule")
+            .controller("IndexController", function ($scope, $rootScope, $location) {
+
+                // log out when refresh
+                $scope.$watch('UserMode', function (mode) {
+                    if (!mode) {
+                        $location.path("/");
+                    }
+                });
+
+                //log out 
+                $scope.logout = function () {
+                    $location.path("/");
+                };
+
+
+            });
+
 }());

@@ -5,10 +5,13 @@
  */
 package com.mac.app.employee;
 
+import com.mac.app.employee.model.Department;
 import com.mac.app.employee.model.Employee;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @CrossOrigin
-@RequestMapping("/employee")
+@RequestMapping("/api/employee")
 public class EmployeeController {
 
     @Autowired
@@ -29,5 +32,20 @@ public class EmployeeController {
     public List<Employee> allEmployee() {
         return employeeService.allEmployee();
     }
-;
+
+    @RequestMapping(value = "/save-employee", method = RequestMethod.POST)
+    public Employee saveEmployee(@RequestBody Employee employee) {
+        return employeeService.saveEmployee(employee);
+    }
+
+    @RequestMapping(value = "/delete-employee", method = RequestMethod.DELETE)
+    public void deleteEmployee(@PathVariable Integer indexNo) {
+        employeeService.deleteEmployee(indexNo);
+    }
+
+    // department
+    @RequestMapping(value = "/all-department", method = RequestMethod.GET)
+    public List<Department> allDepartment() {
+       return employeeService.allDepartment();
+    }
 }

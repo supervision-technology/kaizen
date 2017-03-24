@@ -5,6 +5,7 @@
         "ui.bootstrap",
         "ui-notification",
         "ngAnimate",
-        "base64"
+        "base64",
+        "angular.filter"
     ]);
 }());

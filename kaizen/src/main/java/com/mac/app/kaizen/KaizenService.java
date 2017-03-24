@@ -7,9 +7,12 @@ package com.mac.app.kaizen;
 
 import com.mac.app.document.DocumentRepository;
 import com.mac.app.document.model.Document;
+import com.mac.app.employee.EmployeeRepository;
+import com.mac.app.employee.model.Employee;
 import com.mac.app.kaizen.model.TKaizen;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +34,28 @@ public class KaizenService {
     @Autowired
     private DocumentRepository documentRepository;
 
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
     private static final String KAIZEN_PENDING = "PENDING";
     private static final String MANAGER_VIEW = "MANAGER_VIEW";
     private static final String COMMITTEE_VIEW = "COMMITTEE_VIEW";
     private static final String EMPLOYEE_COMPLETE = "EMPLOYEE_COMPLETE";
     private static final String MANAGER_COMPLETE = "MANAGER_COMPLETE";
-    
 
     public List<TKaizen> allKaisen() {
         return kaizenRepository.findAll();
+    }
+
+    public List<TKaizen> getKaizenByDepartment(Integer index) {
+        List<TKaizen> kaizen = new ArrayList<>();
+
+        List<Employee> empList = employeeRepository.findByDepartmentIndexNo(index);
+
+        for (Employee employee : empList) {
+            kaizen = kaizenRepository.findByEmployee(employee.getIndexNo());
+        }
+        return kaizen;
     }
 
     public TKaizen saveKazen(TKaizen kaizen) {

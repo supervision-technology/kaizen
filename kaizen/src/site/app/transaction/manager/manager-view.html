@@ -1,39 +1,52 @@
 <div class="bt border-primary">
 
-    <div class="col-lg-7">
+    <div class="col-sm-7">
         <div  class="row">
             <div class="bg-default-light" style="height: 110px">
-                <form class="form-inline pt15">
-                    <div class="col-lg-6">
-                        <label for="date" class="col-sm-4" style="margin-top: 9px">Month : </label>
-                        <input type="date" class="form-control" id="date" style="width: 194px" ng-model="model.date">
-                    </div>
-                    <!--                    <div class="col-lg-6">
-                                            <label for="a" class="col-sm-4"  style="margin-top: 9px">type : </label>
-                                            <select name="type" class="form-control" style="width: 194px" ng-model="model.type">
-                                                <option>Implemented</option>
-                                                <option>suggestion</option>
-                                            </select>
-                                        </div>-->
-                    <div class="col-lg-6">
-                        <label for="employee" class="col-sm-4" style="margin-top: 9px" >Employee : </label>
-                        <input type="text" class="form-control" id="employee" ng-model="model.employee"  uib-typeahead="employee as (employee.name) for employee in model.employeeList|filter:$viewValue|limitTo:5">
-                    </div>
-                    <div class="col-lg-6" style="margin-top: 8px">
-                        <label for="department" class="col-sm-4"  style="margin-top: 9px">Department : </label>
-                        <input type="text" class="form-control" id="department">
-                    </div>
-                    <div class="col-lg-6" style="margin-top: 14px;">
-                        <label for="employee" class="col-sm-4"></label>
-                        <label><input type="radio" name="radio" ng-click="ui.selectPending()" checked="">PENDING</label>
-                        <label><input type="radio" name="radio" ng-click="ui.selectComplete()" >COMPLETE</label>
-                    </div>
-                </form>
+                <table class="table">
+                    <tbody style="background-color: #e7e7e7;">
+                        <tr>
+                            <td>
+                                <div class="col-sm-4">
+                                    <label for="date"  style="margin-top: 9px" >Month : </label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="month" class="form-control" id="date" ng-model="model.date">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-sm-4">
+                                    <label for="employee" style="margin-top: 9px" >Employee:</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="text" id="employee" class="form-control" ng-model="model.employee"  uib-typeahead="employee as (employee.name) for employee in model.employeeList|filter:$viewValue|limitTo:5">
+                                </div>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="col-sm-4">
+                                    <label for="department" style="margin-top: 9px">Department: </label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="department" ng-model="model.department" uib-typeahead="department as (department.name) for department in model.departmentList |filter:$viewValue|limitTo:5" typeahead-on-select="onSelect($item, $model, $label)">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-sm-12">
+                                    <label class="pull-right" style="margin-left: 10px"><input type="radio" name="radio" ng-click="ui.selectComplete()" >COMPLETE</label>
+                                    <label class="pull-right" ><input type="radio"  name="radio" ng-click="ui.selectPending()" checked="">PENDING</label>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="br border-default smart-scroll-y" style="height: calc(100vh - 166px)" ng-show="model.kaizenList.length">
                 <section class="bg-white post-comments"> 
-                    <div class="media pt10 pb5 bb border-default"  ng-repeat="kaizen in model.kaizenList| filter:{employee:model.employee.indexNo} | filter:{introduceDate:model.date}" ng-click="ui.selectkaizen(kaizen.indexNo)" ng-class="ui.selectedDataIndex === kaizen.indexNo ? 'selected' : ''">
+                    <div class="media pt10 pb5 bb border-default"  ng-repeat="kaizen in model.kaizenList| filter:{employee:model.employee.indexNo} | filter: ui.filterValue" ng-click="ui.selectkaizen(kaizen.indexNo)" ng-class="ui.selectedDataIndex === kaizen.indexNo ? 'selected' : ''">
                         <div class="col-lg-12">
                             <a class="pull-left" href="javascript:;" style="margin-right: 5px"> 
                                 <img class="media-object avatar avatar-sm" data-ng-src="images/face1.jpg" alt="" src="images/avatar.21d1cc35.jpg">
@@ -55,14 +68,14 @@
         </div>
     </div>
 
-    <div class="col-lg-5">
+    <div class="col-sm-5">
         <div class="mt5">
             <button type="button" class="btn btn-bitbucket btn-xs pull-right" style="border-radius: 0px" ng-click="ui.modalPictures()" data-target=".picture-modal" data-toggle="modal">
                 <span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Images
             </button>
             <label class="pull-left">Description</label>
         </div>
-        
+
         <div class="bordered border-default smart-scroll-y mb5" style="height: 140px; margin-top: 35px;">
             <p style="padding: 5px">{{model.kaizen.description}}</p>
         </div>
@@ -144,9 +157,12 @@
                 <div class="modal-body">
                     <table>
                         <tbody>
-                            <tr ng-repeat="image in ui.images">
-                                <td><img data-ng-src="{{'data:image/png;base64,'+ image.path}}" height="200px" width="200px" /></td>
-                            </tr>
+                            <!--<tr ng-repeat="image in ui.images">-->
+                                <!--<td><img data-ng-src="{{'data:image/png;base64,'+ image}}" height="200px" width="200px" /></td>-->
+                        <td ng-repeat="image in ui.images" style="padding-right: 15px">
+                                    <img data-ng-src="{{image}}" height="200px" width="200px" />
+                                </td>
+                            <!--</tr>-->
                         </tbody>
                     </table>
 

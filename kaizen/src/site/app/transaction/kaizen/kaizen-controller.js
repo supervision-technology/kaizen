@@ -9,7 +9,7 @@
 
                 //load employee
                 factory.loadEmployee = function (callback) {
-                    var url = systemConfig.apiUrl + "/employee";
+                    var url = systemConfig.apiUrl + "/api/employee";
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -21,7 +21,7 @@
 
                 //save kaizen
                 factory.saveKaizen = function (summary, callback, errorCallback) {
-                    var url = systemConfig.apiUrl + "/kaizen/save-kaizen";
+                    var url = systemConfig.apiUrl + "/api/kaizen/save-kaizen";
 
                     $http.post(url, summary)
                             .success(function (data, status, headers) {
@@ -35,7 +35,7 @@
                 };
 
                 factory.uploadFile = function (summary, callback, errorCallback) {
-                    var url = systemConfig.apiUrl + "/document/save-image";
+                    var url = systemConfig.apiUrl + "/api/document/save-image";
 
                     $http.post(url, summary)
                             .success(function (data, status, headers) {
@@ -66,6 +66,8 @@
                 $scope.http = {};
 
                 $scope.imageModel = [];
+
+                $scope.afterImageModel = [];
 
                 //current ui mode IDEAL, SELECTED, NEW, EDIT
                 $scope.ui.mode = null;
@@ -173,6 +175,7 @@
                             function (data) {
                                 Notification.success(data.indexNo + " - " + "Kaizen Saved Successfully.");
                                 $scope.uploadForm(data.indexNo);
+                                $scope.imageModel = [];
                                 $scope.model.reset();
 
                             },
@@ -202,13 +205,26 @@
                     }
                 };
 
-                // upload file
-                $scope.imageUpload = function (event) {
+
+                $scope.fileArray = function (files, status) {
+                    if (angular.isUndefined($rootScope.fileList)) {
+                        $rootScope.fileList = [[]];
+                        $rootScope.fileList.push(([files, status]));
+                    } else {
+                        $rootScope.fileList.push(([files, status]));
+                    }
+                };
+
+
+                //before file upload
+                $scope.imageUpload = function (event, status) {
+                    console.log(status);
                     //FileList object
                     var files = event.target.files;
 
                     for (var i = 0; i < files.length; i++) {
                         var file = files[i];
+                        $scope.fileArray(file, status);
                         var reader = new FileReader();
                         reader.onload = $scope.imageIsLoaded;
                         reader.readAsDataURL(file);
@@ -221,17 +237,56 @@
                     });
                 };
 
-                $scope.uploadForm = function (index) {
-                    var file = document.getElementById("file").files[0];
-                    var url = systemConfig.apiUrl + "/document/upload-image/" + index;
-
-
-                    var formData = new FormData();
-                    formData.append("file", file);
+                //after file upload
+//                $scope.afterImageUpload = function (event, status) {
+//                    console.log(status +  "sss" );
+//                    //FileList object
+//                    var files = event.target.files;
+//                    console.log(files);
 //
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("POST", url);
-                    xhr.send(formData);
+//                    for (var i = 0; i < files.length; i++) {
+//                        var file = files[i];
+//                        $scope.fileArray(file, status);
+//                        var reader = new FileReader();
+//                        reader.onload = $scope.afterUpload;
+//                        reader.readAsDataURL(file);
+//                    }
+//                };
+
+//                $scope.afterUpload = function (e) {
+//                    $scope.$apply(function () {
+//                        $scope.afterImageModel.push(e.target.result);
+//                    });
+//                };
+
+
+                $scope.uploadForm = function (index) {
+                    $rootScope.indexNo = index;
+                    for (var i = 0; i < $rootScope.fileList.length; i++) {
+                        var url = systemConfig.apiUrl + "/api/document/upload-image/" + $rootScope.indexNo + "/" + $rootScope.fileList[i][1];
+                        var formData = new FormData();
+                        formData.append("file", $rootScope.fileList[i][0]);
+
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", url);
+                        xhr.send(formData);
+
+                    }
+                };
+
+                $scope.removeImage = function (indexNo) {
+                    $scope.imageModel.splice(indexNo, 1);
+
+                    var id2 = -1;
+                    for (var i = 0; i < $rootScope.fileList.length; i++) {
+                        if ($rootScope.fileList[i].indexNo === indexNo) {
+                            id2 = i;
+                        }
+                    }
+                    $rootScope.fileList.splice(id2, 1);
+
+                    console.log($rootScope.fileList);
+                    console.log($scope.imageModel);
                 };
 
 
@@ -363,6 +418,7 @@
                 };
 
                 $scope.ui.init = function () {
+
                     //load employee
                     kaizenFactory.loadEmployee(function (data) {
                         $scope.model.employeeList = data;
