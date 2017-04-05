@@ -6,9 +6,15 @@
 package com.mac.app.kaizen;
 
 import com.mac.app.document.model.Document;
+import com.mac.app.kaizen.model.Mail;
+
 import com.mac.app.kaizen.model.TKaizen;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,14 +34,16 @@ public class KaizenController {
     @Autowired
     private KaizenService kaizenService;
 
+    @Autowired
+    private JavaMailSender mailSender;
+
     @RequestMapping(method = RequestMethod.GET)
     public List<TKaizen> allKaizen() {
         return kaizenService.allKaisen();
     }
 
-    @RequestMapping(value = "/department-kaizen/{indexNo}",method = RequestMethod.GET)
+    @RequestMapping(value = "/department-kaizen/{indexNo}", method = RequestMethod.GET)
     public List<TKaizen> getKaizenByDepartment(@PathVariable Integer indexNo) {
-        System.out.println(indexNo + "sssssssssssssssssssssssssssssssssssss");
         return kaizenService.getKaizenByDepartment(indexNo);
     }
 
@@ -52,6 +60,26 @@ public class KaizenController {
     @RequestMapping(value = "/update-committee-kaizen", method = RequestMethod.POST)
     public TKaizen updateByCommittee(@RequestBody TKaizen kaizen) {
         return kaizenService.kaizenUpdateByCommittee(kaizen);
+    }
+
+    // send appreciation mail
+    @RequestMapping(value = "/send-mail/{indexNo}", method = RequestMethod.POST)
+    public void sendEmail(@RequestBody Mail mail, @PathVariable Integer indexNo) {
+//        kaizenService.updateKaizenByIndex(indexNo);
+//    
+//        MimeMessagePreparator messagePreparator = mimeMessage -> {
+//            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+//            messageHelper.setFrom("niduraprageeth@gmail.com");
+//            messageHelper.setTo(mail.getEmail());
+//            messageHelper.setSubject(mail.getSubject());
+//            messageHelper.setText(mail.getMessage());
+//        };
+//        try {
+//            mailSender.send(messagePreparator);
+//        } catch (MailException e) {
+//            System.out.println(e);
+//        }
+
     }
 
 }

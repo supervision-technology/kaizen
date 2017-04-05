@@ -14,7 +14,7 @@
 
                             });
                 };
-                
+
                 //load department
                 factory.loadDepartment = function (callback) {
                     var url = systemConfig.apiUrl + "/api/employee/all-department";
@@ -44,7 +44,7 @@
 
 
     angular.module("AppModule")
-            .controller("employeeController", function ($scope, employeeFactory, Notification) {
+            .controller("employeeController", function (systemConfig, $scope, employeeFactory, Notification) {
 
                 //data models 
                 $scope.model = {};
@@ -61,13 +61,13 @@
                     type: "",
                     epfNo: "",
                     department: null,
-                    picture: null
+                    email : null
                 };
 
                 //validate model
                 $scope.validateInput = function () {
                     if ($scope.model.name && $scope.model.type
-                            && $scope.model.epfNo && $scope.model.department) {
+                            && $scope.model.epfNo && $scope.model.department && $scope.model.email) {
                         return true;
                     } else {
                         return false;
@@ -75,21 +75,31 @@
                 };
 
                 //--------------http funtion------------
-                
+
                 //save employee 
                 $scope.http.saveEmployee = function () {
-                    var model = $scope.model;
-                    var DetailJSON = JSON.stringify(model);
 
-                    employeeFactory.saveEmployee(
-                            DetailJSON,
-                            function (data) {
-                                Notification.success("Save Successfuly..");
-                                $scope.model = null;
-                            });
+                    var url = systemConfig.apiUrl + "/api/employee/save-employee";
+
+                    var formData = new FormData();
+                    var file = document.getElementById('file-upload').files[0];
+                    var json = $scope.model;
+
+                    formData.append("file", file);
+                    formData.append("ad", JSON.stringify(json));//important: convert to JSON!
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", url);
+                    xhr.send(formData);
+                    
+                    Notification.success("added Successfully..");
+                    $scope.model = null;
+                    $scope.imagemodel = null;
                 };
-                
-                 //delete employee
+
+
+
+                //delete employee
                 $scope.http.deleteEmployee = function (indexNo) {
                     employeeFactory.deleteEmployee(indexNo
                             , function () {
@@ -118,20 +128,45 @@
                     }
                 };
 
+                // upload file
+                $scope.imageUpload = function (event) {
+                    //FileList object
+                    var files = event.target.files;
+
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i];
+                        var reader = new FileReader();
+                        reader.onload = $scope.imageIsLoaded;
+                        reader.readAsDataURL(file);
+                    }
+                };
+
+                $scope.imageIsLoaded = function (e) {
+                    $scope.$apply(function () {
+                        $scope.imagemodel = e.target.result;
+                    });
+                };
+
+                $scope.showMore = function () {
+                    console.log("work");
+                    $scope.numLimit += 5;
+                    console.log('show more triggered');
+                };
+
 
                 $scope.init = function () {
-                    
+                    $scope.numLimit = 15;
                     //load employee
                     employeeFactory.loadEmployee(function (data) {
                         $scope.employeeList = data;
                     });
-                    
+
                     //load department
                     employeeFactory.loadDepartment(function (data) {
                         $scope.departmentList = data;
                         console.log($scope.departmentList);
                     });
-                    
+
                 };
 
                 $scope.init();

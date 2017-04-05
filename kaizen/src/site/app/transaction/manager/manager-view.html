@@ -30,7 +30,8 @@
                                     <label for="department" style="margin-top: 9px">Department: </label>
                                 </div>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="department" ng-model="model.department" uib-typeahead="department as (department.name) for department in model.departmentList |filter:$viewValue|limitTo:5" typeahead-on-select="onSelect($item, $model, $label)">
+                                    <!--<input type="text" class="form-control" id="department" ng-model="model.department" uib-typeahead="department as (department.name) for department in model.departmentList |filter:$viewValue|limitTo:5" typeahead-on-select="onSelect($item, $model, $label)">-->
+                                    <input type="text" class="form-control" id="department" ng-model="model.department">
                                 </div>
                             </td>
                             <td>
@@ -44,12 +45,12 @@
                 </table>
             </div>
 
-            <div class="br border-default smart-scroll-y" style="height: calc(100vh - 166px)" ng-show="model.kaizenList.length">
+            <div class="br border-default smart-scroll-y" scrolly="showMore()" style="height: calc(100vh - 166px)" ng-show="model.kaizenList.length">
                 <section class="bg-white post-comments"> 
-                    <div class="media pt10 pb5 bb border-default"  ng-repeat="kaizen in model.kaizenList| filter:{employee:model.employee.indexNo} | filter: ui.filterValue" ng-click="ui.selectkaizen(kaizen.indexNo)" ng-class="ui.selectedDataIndex === kaizen.indexNo ? 'selected' : ''">
+                    <div class="media pt10 pb5 bb border-default"  ng-repeat="kaizen in model.kaizenList| limitTo:numLimit | filter:{employee:model.employee.indexNo} | filter: ui.filterValue" ng-click="ui.selectkaizen(kaizen.indexNo)" ng-class="ui.selectedDataIndex === kaizen.indexNo ? 'selected' : ''">
                         <div class="col-lg-12">
                             <a class="pull-left" href="javascript:;" style="margin-right: 5px"> 
-                                <img class="media-object avatar avatar-sm" data-ng-src="images/face1.jpg" alt="" src="images/avatar.21d1cc35.jpg">
+                                <img class="media-object avatar avatar-sm" style="width: 100px; height: 50px" ng-src="{{imageUrl}}" alt="">
                             </a> 
                             <div class="comment-author h6 no-margin pt5">
                                 <label class="pull-right">{{kaizen.introduceDate| date:mediumDate}}</label>
@@ -135,10 +136,10 @@
         </div>
 
         <div class="pull-right" style="margin-top: 8px">
-            <button type="button" class="btn btn-sm btn-dropbox" style="width: 135px; border-radius: 0px; height: 47px;">
+            <button ng-click="sendSuggestion()" id="suggestionBtn" type="button" class="btn btn-sm btn-dropbox" style="width: 135px; border-radius: 0px; height: 47px;">
                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Suggestion
             </button>
-            <button type="button" class="btn btn-facebook btn-sm" style="width: 135px; border-radius: 0px; height: 47px;">
+            <button ng-click="sendAppreciationMail()" id="appreciationBtn" type="button" class="btn btn-facebook btn-sm" style="width: 135px; border-radius: 0px; height: 47px;">
                 Send an <br>Appreciation Mail
             </button>
             <button type="button" class="btn btn-success btn-sm" style="width: 135px; border-radius: 0px; height: 47px;" ng-click="ui.save()">
@@ -155,24 +156,81 @@
                     <h3 class="modal-title text-center">Pictures</h3>
                 </div>
                 <div class="modal-body">
-                    <table>
-                        <tbody>
-                            <!--<tr ng-repeat="image in ui.images">-->
-                                <!--<td><img data-ng-src="{{'data:image/png;base64,'+ image}}" height="200px" width="200px" /></td>-->
-                        <td ng-repeat="image in ui.images" style="padding-right: 15px">
-                                    <img data-ng-src="{{image}}" height="200px" width="200px" />
-                                </td>
-                            <!--</tr>-->
-                        </tbody>
-                    </table>
-
-
-                    <div class="modal-footer no-border" >
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <!--<a ng-href="{{fileUrl}}" download="file.txt">download</a>-->
+                    <div class="row" style="background-color: #d6d6d6">
+                        <label style="margin-left: 10px">Before Files</label>
                     </div>
+                    <div class="row mygrid-wrapper-div">
+                        <table class="table">  
+                            <tbody>
+                                <tr>
+                                    <td ng-repeat="beforeimage in ui.beforeImages">
+                                        <a href="{{beforeimage}}" download>
+                                            <div id="imgPanel" style="width: 200px; height: 200px;">
+                                                <img src="{{beforeimage}}" style="width: 200px; height: 200px;">
+                                            </div>
+                                        </a>
+                                    </td>
+                                    <td ng-repeat="documentFile in ui.documentFile">
+                                        <a href="{{documentFile.url}}" download>
+                                            <img src="{{documentFile.icon}}" style="width: 200px; height: 200px;">
+                                        </a>
+                                    </td>
+                                </tr>   
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row" style="background-color: #d6d6d6">
+                        <label style="margin-left: 10px">After Files</label>
+                    </div>
+                    <div class="row mygrid-wrapper-div">
+                        <table class="table">  
+                            <tbody>
+                                <tr>
+                                    <td ng-repeat="afterimage in ui.afterImages">
+                                        <a href="{{afterimage}}" download><div id="imgPanel" style="width: 200px; height: 200px;" ng-click="getfabricCostDetails(style)">
+                                                <img ng-src="{{afterimage}}" style="width: 200px; height: 200px;">
+                                            </div></a>
+                                    </td>
+                                    <td ng-repeat="afterDocumentFile in ui.afterDocumentFile">
+                                        <a href="{{afterDocumentFile.url}}" download>
+                                            <img src="{{afterDocumentFile.icon}}" style="width: 200px; height: 200px;">
+                                        </a>
+                                    </td>
+                                </tr>   
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--                    <table>
+                                        <thead style="background-color: #d6d6d6">
+                                        <td>Before Images</td>
+                                        </thead>
+                                        <tbody>
+                                        <td ng-repeat="beforeimage in ui.beforeImages" style="padding-right: 15px">
+                                            <img ng-src="{{beforeimage}}" height="200px" width="200px" />
+                                        </td>
+                                        </tbody>
+                                    </table>-->
+                <!--                    <table>
+                                        <thead style="background-color: #d6d6d6">
+                                        <td>After Images</td>
+                                        </thead>
+                                        <tbody>
+                                        <td ng-repeat="afterimage in ui.afterImages" style="padding-right: 15px">
+                                            <img ng-src="{{afterimage}}" height="200px" width="200px" />
+                                        </td>
+                                        </tbody>
+                                    </table>-->
+
+
+                <div class="modal-footer no-border" >
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 </div>

@@ -53,7 +53,11 @@ public class KaizenService {
         List<Employee> empList = employeeRepository.findByDepartmentIndexNo(index);
 
         for (Employee employee : empList) {
-            kaizen = kaizenRepository.findByEmployee(employee.getIndexNo());
+            for (TKaizen tkaizen : kaizenRepository.findByEmployee(employee.getIndexNo())) {
+                if (tkaizen != null) {
+                    kaizen.add(tkaizen);
+                }
+            }
         }
         return kaizen;
     }
@@ -64,27 +68,6 @@ public class KaizenService {
         kaizen.setEmployeeComplete(EMPLOYEE_COMPLETE);
 
         return kaizenRepository.save(kaizen);
-
-        //save image into database
-//        File file = new File("D:\\mypic.jpg");
-//        byte[] bFile = new byte[(int) file.length()];
-//
-//        try {
-//            FileInputStream fileInputStream = new FileInputStream(file);
-//            //convert file into array of bytes
-//            fileInputStream.read(bFile);
-//            fileInputStream.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        Document document = new Document();
-//        document.setPath(bFile);
-//        document.setKaizen(kaizen1.getIndexNo());
-//
-//        documentRepository.save(document);
-//
-//        return kaizen1;
     }
 
     public TKaizen kaizenUpdateByManager(TKaizen kaizen) {
@@ -110,5 +93,12 @@ public class KaizenService {
         kaizen1.setCommitteeUtilization(kaizen.getCommitteeUtilization());
         kaizen1.setReviewStatus(COMMITTEE_VIEW);
         return kaizenRepository.save(kaizen1);
+    }
+
+    public void updateKaizenByIndex(Integer indexNo) {
+        TKaizen kaizen = kaizenRepository.findOne(indexNo);
+        kaizen.setReviewStatus(MANAGER_VIEW);
+        kaizen.setManagerComplete(MANAGER_COMPLETE);
+        kaizenRepository.save(kaizen);
     }
 }

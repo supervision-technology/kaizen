@@ -23,14 +23,15 @@
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
 //        http
-////                .csrf()
-////                .disable()
+//                .csrf()
+//                .disable()
 //                .authorizeRequests()
-//                .antMatchers("/api/**").authenticated()
+////                .antMatchers("/api/**").authenticated()
+//                .antMatchers("/home", "/").permitAll()
+//                .anyRequest().authenticated()
 //                .and().httpBasic()
 //                .authenticationEntryPoint(authEntryPoint);
 //                
-//                //.anyRequest().authenticated()
 //    }
 //
 //    @Autowired

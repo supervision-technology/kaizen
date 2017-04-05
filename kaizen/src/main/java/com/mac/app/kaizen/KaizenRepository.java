@@ -16,5 +16,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface KaizenRepository extends JpaRepository<TKaizen, Integer>{
 
     public List<TKaizen> findByEmployee(Integer indexNo);
+
     
 }

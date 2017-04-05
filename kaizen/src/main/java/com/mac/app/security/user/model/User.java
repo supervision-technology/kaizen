@@ -14,11 +14,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "User")
-public class User implements Serializable{
-    
+public class User implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -27,19 +26,21 @@ public class User implements Serializable{
 
     @Column(name = "name")
     private String name;
-    
+
     @Column(name = "password")
     private String password;
-    
+
     @Column(name = "role")
     private String role;
-    
-    @Column(name = "email")
-    private String email;
+//    
+    @Column(name = "epf_no")
+    private String epfNo;
+
+    @Column(name = "department")
+    private Integer department;
 
     public User() {
     }
-
 
     public Integer getIndexNo() {
         return indexNo;
@@ -73,14 +74,20 @@ public class User implements Serializable{
         this.role = role;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEpfNo() {
+        return epfNo;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEpfNo(String epfNo) {
+        this.epfNo = epfNo;
     }
 
-    
-    
+    public Integer getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Integer department) {
+        this.department = department;
+    }
+
 }

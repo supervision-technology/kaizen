@@ -34,17 +34,15 @@
                             });
                 };
 
-                factory.uploadFile = function (summary, callback, errorCallback) {
-                    var url = systemConfig.apiUrl + "/api/document/save-image";
-
-                    $http.post(url, summary)
+                //load document
+                factory.loadDocument = function (callback) {
+                    var url = systemConfig.apiUrl + "/api/document";
+                    $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
                             })
                             .error(function (data, status, headers) {
-                                if (errorCallback) {
-                                    errorCallback(data);
-                                }
+
                             });
                 };
 
@@ -54,7 +52,7 @@
 
     //-----------http controller---------
     angular.module("AppModule")
-            .controller("KaizenController", function (kaizenFactory, systemConfig, $base64, $scope, $rootScope, $uibModal, $uibModalStack, Notification) {
+            .controller("KaizenController", function ($http, kaizenFactory, systemConfig, $base64, $scope, $rootScope, $uibModal, $uibModalStack, Notification) {
 
                 //data models 
                 $scope.model = {};
@@ -65,7 +63,7 @@
                 //http models
                 $scope.http = {};
 
-                $scope.imageModel = [];
+                $scope.beforeImageModel = [];
 
                 $scope.afterImageModel = [];
 
@@ -120,6 +118,8 @@
                     $rootScope.scoreQuality = 0;
                     $rootScope.totalScore = 0;
                     $scope.model.employee.epfNo = null;
+                    $scope.model.employee.department = null;
+                    $scope.imageUrl = null;
 
                 };
 
@@ -136,11 +136,13 @@
                 $scope.$watch('model.employee.epfNo', function (val) {
                     if (val === "") {
                         $scope.model.resetEmployee();
+                        $scope.imageUrl = null;
                     }
                 }, true);
 
                 $scope.$watch('model.kaizen.employee', function (val) {
                     if (val === "") {
+                        $scope.imageUrl = null;
                         $scope.model.resetEmployee();
                     }
                 }, true);
@@ -160,6 +162,7 @@
                 //--------------http funtion---------------
                 //save model
                 $scope.http.saveKaizen = function () {
+                    $rootScope.sendMode = "loading";
                     $scope.model.kaizen.employeeCost = $rootScope.scoreCost;
                     $scope.model.kaizen.employeeUtilization = $rootScope.scoreUtilization;
                     $scope.model.kaizen.employeeCreativity = $rootScope.scoreCreativity;
@@ -173,28 +176,48 @@
                     kaizenFactory.saveKaizen(
                             detailJSON,
                             function (data) {
-                                Notification.success(data.indexNo + " - " + "Kaizen Saved Successfully.");
-                                $scope.uploadForm(data.indexNo);
-                                $scope.imageModel = [];
-                                $scope.model.reset();
+                                if ($rootScope.UserMode === "group_user") {
+                                    $rootScope.fileList = [[]];
+                                    Notification.success(data.indexNo + " - " + "Kaizen Saved Successfully.");
+                                    $scope.model.reset();
+                                } else {
+                                    angular.forEach($scope.employees, function (val) {
+                                        if (val.indexNo === data.employee) {
+                                            $scope.model.kaizen.employee = val.name;
+                                        }
+                                    });
 
+                                    $rootScope.scoreCost = 0;
+                                    $rootScope.scoreUtilization = 0;
+                                    $rootScope.scoreCreativity = 0;
+                                    $rootScope.scoreSafety = 0;
+                                    $rootScope.scoreQuality = 0;
+                                    $rootScope.totalScore = 0;
+                                    $scope.model.kaizen.description = null;
+                                    $scope.model.kaizen.title = null;
+                                    $scope.uploadForm(data.indexNo);
+                                    Notification.success(data.indexNo + " - " + "Kaizen Saved Successfully.");
+                                    $rootScope.sendMode = null;
+                                    $scope.beforeImageModel = [];
+                                    $scope.afterImageModel = [];
+                                    $rootScope.fileList = [[]];
+                                }
                             },
                             function (data) {
+                                $rootScope.sendMode = null;
                                 Notification.error(data.message);
                             }
                     );
                 };
 
+                $scope.ui.getPictures = function (path) {
+                    var url = systemConfig.apiUrl + "/api/document/download-image/" + path + "/";
+                    console.log(url)
+                    $scope.imageUrl = url;
+                };
+
 
                 //----------------ui funtion--------------
-//                $scope.ui.setImplemented = function (name) {
-//                    $rootScope.type = name;
-//                };
-//
-//                $scope.ui.setSuggestion = function (name) {
-//                    $rootScope.type = name;
-//                };
-
 
                 //save function 
                 $scope.ui.save = function () {
@@ -207,7 +230,7 @@
 
 
                 $scope.fileArray = function (files, status) {
-                    if (angular.isUndefined($rootScope.fileList)) {
+                    if (!$rootScope.fileList) {
                         $rootScope.fileList = [[]];
                         $rootScope.fileList.push(([files, status]));
                     } else {
@@ -215,67 +238,109 @@
                     }
                 };
 
-
-                //before file upload
-                $scope.imageUpload = function (event, status) {
-                    console.log(status);
-                    //FileList object
+                //before image upload
+                $scope.uploadBeforeFile = function (event) {
+                    var status = "before";
                     var files = event.target.files;
+                    $scope.img = null;
 
                     for (var i = 0; i < files.length; i++) {
                         var file = files[i];
                         $scope.fileArray(file, status);
+
+
+                        if (file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+                            $scope.img = "/images/xl.png";
+                        }
+                        if (file.type === "application/vnd.ms-excel") {
+                            $scope.img = "/images/xl.png";
+                        }
+                        if (file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+                            $scope.img = "/images/word.ico";
+                        }
+                        if (file.type === "application/pdf") {
+                            $scope.img = "/images/pdf.png";
+                        }
+
+
                         var reader = new FileReader();
-                        reader.onload = $scope.imageIsLoaded;
+                        reader.onload = $scope.beforeImageLoaded;
                         reader.readAsDataURL(file);
                     }
                 };
 
-                $scope.imageIsLoaded = function (e) {
+                $scope.beforeImageLoaded = function (e) {
                     $scope.$apply(function () {
-                        $scope.imageModel.push(e.target.result);
+                        if ($scope.img !== null) {
+                            $scope.beforeImageModel.push($scope.img);
+                            $scope.img = null;
+                        } else {
+                            $scope.beforeImageModel.push(e.target.result);
+                        }
                     });
                 };
 
-                //after file upload
-//                $scope.afterImageUpload = function (event, status) {
-//                    console.log(status +  "sss" );
-//                    //FileList object
-//                    var files = event.target.files;
-//                    console.log(files);
-//
-//                    for (var i = 0; i < files.length; i++) {
-//                        var file = files[i];
-//                        $scope.fileArray(file, status);
-//                        var reader = new FileReader();
-//                        reader.onload = $scope.afterUpload;
-//                        reader.readAsDataURL(file);
-//                    }
-//                };
+                //after image upload
+                $scope.uploadAfterFile = function (event) {
+                    var status = "after";
+                    var files = event.target.files;
+                    $scope.img2 = null;
 
-//                $scope.afterUpload = function (e) {
-//                    $scope.$apply(function () {
-//                        $scope.afterImageModel.push(e.target.result);
-//                    });
-//                };
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i];
+                        $scope.fileArray(file, status);
 
+                        if (file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+                            $scope.img2 = "/images/xl.png";
+                        }
+                        if (file.type === "application/vnd.ms-excel") {
+                            $scope.img = "/images/xl.png";
+                        }
+                        if (file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+                            $scope.img2 = "/images/word.ico";
+                        }
+                        if (file.type === "application/pdf") {
+                            $scope.img2 = "/images/pdf.png";
+                        }
 
-                $scope.uploadForm = function (index) {
-                    $rootScope.indexNo = index;
-                    for (var i = 0; i < $rootScope.fileList.length; i++) {
-                        var url = systemConfig.apiUrl + "/api/document/upload-image/" + $rootScope.indexNo + "/" + $rootScope.fileList[i][1];
-                        var formData = new FormData();
-                        formData.append("file", $rootScope.fileList[i][0]);
-
-                        var xhr = new XMLHttpRequest();
-                        xhr.open("POST", url);
-                        xhr.send(formData);
-
+                        var reader = new FileReader();
+                        reader.onload = $scope.afterImageLoaded;
+                        reader.readAsDataURL(file);
                     }
                 };
 
+                $scope.afterImageLoaded = function (e) {
+                    $scope.$apply(function () {
+                        if ($scope.img2 !== null) {
+                            $scope.afterImageModel.push($scope.img2);
+                            $scope.img2 = null;
+                        } else {
+                            $scope.afterImageModel.push(e.target.result);
+                        }
+                    });
+                };
+
+
+                // upload image
+                $scope.uploadForm = function (index) {
+                    $rootScope.indexNo = index;
+                    if ($rootScope.fileList) {
+                        for (var i = 1; i < $rootScope.fileList.length; i++) {
+                            var url = systemConfig.apiUrl + "/api/document/upload-image/" + $rootScope.indexNo + "/" + $rootScope.fileList[i][1];
+                            var formData = new FormData();
+                            formData.append("file", $rootScope.fileList[i][0]);
+
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("POST", url);
+                            xhr.send(formData);
+
+                        }
+                    }
+                };
+
+                //remove before image 
                 $scope.removeImage = function (indexNo) {
-                    $scope.imageModel.splice(indexNo, 1);
+                    $scope.beforeImageModel.splice(indexNo, 1);
 
                     var id2 = -1;
                     for (var i = 0; i < $rootScope.fileList.length; i++) {
@@ -285,9 +350,22 @@
                     }
                     $rootScope.fileList.splice(id2, 1);
 
-                    console.log($rootScope.fileList);
-                    console.log($scope.imageModel);
                 };
+
+                // remove after image
+                $scope.removeAfterImage = function (indexNo) {
+                    $scope.afterImageModel.splice(indexNo, 1);
+
+                    var id2 = -1;
+                    for (var i = 0; i < $rootScope.fileList.length; i++) {
+                        if ($rootScope.fileList[i].indexNo === indexNo) {
+                            id2 = i;
+                        }
+                    }
+                    $rootScope.fileList.splice(id2, 1);
+
+                };
+
 
 
                 // range slider funtion
@@ -391,10 +469,11 @@
                 };
 
                 $scope.ui.selectEmployee = function (employee) {
+                    $scope.ui.getPictures(employee.epfNo);
                     $rootScope.employee = employee.indexNo;
                     $scope.model.employee.epfNo = employee.epfNo;
                     $scope.model.employee.name = employee.name;
-                    $scope.model.employee.department = employee.department.name + " " + "Department";
+                    $scope.model.employee.department = employee.department.name;
                     $scope.model.employee.type = "(" + employee.type + ")";
                 };
 
@@ -408,20 +487,47 @@
                 $scope.ui.EmployeeByEpfNo = function (epfNo) {
                     angular.forEach($scope.model.employeeList, function (value) {
                         if (value.epfNo === epfNo) {
+                            $scope.ui.getPictures(value.epfNo);
                             $scope.model.employee.epfNo = value.epfNo;
                             $scope.model.employee.name = value.name;
                             $scope.model.kaizen.employee = value.name;
-                            $scope.model.employee.department = value.department.name + " " + "Department";
+                            $scope.model.employee.department = value.department.name;
                             $scope.model.employee.type = "(" + value.type + ")";
                         }
                     });
                 };
 
+
+
                 $scope.ui.init = function () {
+                    //load document
+                    kaizenFactory.loadEmployee(function (data) {
+                        $scope.employees = data;
+                    });
 
                     //load employee
                     kaizenFactory.loadEmployee(function (data) {
-                        $scope.model.employeeList = data;
+                        if ($rootScope.UserMode === 'group_user') {
+                            var d = [];
+                            angular.forEach(data, function (val) {
+                                if (val.department.indexNo === $rootScope.user.department) {
+                                    d.push(val);
+                                }
+                            });
+                            $scope.model.employeeList = d;
+                        } else {
+//                            var d = [];
+                            angular.forEach(data, function (val) {
+                                if (val.epfNo === $rootScope.user.epfNo) {
+                                    document.getElementById("empName").disabled = true;
+                                    document.getElementById("epfNo").disabled = true;
+                                    $scope.model.kaizen.employee = val.name;
+                                    $scope.ui.selectEmployee(val);
+//                                    d.push(val);
+                                }
+                            });
+//                            $scope.model.employeeList = d;
+                        }
                     });
 
                     if (!$rootScope.totalScore) {

@@ -45,15 +45,27 @@
     overflow-y: scroll;
 }
 
-.smart-scroll-x::-webkit-scrollbar, .smart-scroll-y::-webkit-scrollbar {
+.smart-scroll-x::-webkit-scrollbar{
+    width: 5px;
+}
+.smart-scroll-y::-webkit-scrollbar {
     width: 5px;
 }
 
-.smart-scroll-x::-webkit-scrollbar-track, .smart-scroll-y::-webkit-scrollbar-track {
+.smart-scroll-x::-webkit-scrollbar-track{
     display: none;
 }
 
-.smart-scroll-x::-webkit-scrollbar-thumb, .smart-scroll-y::-webkit-scrollbar-thumb {
+.smart-scroll-y::-webkit-scrollbar-track {
+    display: none;
+}
+
+.smart-scroll-x::-webkit-scrollbar-thumb{
+    background-color: #cccccc;
+    border-radius: 2px;
+}
+
+.smart-scroll-y::-webkit-scrollbar-thumb {
     background-color: #cccccc;
     border-radius: 2px;
 }

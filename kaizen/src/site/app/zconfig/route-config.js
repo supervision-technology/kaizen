@@ -5,7 +5,7 @@
                 apiUrl:
                         location.hostname === 'localhost'
                         ? "http://localhost:8080"
-                        : location.protocol + "//" + location.hostname
+                        : location.protocol + "//" + location.hostname + (location.port ? ':' + location.port : '')
             });
 
 
@@ -21,7 +21,7 @@
                         })
 
                         .when("/home", {
-                            templateUrl: "app/system/home/home.html"
+                            redirectTo: "/transaction/kaizen"
                         })
                         //  Transaction
                         .when("/transaction/job", {
@@ -46,6 +46,10 @@
                             templateUrl: "app/master/employee/employee-registration.html",
                             controller: "employeeController"
                         })
+                        .when("/master/user-registration", {
+                            templateUrl: "app/master/user/user-registration.html",
+                            controller: "userController"
+                        })
 
                         .otherwise({
                             redirectTo: "/"
@@ -53,21 +57,37 @@
             });
 
     angular.module("AppModule")
-            .controller("IndexController", function ($scope, $rootScope, $location) {
+            .run(function ($rootScope, $location, $cookieStore, $http) {
+                    // keep user logged in after page refresh
+                    $rootScope.globals = $cookieStore.get('globals') || {};
+                    if ($rootScope.globals.currentUser) {
+                        $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+                    }
 
+                    $rootScope.$on('$locationChangeStart', function (event, next, current) {
+                        // redirect to login page if not logged in
+                        if ($location.path() !== '/' && !$rootScope.globals.currentUser) {
+                            $location.path('/');
+                        }
+                    });
+                });
+
+    angular.module("AppModule")
+            .controller("IndexController", function ($scope, $rootScope, $location) {
                 // log out when refresh
                 $scope.$watch('UserMode', function (mode) {
                     if (!mode) {
                         $location.path("/");
                     }
                 });
-
-                //log out 
-                $scope.logout = function () {
-                    $location.path("/");
-                };
+////
+//                //log out 
+//                $scope.logout = function () {
+//                    $location.path("/");
+//                };
 
 
             });
+
 
 }());

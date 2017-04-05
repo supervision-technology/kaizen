@@ -6,7 +6,6 @@
 package com.mac.app.security.user;
 
 import com.mac.app.security.user.model.User;
-import java.io.Serializable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

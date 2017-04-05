@@ -565,6 +565,12 @@ input[type=range]:focus::-ms-fill-upper {
     background: #ccc;
 }
 
+input[type="text"][disabled] {
+    background-color: white;
+}
+
+
+
 
 .media:hover{
     background-color: #6699ff;
@@ -643,7 +649,7 @@ tr.ng-leave {
 
             margin: auto;
             margin-top: 100px;
-     
+
 
             border-radius: 3px;
 
@@ -671,9 +677,9 @@ tr.ng-leave {
                     border-radius:3px;
 
                     .input-group-addon{
-/*                        background-color: $bg-dark-color;
-                        border-color: $bg-hi-dark-color-border;
-                        color: $bg-hi-dark-color-border;*/
+                        /*                        background-color: $bg-dark-color;
+                                                border-color: $bg-hi-dark-color-border;
+                                                color: $bg-hi-dark-color-border;*/
                     }
                 }
 
@@ -688,9 +694,9 @@ tr.ng-leave {
                     /*border-color: $primary-color;*/
                 }
 
-/*                box-shadow: 0px 0px 3px 0px $primary-color;
-                -webkit-box-shadow: 0px 0px 3px 0px $primary-color;
-                -moz-box-shadow: 0px 0px 3px 0px $primary-color;*/
+                /*                box-shadow: 0px 0px 3px 0px $primary-color;
+                                -webkit-box-shadow: 0px 0px 3px 0px $primary-color;
+                                -moz-box-shadow: 0px 0px 3px 0px $primary-color;*/
 
                 background-clip: border-box;
             }
@@ -716,9 +722,9 @@ tr.ng-leave {
                     /*border-color: $danger-color;*/
                 }
 
-/*                box-shadow: 0px 0px 3px 0px $danger-color;
-                -webkit-box-shadow: 0px 0px 3px 0px $danger-color;
-                -moz-box-shadow: 0px 0px 3px 0px $danger-color;*/
+                /*                box-shadow: 0px 0px 3px 0px $danger-color;
+                                -webkit-box-shadow: 0px 0px 3px 0px $danger-color;
+                                -moz-box-shadow: 0px 0px 3px 0px $danger-color;*/
             }
 
             .btn{
@@ -728,3 +734,23 @@ tr.ng-leave {
         }
     }
 }
+
+/*.ng-enter{
+    animation: fadeIn 1s;
+}*/
+
+
+
+.mygrid-wrapper-div{
+/*    white-space: nowrap;
+    overflow-x: visible;*/
+    overflow-y: hidden;
+    border: 1px solid #cccccc; 
+}
+
+.modal-header{
+    padding: 5px !important;
+}
+
+
+

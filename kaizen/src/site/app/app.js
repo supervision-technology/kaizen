@@ -6,6 +6,7 @@
         "ui-notification",
         "ngAnimate",
         "base64",
-        "angular.filter"
+        "angular.filter",
+        'ngCookies'
     ]);
 }());

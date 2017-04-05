@@ -3,41 +3,35 @@
 
     //-----------http controller---------
     angular.module("AppModule")
-            .controller("LoginController", function ($http, systemConfig, $base64, $scope, $rootScope, $location) {
-                //data models 
-                $scope.model = {};
-
+            .controller("LoginController", function ($http, systemConfig, $scope, $rootScope, $location, AuthenticationService) {
                 //ui models
                 $scope.ui = {};
 
+                // reset login status
+                AuthenticationService.ClearCredentials();
 
-                $scope.model.user = {
-                    name: null,
-                    password: null
+                $scope.login = function () {
+                    $scope.error =null;
+                    $rootScope.loading = "loading";
+                    AuthenticationService.Login($scope.username, $scope.password, function (response) {
+                        if (response) {
+                            $rootScope.loading = null;
+                            AuthenticationService.SetCredentials($scope.username, $scope.password);
+                            $rootScope.UserMode = response.role;
+//                            $rootScope.userName = response.name;
+                            $rootScope.user = response;
+                            if (response.role === 'admin') {
+                                $location.path('/master/user-registration');
+                            } else {
+                                $location.path('/home');
+                            }
+
+                        } else {
+                            $rootScope.loading = null;
+                            $scope.error = 'Username or password is incorrect';
+                        }
+                    });
                 };
-
-
-                $scope.ui.login = function () {
-                    var model = $scope.model.user;
-                    var JSONDetail = JSON.stringify(model);
-
-                    if ($scope.model.user.name !== null && $scope.model.user.password !== null) {
-                        var url = systemConfig.apiUrl + "/user/login";
-                        $http.post(url, JSONDetail)
-                                .success(function (data, status, headers) {
-                                    if (data) {
-                                        $rootScope.UserMode = data.role;
-                                        $rootScope.userName = data.name;
-                                        $location.path('/home');
-                                    }
-                                })
-                                .error(function (data, status, headers) {
-                                    console.log(data);
-                                });
-                    }
-                };
-
 
             });
 }());
-

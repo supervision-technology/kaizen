@@ -1,37 +1,36 @@
 <div class="col-lg-12 bt border-primary" style="height: calc(100vh - 57px)">
     <div class="row">
-        <div class="col-sm-3 bg-default-light" style="height: calc(100vh - 57px)">
-            <div class="profile-sidebar mt10">
+        <div class="col-sm-3 bg-default-light" style="height: calc(100vh - 57px)" ng-show="imageUrl">
+            <div class="profile-sidebar mt10" style="animation: fadeIn 1s">
                 <div class="profile-sidebar-item profile-avatar">
-                    <img src="./images/face2.jpg"  alt="" class="bordered"/>
-                    <!--<img src="images/man.png" alt="" class="img-rounded">-->
+                    <div>
+                        <image id="userImg"  ng-src="{{imageUrl}}"  height="100%" width="150px" />
+                    </div>
                 </div>
+                <br>
+                <h5 class="bold text-center">{{model.employee.name}}</h5>
                 <div class="profile-sidebar-item profile-info">
-                    <span class="h5 bold">{{model.employee.name}}</span>
-                    <!--<p>{{model.employee.type}}</p>-->
                     <div class="center-block mt10">
-                        <label class="label bg-bluegrey" style="font-size: 15px">{{model.employee.department}}</label>
+                        <label class="label bg-bluegrey" style="font-size: 10px">{{model.employee.department}}</label>
                     </div>
                 </div>
             </div>
-
         </div>
+
+        <div class="col-sm-3 bg-default-light" style="height: calc(100vh - 57px)" ng-hide="imageUrl">
+            <div class="col-sm-12 bordered" style="border: 1px solid white;opacity: 0.6;height: calc(100vh - 74px); margin-top: 10px;">
+                <h1 class="text-center mt200">Employee Details</h1>
+            </div>
+        </div>
+
         <div class="col-sm-5 mt10">
             <section class="profile-timeline composer" style="height: 230px">
-                <!--                <div class="btn-group mb15" data-toggle="buttons">
-                                    <label class="btn btn-primary active" ng-click="ui.setImplemented('Implemented')">
-                                        <input type="radio" name="options" id="option2" > Implemented
-                                    </label>
-                                    <label class="btn btn-primary"  ng-click="ui.setSuggestion('Suggestion')">
-                                        <input type="radio" name="options" id="option3"> Suggestion
-                                    </label>
-                                </div><br>-->
                 <div class="row">
                     <div class="col-sm-5">
-                        <input type="text" class="form-control mb5" placeholder="Emp No" ng-model="model.employee.epfNo"  ng-keypress="ui.keyEvent($event);">
+                        <input type="text" id="epfNo" class="form-control mb5" placeholder="Emp No" ng-model="model.employee.epfNo"  ng-keypress="ui.keyEvent($event);">
                     </div>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control mb5" placeholder="Employee" ng-model="model.kaizen.employee" uib-typeahead="employee as (employee.name) for employee in model.employeeList|filter:$viewValue|limitTo:10"  typeahead-on-select="ui.selectEmployee($model)">
+                        <input type="text" id="empName" class="form-control mb5" placeholder="Employee" ng-model="model.kaizen.employee" uib-typeahead="employee as (employee.name) for employee in model.employeeList|filter:$viewValue|limitTo:10"  typeahead-on-select="ui.selectEmployee($model)">
                     </div>
                 </div>
                 <input class="form-control mb5" placeholder="Title" ng-model="model.kaizen.title">
@@ -41,21 +40,22 @@
             <div class="composer-options" style="margin-bottom: 40px">
                 <div class="row col-sm-5">
                     <label class="btn btn-xs btn-instagram btn-flat" for="file">
-                        <span class="glyphicon glyphicon-folder-open mr2"></span><input type="file" id="file" ng-model-instant  onchange="angular.element(this).scope().imageUpload(event,'before')" multiple style="display: none">
+                        <!--<span class="glyphicon glyphicon-folder-open mr2"></span><input type="file" id="file" ng-model-instant  onchange="angular.element(this).scope().imageUpload(event, 'before')" multiple style="display: none">-->
+                        <span class="glyphicon glyphicon-folder-open mr2"></span><input style="display: none" type="file" id="file"  custom-on-change="uploadBeforeFile" multiple>
                         browse
                     </label>
                 </div>
                 <label class="pull-right">BEFORE PICTURE</label>
             </div>
 
-            <div class="bordered border-default" style="height: 130px" >
+            <div class="bordered border-default mygrid-wrapper-div" style="height: 130px" >
                 <!--<div>-->
                 <table>
                     <tbody>
-                    <td ng-repeat="image in imageModel">
+                    <td ng-repeat="image in beforeImageModel track by $index">
                         <div style="width: 110px; height: 120px; margin-top: 5px;margin-left: 5px">
                             <button class="btn btn-xs btn-danger btn-flat pull-right" ng-click="removeImage($index)"><span class="glyphicon glyphicon-remove"></span></button>
-                            <img src="{{image}}" style="width: 100%; height: 95px;border: 1px solid #cccccc; ">
+                            <img ng-src="{{image}}" style="width: 100%; height: 95px;border: 1px solid #cccccc; ">
                         </div>
                     </td>
                     </tbody>
@@ -64,20 +64,20 @@
 
             <div class="composer-options mt15" style="margin-bottom: 40px">
                 <div class=" row col-sm-5">
-                    <label class="btn btn-xs btn-instagram btn-flat" for="file">
-                        <span class="glyphicon glyphicon-folder-open mr2"></span><input type="file" id="file" ng-model-instant onchange="angular.element(this).scope().imageUpload(event,'after')" multiple style="display: none">
+                    <label class="btn btn-xs btn-instagram btn-flat" for="file2">
+                        <span class="glyphicon glyphicon-folder-open mr2"></span><input style="display: none" type="file" id="file2"  custom-on-change="uploadAfterFile" multiple>
                         browse
                     </label>
                 </div>
                 <label class="pull-right">AFTER PICTURE</label>
             </div>
 
-            <div class="bordered border-default" style="height: 130px" >
+            <div class="bordered border-default mygrid-wrapper-div" style="height: 130px" >
                 <table>
                     <tbody>
-                    <td ng-repeat="images in afterImageModel">
+                    <td ng-repeat="images in afterImageModel track by $index">
                         <div style="width: 110px; height: 120px; margin-top: 5px;margin-left: 5px">
-                            <button class="btn btn-xs btn-danger btn-flat pull-right" ng-click="removeImage($index)"><span class="glyphicon glyphicon-remove"></span></button>
+                            <button class="btn btn-xs btn-danger btn-flat pull-right" ng-click="removeAfterImage($index)"><span class="glyphicon glyphicon-remove"></span></button>
                             <img src="{{images}}" style="width: 100%; height: 95px;border: 1px solid #cccccc; ">
                         </div>
                     </td>

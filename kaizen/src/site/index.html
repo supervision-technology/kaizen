@@ -42,47 +42,51 @@
                 <nav role="navigation">
                     <ul class="nav">
                         <!-- transaction -->
-                        <li>
-                            <a href="javascript:;">
-                                <i class="fa fa-list-alt"></i>
-                                <span>Transaction</span>
+                        <li ng-hide="UserMode === 'admin'">
+                            <!--                            <a href="javascript:;">
+                                                            <i class="fa fa-list-alt"></i>
+                                                            <span>Transaction</span>
+                                                        </a>-->
+
+
+                            <!--<ul  ng-show="UserMode === 'manager' || UserMode === 'committee' || UserMode === 'group_user' || UserMode === 'user'">-->
+                            <i class="sub-menu"></i> 
+                            <a href="#/transaction/kaizen" ng-show="UserMode === 'manager' || UserMode === 'committee' || UserMode === 'group_user' || UserMode === 'user'">
+                                <span>Create Kaizen</span>
                             </a>
-                            <ul class="sub-menu" ng-show="UserMode === 'manager' || UserMode === 'employee'">
-                                <li>
-                                    <a href="#/transaction/kaizen">
-                                        <span>Create Kaizen</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="sub-menu" ng-show="UserMode === 'manager'">
-                                <li>
-                                    <a href="#/transaction/kaizen-manager-view">
-                                        <span>Manager View</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="sub-menu" ng-show="UserMode === 'committee'">
-                                <li>
-                                    <a href="#/transaction/kaizen-committee-view">
-                                        <span>Committee View</span>
-                                    </a>
-                                </li>
-                            </ul>
+                            <!--</ul>-->
+                            <i class="sub-menu"></i>
+                            <a href="#/transaction/kaizen-manager-view" ng-show="UserMode === 'manager' || UserMode === 'committee'">
+                                <span>Manager View</span>
+                            </a>
+
+                            <!--</ul>-->
+                            <!--<ul class="sub-menu" ng-show="UserMode === 'committee'">-->
+                            <i class="sub-menu"></i>
+                            <a href="#/transaction/kaizen-committee-view" ng-show="UserMode === 'committee'">
+                                <span>Committee View</span>
+                            </a>
                         </li>
+                        <!--</ul>-->
                         <!-- /transaction-->
                         <!-- master -->
-                        <li ng-show="UserMode === 'manager'">
-                            <a href="javascript:;">
-                                <i class="fa fa-cubes"></i>
-                                <span>Master </span>
+                        <li ng-show="UserMode === 'admin'">
+                            <!--                            <a href="javascript:;">
+                                                            <i class="fa fa-cubes"></i>
+                                                            <span>Master </span>
+                                                        </a>-->
+                            <!--<ul class="sub-menu">-->
+                            <!--<li>-->
+                            <i class="sub-menu"></i>
+                            <a href="#/master/employee-registration">
+                                <span>Employee Registration</span>
                             </a>
-                            <ul class="sub-menu">
-                                <li>
-                                    <a href="#/master/employee-registration">
-                                        <span>Employee Registration</span>
-                                    </a>
-                                </li>
-                            </ul>
+                            <i class="sub-menu"></i>
+                            <a href="#/master/user-registration">
+                                <span>User Registration</span>
+                            </a>
+                            <!--</li>-->
+                            <!--</ul>-->
                         </li>
                         <!-- /master-->
                     </ul>
@@ -142,11 +146,9 @@
                                         </ul>-->
 
                     <ul class="nav navbar-nav navbar-right hidden-xs">
-                        <!--                        <li>
-                                                    <a href="javascript:;" data-toggle="quick-launch-panel">
-                                                        <i class="fa fa-circle-thin"></i>
-                                                    </a>
-                                                </li>-->
+                        <li ng-show="sendMode === 'loading'">
+                            <img src="images/loading.gif">
+                        </li>
 
                         <!--                        <li>
                                                     <a href="javascript:;" data-toggle="dropdown">
@@ -204,15 +206,16 @@
 
                         <li>
                             <a href="javascript:;" data-toggle="dropdown">
-                                <img src="images/face3.jpg" class="header-avatar img-circle ml10" alt="user" title="user">
-                                <span class="pull-left">{{userName}}</span>
+                                <label class="glyphicon glyphicon-user" style="margin-left: 10px"></label>
+                                <!--<img src="images/face3.jpg" class="header-avatar img-circle ml10" alt="user" title="user">-->
+                                <span class="pull-left">{{globals.currentUser.username}}</span>
                             </a>
                             <ul class="dropdown-menu">
+                                <!--                                <li>
+                                                                    <a>Settings</a>
+                                                                </li>-->
                                 <li>
-                                    <a>Settings</a>
-                                </li>
-                                <li>
-                                    <a ng-click="logout()">Logout</a>
+                                    <a href="#/">Logout</a>
                                 </li>
                             </ul>
 

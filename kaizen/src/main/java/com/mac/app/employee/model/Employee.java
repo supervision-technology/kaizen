@@ -42,8 +42,8 @@ public class Employee implements Serializable {
     @Column(name = "type")
     private String type;
 
-    @Column(name = "picture")
-    private String picture;
+    @Column(name = "email")
+    private String email;
 
     
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
@@ -55,12 +55,12 @@ public class Employee implements Serializable {
         
     }
 
-    public Employee(Integer indexNo, String name, String epfNo, String type, String picture, Department department) {
+    public Employee(Integer indexNo, String name, String epfNo, String type, String email, Department department) {
         this.indexNo = indexNo;
         this.name = name;
         this.epfNo = epfNo;
         this.type = type;
-        this.picture = picture;
+        this.email = email;
         this.department = department;
     }
 
@@ -96,12 +96,12 @@ public class Employee implements Serializable {
         this.type = type;
     }
 
-    public String getPicture() {
-        return picture;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Department getDepartment() {
@@ -112,7 +112,7 @@ public class Employee implements Serializable {
         this.department = department;
     }
 
-    
+   
     
   
 }
