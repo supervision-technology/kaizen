@@ -212,7 +212,6 @@
 
                 $scope.ui.getPictures = function (path) {
                     var url = systemConfig.apiUrl + "/api/document/download-image/" + path + "/";
-                    console.log(url)
                     $scope.imageUrl = url;
                 };
 

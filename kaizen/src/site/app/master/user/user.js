@@ -59,7 +59,7 @@
 
 
     angular.module("AppModule")
-            .controller("userController", function ($scope, userFactory, Notification) {
+            .controller("userController", function ($filter, $scope, userFactory, Notification) {
 
                 //data models 
                 $scope.model = {
@@ -77,10 +77,23 @@
 
                 $scope.userList = [];
 
+                //convert lovercase to uppercase 
+//                $scope.$watch('model.searchName', function (val) {
+//                    $scope.model.searchName = $filter('uppercase')(val);
+//                }, true);
+
+                $scope.routeLabel = function (indexNo) {
+                    var label;
+                    angular.forEach($scope.departmentList, function (value) {
+                        if (value.indexNo === indexNo) {
+                            label = value.indexNo + "-" + value.name;
+                            return;
+                        }
+                    });
+                    return label;
+                };
                 //-------------------http funtion-------------
                 $scope.http.save = function () {
-                    $scope.model.department = $scope.model.department.indexNo;
-                    console.log($scope.model);
                     var JSONDetail = JSON.stringify($scope.model);
 
                     userFactory.saveUser(
@@ -115,12 +128,7 @@
                 };
 
                 $scope.ui.edit = function (index, user) {
-                    console.log(user);
-//                     angular.forEach($scope.departmentList, function (value) {
-//                        if (value.indexNo === user.department) {
-//                            $scope.model.department = value.name;
-//                         }
-//                    });
+//                    console.log(user)
                     $scope.model = user;
                     $scope.userList.splice(index, 1);
                 };
@@ -136,10 +144,10 @@
                     return  department;
                 };
 
+
+
                 $scope.showMore = function () {
-                    console.log("work");
                     $scope.numLimit += 5;
-                    console.log('show more triggered');
                 };
 
                 $scope.init = function () {

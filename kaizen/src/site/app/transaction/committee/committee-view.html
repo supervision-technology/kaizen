@@ -46,7 +46,7 @@
             <div class="br border-default smart-scroll-y" scrolly="showMore()" style="height: calc(100vh - 166px)" ng-show="model.kaizenList.length">
                 <section class="bg-white post-comments"> 
                     <section class="bg-white post-comments"> 
-                        <div class="media pt10 pb5 bb border-default"  ng-repeat="kaizen in model.kaizenList| limitTo:numLimit |filter:{employee:model.employee.indexNo} | filter:{type:model.type} | filter: ui.filterValue" ng-click="ui.selectkaizen(kaizen.indexNo)" ng-class="ui.selectedDataIndex === kaizen.indexNo ? 'selected' : ''">
+                        <div class="media pt10 pb5 bb border-default"  ng-repeat="kaizen in model.kaizenList| filter:{employee:model.employee.indexNo} | filter:{type:model.type} | filter: ui.filterValue | limitTo:numLimit " ng-click="ui.selectkaizen(kaizen.indexNo)" ng-class="ui.selectedDataIndex === kaizen.indexNo ? 'selected' : ''">
                             <div class="col-lg-12">
                                 <a class="pull-left" href="javascript:;" style="margin-right: 5px"> 
                                     <img class="media-object avatar avatar-sm" style="width: 100px; height: 50px" ng-src="{{imageUrl}}" alt="">
@@ -192,12 +192,12 @@
                         <table class="table">  
                             <tbody>
                                 <tr>
-                                    <td ng-repeat="afterimage in ui.afterImages">
+                                    <td ng-repeat="afterimage in ui.afterImages track by $index">
                                         <a href="{{afterimage}}" download><div id="imgPanel" style="width: 200px; height: 200px;" ng-click="getfabricCostDetails(style)">
                                                 <img ng-src="{{afterimage}}" style="width: 200px; height: 200px;">
                                             </div></a>
                                     </td>
-                                    <td ng-repeat="afterDocumentFile in ui.afterDocumentFile">
+                                    <td ng-repeat="afterDocumentFile in ui.afterDocumentFile track by $index">
                                         <a href="{{afterDocumentFile.url}}" download>
                                             <img src="{{afterDocumentFile.icon}}" style="width: 200px; height: 200px;">
                                         </a>

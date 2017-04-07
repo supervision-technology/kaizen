@@ -77,7 +77,7 @@
                 <label class="control-label" style="margin-top: 9px">Employee :</label>
             </div>
             <div class="col-sm-5">
-                <input class="form-control" ng-model="model.searchName"><br>
+                <input class="form-control" ng-model="searchName"><br>
             </div>
         </div>
 
@@ -106,13 +106,13 @@
                 <col style="width: 20%">
                 <col style="width: 25%">
                 <tbody>
-                    <tr ng-repeat="employee in employeeList| limitTo: numLimit | filter : model.searchName">
+                    <tr ng-repeat="employee in employeeList| filter : searchName | limitTo: numLimit">
                         <td>{{employee.name}}</td>
                         <td>{{employee.type}}</td>
                         <td>{{employee.epfNo}}</td>
                         <td>{{employee.department.name}}</td>
                         <td><button style="margin-left: 5px" class="btn btn-xs btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span> Delete</button>
-                            <button class="btn btn-xs btn-primary pull-right"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                            <button class="btn btn-xs btn-primary pull-right" ng-click="ui.edit(employee)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
                         </td>
                     </tr>
                 </tbody>

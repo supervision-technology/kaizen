@@ -38,7 +38,7 @@
                             <label for="department" class="control-label" style="margin-top: 9px">Department :</label>
                         </td>
                         <td class="col-sm-8"> 
-                            <input type="text" ng-model="model.department"  class="form-control" id="department" uib-typeahead="department as (department.name) for department in departmentList|filter:$viewValue|limitTo:10">
+                            <input type="text" ng-model="model.department"  class="form-control" id="department" uib-typeahead="department.indexNo as (department.name) for department in departmentList|filter:$viewValue|limitTo:10" typeahead-input-formatter="routeLabel($model)">
                         </td>
                     </tr>
                 </tbody>
@@ -81,7 +81,7 @@
                 <col style="width: 20%">
                 <col style="width: 25%">
                 <tbody>
-                    <tr ng-repeat="user in userList| limitTo: numLimit | filter : model.searchName">
+                    <tr ng-repeat="user in userList | filter : model.searchName | limitTo: numLimit">
                         <td>{{user.name}}</td>
                         <td>{{user.role}}</td>
                         <td>{{user.password}}</td>

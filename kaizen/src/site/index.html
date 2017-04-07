@@ -24,7 +24,7 @@
 
                     <!-- logo -->
                     <div class="brand-logo">
-                        <label style="font-size: 18px; color: white">KAIZEN</label>
+                        <label style="font-size: 18px; color: white">MENU</label>
                         <!--<img src="images/logo.png" height="15" alt="">-->
                     </div>
                     <!-- /logo -->
@@ -88,6 +88,12 @@
                             <!--</li>-->
                             <!--</ul>-->
                         </li>
+                        <li ng-show="UserMode === 'admin'">
+                            <i class="sub-menu"></i>
+                            <a href="#/reports/summary">
+                                <span>Report</span>
+                            </a>
+                        </li>
                         <!-- /master-->
                     </ul>
                     <!-- /forms -->
@@ -144,10 +150,19 @@
                                                 </ol>
                                             </li>
                                         </ul>-->
+                    
+                    <div class="col-sm-4">
+                        <img style="margin-top: 0px" src="images/3KAZENLOGO.PNG" width="110px" height="50px;"/>
+                        
+                    </div>
 
                     <ul class="nav navbar-nav navbar-right hidden-xs">
                         <li ng-show="sendMode === 'loading'">
                             <img src="images/loading.gif">
+                        </li>
+                        <li ng-show="sendMode === 'loading2'">
+                            <h5 style="margin-left: 32px; margin-bottom: 0px;">Sending</h5>
+                            <img src="images/loading3.gif">
                         </li>
 
                         <!--                        <li>

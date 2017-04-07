@@ -1,9 +1,4 @@
-///*
-// * To change this license header, choose License Headers in Project Properties.
-// * To change this template file, choose Tools | Templates
-// * and open the template in the editor.
-// */
-//package com.mac.app.security.zconfig;
+package com.mac.app.security.zconfig;
 //
 //import java.io.IOException;
 //import java.io.PrintWriter;
@@ -17,7 +12,9 @@
 //
 //
 //@Component
-//public class AuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
+public class AuthenticationEntryPoint 
+//extends BasicAuthenticationEntryPoint
+{
 //
 //    @Override
 //    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authEx)
@@ -33,4 +30,4 @@
 //        setRealmName("DeveloperStack");
 //        super.afterPropertiesSet();
 //    }
-//}
+}

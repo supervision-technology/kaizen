@@ -28,7 +28,7 @@
                 };
 
                 factory.saveEmployee = function (employee, callback) {
-                    var url = systemConfig.apiUrl + "/api/employee/save-employee";
+                    var url = systemConfig.apiUrl + "/api/employee/upload-employee";
                     $http.post(url, employee)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -61,8 +61,10 @@
                     type: "",
                     epfNo: "",
                     department: null,
-                    email : null
+                    email: null
                 };
+
+                $scope.employeeList = [];
 
                 //validate model
                 $scope.validateInput = function () {
@@ -79,22 +81,33 @@
                 //save employee 
                 $scope.http.saveEmployee = function () {
 
-                    var url = systemConfig.apiUrl + "/api/employee/save-employee";
-
-                    var formData = new FormData();
                     var file = document.getElementById('file-upload').files[0];
-                    var json = $scope.model;
+                    var json = JSON.stringify($scope.model);
 
-                    formData.append("file", file);
-                    formData.append("ad", JSON.stringify(json));//important: convert to JSON!
+                    if (file) {
+                        var url = systemConfig.apiUrl + "/api/employee/save-employee";
+                        var formData = new FormData();
+                        formData.append("file", file);
+                        formData.append("ad", json);
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", url);
+                        xhr.send(formData);
 
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("POST", url);
-                    xhr.send(formData);
-                    
-                    Notification.success("added Successfully..");
-                    $scope.model = null;
-                    $scope.imagemodel = null;
+                        Notification.success("Employee Save Successfully");
+                        $scope.employeeList.push($scope.model);
+                        $scope.model = null;
+                        $scope.imagemodel = null;
+                    } else {
+                        employeeFactory.saveEmployee(
+                                json,
+                                function (data) {
+                                    Notification.success(data.indexNo + " Employee Save Successfully");
+                                    $scope.employeeList.push($scope.model);
+                                    $scope.imagemodel = null;
+                                    $scope.model = null;
+                                });
+
+                    }
                 };
 
 
@@ -113,9 +126,16 @@
                                 $scope.employeeList.splice(id, 1);
                             },
                             function (data) {
-                                Notification.error(data);
+//                                Notification.error(data);
                             });
                 };
+
+                //get employee image
+                $scope.http.getPictures = function (path) {
+                    var url = systemConfig.apiUrl + "/api/document/download-image/" + path + "/";
+                    $scope.imagemodel = url;
+                };
+
 
 
                 //---------------ui funtion--------------
@@ -153,6 +173,29 @@
                     console.log('show more triggered');
                 };
 
+                $scope.ui.edit = function (user) {
+                    var id = -1;
+                    for (var i = 0; i < $scope.employeeList.length; i++) {
+                        if ($scope.employeeList[i].indexNo === user.indexNo) {
+                            id = i;
+                        }
+                    }
+                    $scope.employeeList.splice(id, 1);
+
+                    $scope.model = user;
+                    $scope.http.getPictures(user.epfNo);
+                };
+
+//                $scope.routeLabel = function (indexNo) {
+//                    var label;
+//                    angular.forEach($scope.departmentList, function (value) {
+//                        if (value.indexNo === indexNo) {
+//                            label = value.indexNo + "-" + value.name;
+//                            return;
+//                        }
+//                    });
+//                    return label;
+//                };
 
                 $scope.init = function () {
                     $scope.numLimit = 15;
@@ -164,7 +207,6 @@
                     //load department
                     employeeFactory.loadDepartment(function (data) {
                         $scope.departmentList = data;
-                        console.log($scope.departmentList);
                     });
 
                 };

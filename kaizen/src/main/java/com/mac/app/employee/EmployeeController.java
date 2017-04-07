@@ -44,9 +44,11 @@ public class EmployeeController {
         return employeeService.allEmployee();
     }
 
-//    public Employee saveEmployee(@RequestBody Employee employee) {
-//        return employeeService.saveEmployee(employee);
-//    }
+    @RequestMapping(value = "/upload-employee", method = RequestMethod.POST)
+    public Employee saveEmployee(@RequestBody Employee employee) {
+        return employeeService.saveEmployee(employee);
+    }
+
     @RequestMapping(value = "/save-employee", method = RequestMethod.POST)
     public @ResponseBody
     Employee saveEmployee(@RequestPart("ad") String adString, @RequestPart("file") MultipartFile file) {
@@ -58,10 +60,12 @@ public class EmployeeController {
 
 //            String fileName = dateFormat.format(new Date());
 //            fileName = Base64.getEncoder().encodeToString(fileName.getBytes()) + file.getOriginalFilename();
+            String fileName = dateFormat.format(new Date());
+            fileName = file.getOriginalFilename();
 
-//            System.out.println(fileName);
+            System.out.println(fileName);
 
-            File uploadFile = new File("./files", jsonAd.getEpfNo());
+            File uploadFile = new File("./files", fileName);
             if (!uploadFile.getParentFile().exists()) {
                 uploadFile.getParentFile().mkdirs();
             }
@@ -71,8 +75,6 @@ public class EmployeeController {
             FileOutputStream fileOutputStream = new FileOutputStream(uploadFile);
             fileOutputStream.write(file.getBytes());
 
-            //TODO
-//            jsonAd.setPicture(); 
             saveEmployee = employeeService.saveEmployee(jsonAd);
 
         } catch (Exception a) {

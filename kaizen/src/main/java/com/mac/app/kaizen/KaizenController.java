@@ -65,20 +65,23 @@ public class KaizenController {
     // send appreciation mail
     @RequestMapping(value = "/send-mail/{indexNo}", method = RequestMethod.POST)
     public void sendEmail(@RequestBody Mail mail, @PathVariable Integer indexNo) {
-//        kaizenService.updateKaizenByIndex(indexNo);
+        kaizenService.updateKaizenByIndex(indexNo);
+        System.out.println(mail.getEmail());
+        System.out.println(mail.getMessage());
 //    
-//        MimeMessagePreparator messagePreparator = mimeMessage -> {
-//            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-//            messageHelper.setFrom("niduraprageeth@gmail.com");
-//            messageHelper.setTo(mail.getEmail());
-//            messageHelper.setSubject(mail.getSubject());
-//            messageHelper.setText(mail.getMessage());
-//        };
-//        try {
-//            mailSender.send(messagePreparator);
-//        } catch (MailException e) {
-//            System.out.println(e);
-//        }
+        MimeMessagePreparator messagePreparator = mimeMessage -> {
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+            messageHelper.setFrom("kaizencommittee1@gmail.com");
+            messageHelper.setTo(mail.getEmail());
+//            messageHelper.setTo("niduraprageeth@gmail.com");
+            messageHelper.setSubject(mail.getSubject());
+            messageHelper.setText(mail.getMessage());
+        };
+        try {
+            mailSender.send(messagePreparator);
+        } catch (MailException e) {
+            System.out.println(e);
+        }
 
     }
 

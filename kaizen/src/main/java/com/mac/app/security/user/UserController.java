@@ -9,6 +9,7 @@ import com.mac.app.security.user.model.User;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +49,6 @@ public class UserController {
 //        return userRepository.findAll();
 //
 //    }
-    
     @RequestMapping(path = "/user/login", method = RequestMethod.POST)
     public User getUser(@RequestBody User user) {
         User user1 = userRepository.findByNameAndPassword(user.getName(), user.getPassword());
@@ -76,4 +76,10 @@ public class UserController {
     public void deleteUser(@PathVariable Integer indexNo) {
         userRepository.delete(indexNo);
     }
+
+//    @RequestMapping(value = "/**", method = RequestMethod.OPTIONS)
+//    public HttpEntity optionRequest() {
+//        return new HttpEntity(HttpEntity.EMPTY);
+//    }
+
 }

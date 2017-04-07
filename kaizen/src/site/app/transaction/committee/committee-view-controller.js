@@ -96,9 +96,9 @@
                 $scope.model.kaizenList = [];
 
                 $scope.ui.beforeImages = [];
-                
+
                 $scope.ui.documentFile = [];
-                
+
                 $scope.ui.afterDocumentFile = [];
 
                 $scope.ui.afterImages = [];
@@ -339,6 +339,10 @@
                 };
 
                 $scope.ui.modalPictures = function () {
+                    $scope.ui.beforeImages = [];
+                    $scope.ui.afterImages = [];
+                    $scope.ui.documentFile = [];
+                    $scope.ui.afterDocumentFile = [];
                     angular.forEach($scope.model.documents, function (value) {
                         if (value.kaizen === $rootScope.kaizenIndex) {
 
@@ -412,8 +416,6 @@
                 };
 
                 $scope.ui.selectkaizen = function (indexNo) {
-                    $scope.ui.beforeImages = [];
-                    $scope.ui.afterImages = [];
                     $scope.ui.selectedDataIndex = indexNo;
                     angular.forEach($scope.model.kaizenList, function (value) {
                         if (value.indexNo === indexNo) {
@@ -542,9 +544,7 @@
 
                 //load scroll
                 $scope.showMore = function () {
-                    console.log("work");
                     $scope.numLimit += 5;
-                    console.log('show more triggered');
                 };
 
 

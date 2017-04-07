@@ -28,12 +28,21 @@ angular.module('AppModule')
                 $rootScope.model.name = username;
                 $rootScope.model.password = password;
 
+                var auth = username + '--' + password + ":" + password;
+                auth = "Basic " + btoa(auth);
+
+                var headers = {
+                    "Authorization": auth
+                };
+
                 var url = systemConfig.apiUrl + "/user/login";
 
                 var DetailJSON = JSON.stringify($rootScope.model);
 
                 $timeout(function () {
-                    $http.post(url, DetailJSON)
+                    $http.post(url, DetailJSON, {
+                        'headers': headers
+                    })
                             .success(function (response) {
                                 callback(response);
                             });
@@ -42,7 +51,7 @@ angular.module('AppModule')
             };
 
             service.SetCredentials = function (username, password) {
-                var authdata = $base64.encode(username + ':' + password);
+                var authdata = btoa(username + '--' + password + ":" + password); //$base64.encode(username + ':' + password);
 
                 $rootScope.globals = {
                     currentUser: {
