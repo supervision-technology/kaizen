@@ -66,6 +66,12 @@ public class KaizenService {
         kaizen.setIntroduceDate(new Date());
         kaizen.setReviewStatus(KAIZEN_PENDING);
         kaizen.setEmployeeComplete(EMPLOYEE_COMPLETE);
+        
+        //if manager kaizen then automatically manager approve
+        Employee employee = employeeRepository.findOne(kaizen.getEmployee());
+        if (employee.getType().equalsIgnoreCase("Manager")) {
+            kaizen.setReviewStatus(MANAGER_VIEW);
+        }
 
         return kaizenRepository.save(kaizen);
     }

@@ -107,7 +107,7 @@
                     subject: null
                 };
 
-
+                $scope.urlX = systemConfig.apiUrl + "/api/document/download-image/";
 
                 //kaizen model
                 $scope.model.kaizen = {
@@ -508,7 +508,7 @@
                 $scope.sendAppreciationMail = function () {
                     if ($scope.ui.selectedDataIndex) {
                         if ($scope.emailModel.email) {
-                           $rootScope.sendMode = "loading2";
+                            $rootScope.sendMode = "loading2";
 //                        var introduceDate = $filter('date')($rootScope.introduceDate, 'yyyy-MM-dd');
                             var date = $filter('date')(new Date(), 'yyyy-MM-dd');
                             $scope.emailModel.message = "Hi(" + $rootScope.employeeName + "),\n\THANK YOU !!! for your effort towards improving the continues improvement culture in Linea Aqua.\n\We have considered your Kaizen in the " + date + " kaizen forum and found it as a valuable idea for Linea Aqua.\n\ \n\We hope you will keep doing Kaizens to bring Linea Aqua to the next level.\n\Thanks & Regards,\n\Kaizen Committee";

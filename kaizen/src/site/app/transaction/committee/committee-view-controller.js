@@ -103,6 +103,8 @@
 
                 $scope.ui.afterImages = [];
 
+                $scope.urlX = systemConfig.apiUrl + "/api/document/download-image/";
+
                 //kaizen model
                 $scope.model.kaizen = {
                     title: null,
