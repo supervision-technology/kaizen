@@ -103,7 +103,7 @@ public class KaizenService {
 
     public void updateKaizenByIndex(Integer indexNo) {
         TKaizen kaizen = kaizenRepository.findOne(indexNo);
-        kaizen.setReviewStatus(MANAGER_VIEW);
+        kaizen.setReviewStatus(null);
         kaizen.setManagerComplete(MANAGER_COMPLETE);
         kaizenRepository.save(kaizen);
     }

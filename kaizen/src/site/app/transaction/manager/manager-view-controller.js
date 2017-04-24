@@ -521,6 +521,13 @@
                             $http.post(url, JsonDetail)
                                     .success(function (data, status, headers) {
                                         $rootScope.sendMode = null;
+                                        var id = null;
+                                        for (var i = 0; i < $scope.model.kaizenList.length; i++) {
+                                            if ($scope.model.kaizenList[i].indexNo === data.indexNo) {
+                                                id = i;
+                                            }
+                                        }
+                                        $scope.model.kaizenList.splice(id, 1);
                                         Notification.success("Send successfully");
                                     })
                                     .error(function (data, status, headers) {
@@ -549,6 +556,13 @@
                             $http.post(url, JsonDetail)
                                     .success(function (data, status, headers) {
                                         $rootScope.sendMode = null;
+                                        var id = null;
+                                        for (var i = 0; i < $scope.model.kaizenList.length; i++) {
+                                            if ($scope.model.kaizenList[i].indexNo === data.indexNo) {
+                                                id = i;
+                                            }
+                                        }
+                                        $scope.model.kaizenList.splice(id, 1);
                                         Notification.success("Send successfully");
                                     })
                                     .error(function (data, status, headers) {
