@@ -119,7 +119,8 @@
                     employeeUtilization: 0,
                     employeeCreativity: 0,
                     employeeSafety: 0,
-                    employeeQuality: 0
+                    employeeQuality: 0,
+                    actualCost:null
                 };
 
                 //manager kaizen model
@@ -406,6 +407,8 @@
                             $scope.model.kaizen.employeeCreativity = value.employeeCreativity;
                             $scope.model.kaizen.employeeSafety = value.employeeSafety;
                             $scope.model.kaizen.employeeQuality = value.employeeQuality;
+                            $scope.model.kaizen.actualCost = value.actualCost;
+                            
                             $rootScope.ManagerScoreCost = value.employeeCost;
                             $rootScope.ManagerScoreUtilization = value.employeeUtilization;
                             $rootScope.ManagerScoreCreativity = value.employeeCreativity;
@@ -479,6 +482,7 @@
 
                 $scope.ui.save = function () {
                     if ($scope.validateInput()) {
+                        $scope.sendAppreciationMail(1);
                         $scope.http.saveKaizen();
                     }
                 };
@@ -505,38 +509,42 @@
                 };
 
 
-                $scope.sendAppreciationMail = function () {
+                $scope.sendAppreciationMail = function (a) {
                     if ($scope.ui.selectedDataIndex) {
-                        if ($scope.emailModel.email) {
-                            $rootScope.sendMode = "loading2";
+                        if ($rootScope.managerTotalScore < 70 || a===1) {
+                            if ($scope.emailModel.email) {
+                                $rootScope.sendMode = "loading2";
 //                        var introduceDate = $filter('date')($rootScope.introduceDate, 'yyyy-MM-dd');
-                            var date = $filter('date')(new Date(), 'yyyy-MM-dd');
-                            $scope.emailModel.message = "Hi(" + $rootScope.employeeName + "),\n\THANK YOU !!! for your effort towards improving the continues improvement culture in Linea Aqua.\n\We have considered your Kaizen in the " + date + " kaizen forum and found it as a valuable idea for Linea Aqua.\n\ \n\We hope you will keep doing Kaizens to bring Linea Aqua to the next level.\n\Thanks & Regards,\n\Kaizen Committee";
-                            $scope.emailModel.subject = "Kaizen Appreciation";
+                                var date = $filter('date')(new Date(), 'yyyy-MM-dd');
+                                $scope.emailModel.message = "Hi (" + $rootScope.employeeName + "),\n\nTHANK YOU !!! for your effort towards improving the continues improvement culture in Linea Aqua.\n\nWe have considered your Kaizen in the " + date + " kaizen forum and found it as a valuable idea for Linea Aqua.\n\n\We hope you will keep doing Kaizens to bring Linea Aqua to the next level.\n\nThanks & Regards,\nKaizen Committee";
+                                $scope.emailModel.subject = "Kaizen Appreciation";
 
-                            var url = systemConfig.apiUrl + "/api/kaizen/send-mail/" + $scope.ui.selectedDataIndex;
+                                var url = systemConfig.apiUrl + "/api/kaizen/send-mail/" + $scope.ui.selectedDataIndex;
 
-                            var JsonDetail = JSON.stringify($scope.emailModel);
+                                var JsonDetail = JSON.stringify($scope.emailModel);
 
-                            $http.post(url, JsonDetail)
-                                    .success(function (data, status, headers) {
-                                        $rootScope.sendMode = null;
-                                        var id = null;
-                                        for (var i = 0; i < $scope.model.kaizenList.length; i++) {
-                                            if ($scope.model.kaizenList[i].indexNo === data.indexNo) {
-                                                id = i;
+                                $http.post(url, JsonDetail)
+                                        .success(function (data, status, headers) {
+                                            $rootScope.sendMode = null;
+                                            var id = null;
+                                            for (var i = 0; i < $scope.model.kaizenList.length; i++) {
+                                                if ($scope.model.kaizenList[i].indexNo === data.indexNo) {
+                                                    id = i;
+                                                }
                                             }
-                                        }
-                                        $scope.model.kaizenList.splice(id, 1);
-                                        Notification.success("Send successfully");
-                                    })
-                                    .error(function (data, status, headers) {
-                                    });
+                                            $scope.model.kaizenList.splice(id, 1);
+                                            Notification.success("Send successfully");
+                                        })
+                                        .error(function (data, status, headers) {
+                                        });
+                            } else {
+                                Notification.error("Email is null");
+                            }
                         } else {
-                            Notification.error("Email is null");
+                            Notification.error("Selected kaizen should be less than 70%");
                         }
                     } else {
-                        Notification.error("Please select kaizen");
+                        Notification.error("Please select kaizen ");
                     }
                 };
 
@@ -546,7 +554,7 @@
                             $rootScope.sendMode = "loading2";
 //                        var introduceDate = $filter('date')($rootScope.introduceDate, 'yyyy-MM-dd');
                             var date = $filter('date')(new Date(), 'yyyy-MM-dd');
-                            $scope.emailModel.message = "Hi(" + $rootScope.employeeName + "),\n\THANK YOU !!! for your effort towards improving the continues improvement culture in Linea Aqua.\n\We have considered your suggestion in the " + date + " February kaizen forum and found it as a valuable idea for Linea Aqua.\n\ \n\Your support in making this suggestion as an implemented improvement is highly appreciated which will be then entitled as a kaizen for the \n\monthly Kaizen evaluation. If you need any support for the suggestion implementation please contact your immediate supervisor or manager.\n\** Since this is a suggestion made by you, it won’t be considered as an implemented kaizen for the moment. Please do the needful and update the system.\n\Thanks & Regards,\n\Kaizen Committee";
+                            $scope.emailModel.message = "Hi (" + $rootScope.employeeName + "),\n\nTHANK YOU !!! for your effort towards improving the continues improvement culture in Linea Aqua.\n\nWe have considered your suggestion in the " + date + " kaizen forum and found it as a valuable idea for Linea Aqua.\n\nYour support in making this suggestion as an implemented improvement is highly appreciated which will be then entitled as a kaizen for the \nmonthly Kaizen evaluation. If you need any support for the suggestion implementation please contact your immediate supervisor or manager.\n\n**Since this is a suggestion made by you, it won’t be considered as an implemented kaizen for the moment. Please do the needful and update the system.\n\nThanks & Regards,\n\Kaizen Committee";
                             $scope.emailModel.subject = "Suggestion Note";
 
                             var url = systemConfig.apiUrl + "/api/kaizen/send-mail/" + $scope.ui.selectedDataIndex;

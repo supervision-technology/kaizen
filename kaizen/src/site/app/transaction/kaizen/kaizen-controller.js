@@ -80,7 +80,8 @@
                     employeeUtilization: 0,
                     employeeCreativity: 0,
                     employeeSafety: 0,
-                    employeeQuality: 0
+                    employeeQuality: 0,
+                    actualCost:null
                 };
                 $scope.model.document = {
                     indexNo: null,

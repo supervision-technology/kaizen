@@ -46,17 +46,16 @@ public class TKaizen implements Serializable {
 
     @Column(name = "review_status")
     private String reviewStatus;
-    
-    
+
     @Column(name = "employee_complete")
     private String employeeComplete;
-    
+
     @Column(name = "manager_complete")
     private String managerComplete;
-   
+
     @Column(name = "appreciation")
     private String appreciation;
-    
+
     @Column(name = "suggestion")
     private String suggestion;
 
@@ -77,7 +76,7 @@ public class TKaizen implements Serializable {
 
     @Column(name = "employee_quality")
     private String employeeQuality;
-    
+
     @Column(name = "manager_cost")
     private String managerCost;
 
@@ -92,7 +91,7 @@ public class TKaizen implements Serializable {
 
     @Column(name = "manager_quality")
     private String managerQuality;
-    
+
     @Column(name = "committee_cost")
     private String committeeCost;
 
@@ -107,7 +106,9 @@ public class TKaizen implements Serializable {
 
     @Column(name = "committee_quality")
     private String committeeQuality;
-    
+
+    @Column(name = "actual_cost")
+    private Double actualCost;
 
     public TKaizen() {
     }
@@ -348,12 +349,13 @@ public class TKaizen implements Serializable {
     public void setCommitteeQuality(String committeeQuality) {
         this.committeeQuality = committeeQuality;
     }
-    
-    
-    
-    
-    
 
-    
- 
+    public Double getActualCost() {
+        return actualCost;
+    }
+
+    public void setActualCost(Double actualCost) {
+        this.actualCost = actualCost;
+    }
+
 }

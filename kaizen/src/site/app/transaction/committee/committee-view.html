@@ -1,8 +1,8 @@
 <div class="bt border-primary">
 
     <div class="col-lg-6">
-        <div  class="row">
-            <div class="bg-default-light" style="height: 110px">
+        <div  class="row br border-primary">
+            <div class="bg-default-light bb border-primary" style="height: 112px">
                 <table class="table">
                     <tbody style="background-color: #e7e7e7;">
                         <tr>
@@ -43,7 +43,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="br border-default smart-scroll-y" scrolly="showMore()" style="height: calc(100vh - 166px)" ng-show="model.kaizenList.length">
+            <div class="smart-scroll-y" scrolly="showMore()" style="height: calc(100vh - 170px)" ng-show="model.kaizenList.length">
                 <section class="bg-white post-comments"> 
                     <section class="bg-white post-comments"> 
                         <div class="media pt10 pb5 bb border-default"  ng-repeat="kaizen in model.kaizenList| filter:{employee:model.employee.indexNo} | filter:{type:model.type} | filter: ui.filterValue | limitTo:numLimit " ng-click="ui.selectkaizen(kaizen.indexNo)" ng-class="ui.selectedDataIndex === kaizen.indexNo ? 'selected' : ''">
@@ -63,13 +63,19 @@
                 </section>
             </div>
 
-            <div class="col-lg-12 placeholder bordered border-default" style="height: calc(100vh - 166px)" ng-hide="model.kaizenList.length">
+            <div class="col-lg-12 placeholder bordered border-default" style="height: calc(100vh - 170px)" ng-hide="model.kaizenList.length">
                 <h1 class="text-center mt200" style="">KAIZEN IS EMPTY :(</h1>
             </div>
         </div>
     </div>
 
     <div class="col-lg-6">
+        <div class="row bg-default-light bb border-primary">
+            <div class="col-xs-12" style="margin: 10px 0 10px 0">
+                <label class="form-control"><b>Actual Cost:</b> {{model.kaizen.actualCost|number:2}}</label>
+            </div>
+        </div>
+
         <div class="mt5">
             <button type="button" class="btn btn-bitbucket btn-xs pull-right" style="border-radius: 0px" ng-click="ui.modalPictures()" data-target=".picture-modal" data-toggle="modal">
                 <span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Images
@@ -77,7 +83,7 @@
             <label class="pull-left">Description</label>
         </div>
 
-        <div class="bordered border-default smart-scroll-y mb5" style="height: 140px; margin-top: 35px;">
+        <div class="bordered border-default smart-scroll-y mb5" style="height: 80px; margin-top: 35px;">
             <p style="padding: 5px">{{model.kaizen.description}}</p>
         </div>
 

@@ -428,6 +428,8 @@
                             $scope.model.kaizen.employeeCreativity = value.employeeCreativity;
                             $scope.model.kaizen.employeeSafety = value.employeeSafety;
                             $scope.model.kaizen.employeeQuality = value.employeeQuality;
+                            console.log(value.actualCost);
+                            $scope.model.kaizen.actualCost = value.actualCost;
                             $scope.model.managerkaizen.managerCost = value.managerCost;
                             $scope.model.managerkaizen.managerUtilization = value.managerUtilization;
                             $scope.model.managerkaizen.managerCreativity = value.managerCreativity;

@@ -1,6 +1,6 @@
 <div class="col-lg-12 bt border-primary" style="height: calc(100vh - 57px)">
     <div class="row">
-        <div class="col-sm-3 bg-default-light" style="height: calc(100vh - 57px)" ng-show="imageUrl">
+        <div class="col-sm-3 bg-default-light br border-primary" style="height: calc(100vh - 57px)" ng-show="imageUrl">
             <div class="profile-sidebar mt10" style="animation: fadeIn 1s">
                 <div class="profile-sidebar-item profile-avatar">
                     <div>
@@ -8,7 +8,7 @@
                     </div>
                 </div>
                 <br>
-                <h5 class="bold text-center">{{model.employee.name}}</h5>
+                <h5 class="bold text-center">{{model.employee.name}}-{{model.employee.epfNo}}</h5>
                 <div class="profile-sidebar-item profile-info">
                     <div class="center-block mt10">
                         <label class="label bg-bluegrey" style="font-size: 10px">{{model.employee.department}}</label>
@@ -92,6 +92,13 @@
                     <h4 class="text-center">VALUE YOUR KAIZEN</h4>
                 </div>
             </div>
+            
+            <div class="row bg-default-light bb border-primary">
+                <div class="col-xs-12" style="margin: 10px 0 10px 0">
+                    <input class="form-control" ng-model="model.kaizen.actualCost" placeholder="Actual cost">
+                </div>
+            </div>
+            
             <!--<label class="label label-success pull-right" style="height: 20px">score {{model.kaizen.employeeCost}}</label>-->
             <div style="height: calc(100vh - 319px)" class="mt20" ng-init="onLoadValueKaizer()">
                 <h6>Cost  <button ng-click="ui.modalOpenCost()" class="btn btn-xs btn-primary btn-flat pull-right">Criteria</button> <button class="btn btn-xs btn-outline btn-flat pull-right" style="margin-right: 7px">Score {{scoreCost}}</button></h6>
@@ -110,7 +117,7 @@
                 <input type="range" value="0" ng-model="scoreQuality" step="1" min="0" max="5" ng-disabled="true" style="margin-bottom: 20px">  
             </div>
 
-            <div class="col-sm-12 text-center" style="height: 165px">
+            <div class="col-sm-12 text-center" style="height: 115px">
                 <label style="font-size: 30px;" class="pt30">TOTAL SCORE <br>{{totalScore}} %</label>
             </div>
 
