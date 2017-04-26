@@ -121,6 +121,7 @@
                     $scope.model.employee.epfNo = null;
                     $scope.model.employee.department = null;
                     $scope.imageUrl = null;
+                    $rootScope.actualCost = "";
 
                 };
 
@@ -171,6 +172,7 @@
                     $scope.model.kaizen.employeeQuality = $rootScope.scoreQuality;
                     $scope.model.kaizen.employee = $rootScope.employee;
                     $scope.model.kaizen.type = $rootScope.type;
+                    $scope.model.kaizen.actualCost = $rootScope.actualCost;
 
                     var details = $scope.model.kaizen;
                     var detailJSON = JSON.stringify(details);
@@ -194,6 +196,7 @@
                                     $rootScope.scoreSafety = 0;
                                     $rootScope.scoreQuality = 0;
                                     $rootScope.totalScore = 0;
+                                    $rootScope.actualCost = "";
                                     $scope.model.kaizen.description = null;
                                     $scope.model.kaizen.title = null;
                                     $scope.uploadForm(data.indexNo);
@@ -369,6 +372,9 @@
 
 
                 // range slider funtion
+                $scope.ui.changeActualCost = function (actualCost) {
+                    $rootScope.actualCost = actualCost;
+                };
                 $scope.ui.costChange = function (score) {
                     $rootScope.scoreCost = score;
                     $scope.ui.totalScore();
@@ -548,6 +554,9 @@
                     if (!$rootScope.scoreQuality) {
                         $rootScope.scoreQuality = 0;
                     }
+//                    if (!$rootScope.actualCost) {
+//                        $rootScope.actualCost = 0;
+//                    }
 
                     if (!$rootScope.type) {
                         $rootScope.type = "Implemented";

@@ -201,7 +201,7 @@
                     kaizenManagerViewFactory.saveKaizen(
                             detailJSON,
                             function (data) {
-                                Notification.success(data.indexNo + " - " + " Saved Successfully.");
+//                                Notification.success(data.indexNo + " - " + " Saved Successfully.");
 
                                 for (var i = 0; i < $scope.model.kaizenList.length; i++) {
                                     if ($scope.model.kaizenList[i].indexNo === data.indexNo) {
@@ -213,7 +213,7 @@
                                 $scope.model.reset();
                             },
                             function (data) {
-                                Notification.error(data.message);
+//                                Notification.error(data.message);
                             }
                     );
                 };
@@ -514,7 +514,6 @@
                         if ($rootScope.managerTotalScore < 70 || a===1) {
                             if ($scope.emailModel.email) {
                                 $rootScope.sendMode = "loading2";
-//                        var introduceDate = $filter('date')($rootScope.introduceDate, 'yyyy-MM-dd');
                                 var date = $filter('date')(new Date(), 'yyyy-MM-dd');
                                 $scope.emailModel.message = "Hi (" + $rootScope.employeeName + "),\n\nTHANK YOU !!! for your effort towards improving the continues improvement culture in Linea Aqua.\n\nWe have considered your Kaizen in the " + date + " kaizen forum and found it as a valuable idea for Linea Aqua.\n\n\We hope you will keep doing Kaizens to bring Linea Aqua to the next level.\n\nThanks & Regards,\nKaizen Committee";
                                 $scope.emailModel.subject = "Kaizen Appreciation";

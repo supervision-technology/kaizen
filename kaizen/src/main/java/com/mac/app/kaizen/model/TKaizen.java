@@ -112,36 +112,7 @@ public class TKaizen implements Serializable {
 
     public TKaizen() {
     }
-
-    public TKaizen(Integer indexNo, String title, String description, Date introduceDate, String type, String reviewStatus, String employeeComplete, String managerComplete, String appreciation, String suggestion, int employee, String employeeCost, String employeeUtilization, String employeeCreativity, String employeeSafety, String employeeQuality, String managerCost, String managerUtilization, String managerCreativity, String managerSafety, String managerQuality, String committeeCost, String committeeUtilization, String committeeCreativity, String committeeSafety, String committeeQuality) {
-        this.indexNo = indexNo;
-        this.title = title;
-        this.description = description;
-        this.introduceDate = introduceDate;
-        this.type = type;
-        this.reviewStatus = reviewStatus;
-        this.employeeComplete = employeeComplete;
-        this.managerComplete = managerComplete;
-        this.appreciation = appreciation;
-        this.suggestion = suggestion;
-        this.employee = employee;
-        this.employeeCost = employeeCost;
-        this.employeeUtilization = employeeUtilization;
-        this.employeeCreativity = employeeCreativity;
-        this.employeeSafety = employeeSafety;
-        this.employeeQuality = employeeQuality;
-        this.managerCost = managerCost;
-        this.managerUtilization = managerUtilization;
-        this.managerCreativity = managerCreativity;
-        this.managerSafety = managerSafety;
-        this.managerQuality = managerQuality;
-        this.committeeCost = committeeCost;
-        this.committeeUtilization = committeeUtilization;
-        this.committeeCreativity = committeeCreativity;
-        this.committeeSafety = committeeSafety;
-        this.committeeQuality = committeeQuality;
-    }
-
+   
     public Integer getIndexNo() {
         return indexNo;
     }
