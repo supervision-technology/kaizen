@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
  *
  * @author Nidura Prageeth
  */
-@Entity
+@Entity(name = "com.mac.app.Reports.model.Target")
 @Table(name = "target")
 public class Target implements Serializable{
     

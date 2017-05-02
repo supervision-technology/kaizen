@@ -1,0 +1,82 @@
+<div class="bt border-primary">
+    <div class="col-sm-4 bg-default-light">
+        <div class="row text-center" style="background-color: darkgray; height: 40px;"><label style="color: #ffffff; font-size: 20px">DEPARTMENTS</label></div>
+        <!--<div style="height: calc(100vh - 57px)">-->
+        <div class="smart-scroll-y row" style="height: calc(100vh - 100px)" ng-show="departments.length">
+            <section class="bg-white post-comments" ng-repeat="department in departments" ng-click="ui.selectDepartment(department,$index)" ng-class="selectedDataIndex === department.indexNo ? 'selected' : ''" > 
+                <div class="media pt10 pb5 bb border-default" >
+                    <div class="col-lg-12" >
+                        <div class="comment-author h6 no-margin pt5">
+                            <label class="center-block">{{department.name}}</label>
+                        </div>
+                    </div> 
+                </div>
+            </section>
+        </div>
+
+        <div class="col-lg-12 placeholder bordered border-default" style="height: calc(100vh - 100px)"  ng-hide="departments.length">
+            <h1 class="text-center mt200" style="">DEPARTMENTS ARE EMPTY</h1>
+        </div>
+    </div>
+    <div class="col-sm-8 bg-white ">
+
+        <div style="margin-top: 15px; margin-bottom: 60px">
+            <div class="col-sm-1">
+                <label class="control-label" style="margin-top: 9px">Year</label>
+            </div>
+            <div class="col-sm-4">
+                <select name="yearpicker" id="yearpicker" class="form-control" ng-model="year" ng-change="ui.changeTargetYear(year)">
+                    <option ng-repeat="year in yearList">{{year}}</option>
+                </select>
+            </div>
+            <div class="col-sm-1">
+                <label class="control-label" style="margin-top: 9px">Target</label>
+            </div>
+            <div class="col-sm-4">
+                <input type="number" class="form-control" ng-model="model.target">
+            </div>
+            <div class="col-sm-1">
+                <button class="btn btn-sm btn-success" ng-click="ui.save()"><span class="glyphicon glyphicon-plus"></span> Add</button>
+            </div>
+        </div>
+
+        <table class="table" style="margin-bottom: 0px; margin-top: 15px;">
+            <col style="width: 15%">
+            <col style="width: 50%">
+            <col style="width: 20%">
+            <col style="width: 15%">
+            <thead style="background-color: #eeeeee">
+                <tr>
+                    <td>Year</td>
+                    <td>Department</td>
+                    <td>Target</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </thead>
+        </table>
+
+        <div class="smart-scroll-y" style="height: calc(100vh - 200px);" scrolly="showMore()">
+            <table class="table">
+                <col style="width: 15%">
+                <col style="width: 50%">
+                <col style="width: 20%">
+                <col style="width: 15%">
+                <tbody>
+                    <tr ng-repeat="target in targetKaizenList| filter : year | limitTo: numLimit">
+                        <td>{{target.targetYear| date :  "yyyy"}}</td>
+                        <td>{{target.department.name}}</td>
+                        <td>{{target.target}}</td>
+                        <td>
+                            <button class="btn btn-xs btn-primary pull-right" ng-click="ui.edit($index, user)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--
+                <button type="button" class="btn btn-success btn-sm pull-right" style="width: 100px; border-radius: 0px" ng-click="ui.save()">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Save
+                </button>-->
+    </div>
+</div>
+

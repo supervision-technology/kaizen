@@ -66,8 +66,6 @@ public class KaizenController {
     @RequestMapping(value = "/send-mail/{indexNo}", method = RequestMethod.POST)
     public void sendEmail(@RequestBody Mail mail, @PathVariable Integer indexNo) {
         kaizenService.updateKaizenByIndex(indexNo);
-        System.out.println(mail.getEmail());
-        System.out.println(mail.getMessage());
  
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);

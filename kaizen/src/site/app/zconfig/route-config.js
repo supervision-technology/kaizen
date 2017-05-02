@@ -50,9 +50,17 @@
                             templateUrl: "app/master/user/user-registration.html",
                             controller: "userController"
                         })
+                        .when("/master/create-target", {
+                            templateUrl: "app/master/target/target.html",
+                            controller: "targetController"
+                        })
                         //reports
                         .when("/reports/summary", {
                             templateUrl: "app/reports/summary.html",
+                            controller: "SummaryController"
+                        })
+                        .when("/reports/annual-achievement", {
+                            templateUrl: "app/reports/annual-achievement.html",
                             controller: "SummaryController"
                         })
 
