@@ -63,6 +63,14 @@
                             templateUrl: "app/reports/annual-achievement.html",
                             controller: "SummaryController"
                         })
+                        .when("/reports/evaluated-details", {
+                            templateUrl: "app/reports/manager-evaluated.html",
+                            controller: "SummaryController"
+                        })
+                        .when("/reports/monthly-details", {
+                            templateUrl: "app/reports/monthly-details.html",
+                            controller: "SummaryController"
+                        })
 
                         .otherwise({
                             redirectTo: "/"

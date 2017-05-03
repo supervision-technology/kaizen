@@ -454,7 +454,8 @@
                     document.getElementById("saveBtn").disabled = true;
                     kaizenCommitteeViewFactory.loadKaizen(function (data) {
                         angular.forEach(data, function (value) {
-                            if (value.reviewStatus === "COMMITTEE_VIEW") {
+                            if (value.reviewStatus === "COMMITTEE_COMPLETE") {
+                                console.log(data)
                                 $scope.model.kaizenList.push(value);
                             }
                         });

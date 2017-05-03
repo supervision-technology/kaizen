@@ -39,7 +39,7 @@ public class KaizenService {
 
     private static final String KAIZEN_PENDING = "PENDING";
     private static final String MANAGER_VIEW = "MANAGER_VIEW";
-    private static final String COMMITTEE_VIEW = "COMMITTEE_VIEW";
+    private static final String COMMITTEE_COMPLETE = "COMMITTEE_COMPLETE";
     private static final String EMPLOYEE_COMPLETE = "EMPLOYEE_COMPLETE";
     private static final String MANAGER_COMPLETE = "MANAGER_COMPLETE";
 
@@ -66,7 +66,7 @@ public class KaizenService {
         kaizen.setIntroduceDate(new Date());
         kaizen.setReviewStatus(KAIZEN_PENDING);
         kaizen.setEmployeeComplete(EMPLOYEE_COMPLETE);
-        
+
         //if manager kaizen then automatically manager approve
         Employee employee = employeeRepository.findOne(kaizen.getEmployee());
         if (employee.getType().equalsIgnoreCase("Manager")) {
@@ -97,14 +97,21 @@ public class KaizenService {
         kaizen1.setCommitteeQuality(kaizen.getCommitteeQuality());
         kaizen1.setCommitteeSafety(kaizen.getCommitteeSafety());
         kaizen1.setCommitteeUtilization(kaizen.getCommitteeUtilization());
-        kaizen1.setReviewStatus(COMMITTEE_VIEW);
+        kaizen1.setReviewStatus(COMMITTEE_COMPLETE);
+        kaizen1.setCommitteeComplete(COMMITTEE_COMPLETE);
         return kaizenRepository.save(kaizen1);
     }
 
     public void updateKaizenByIndex(Integer indexNo) {
         TKaizen kaizen = kaizenRepository.findOne(indexNo);
-        kaizen.setReviewStatus(null);
-        kaizen.setManagerComplete(MANAGER_COMPLETE);
-        kaizenRepository.save(kaizen);
+        if (kaizen.getReviewStatus().equals(MANAGER_VIEW)) {
+            kaizen.setManagerComplete(MANAGER_COMPLETE);
+            kaizenRepository.save(kaizen);
+        } else {
+            kaizen.setReviewStatus(null);
+            kaizen.setManagerComplete(MANAGER_COMPLETE);
+            kaizenRepository.save(kaizen);
+        }
+
     }
 }

@@ -25,5 +25,9 @@ public class ReportService {
     public List<Object[]> summary() {
         return reportRepository.AllSummary();
     }
+    
+    public List<Object[]> viewCountDetails() {
+        return reportRepository.viewCountDetails();
+    }
 
 }

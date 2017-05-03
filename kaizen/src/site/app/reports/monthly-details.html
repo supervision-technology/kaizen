@@ -1,0 +1,108 @@
+<div class="bt border-primary">
+    <div class="col-sm-12" style="margin-bottom: 15px; margin-top: 15px">
+        <div class="col-sm-4" ng-hide="printMode === 'true'">
+<!--            <div class="col-sm-2">
+                <label class="control-label" style="margin-top: 9px">Month </label>
+            </div>-->
+            <!--<div class="col-sm-8">-->
+                <!--<input type="date" class="form-control">-->
+<!--                <select name="yearpicker" id="yearpicker" class="form-control" ng-model="month" ng-change="changeMonth(month)">
+                    <option value=''>--Select Month--</option>
+                    <option selected value='01'>Janaury</option>
+                    <option value='02'>February</option>
+                    <option value='03'>March</option>
+                    <option value='04'>April</option>
+                    <option value='05'>May</option>
+                    <option value='06'>June</option>
+                    <option value='07'>July</option>
+                    <option value='08'>August</option>
+                    <option value='09'>September</option>
+                    <option value='10'>October</option>
+                    <option value='11'>November</option>
+                    <option value='12'>December</option>
+                </select>-->
+            <!--</div>-->
+        </div>
+        <h3 class="text-center" ng-show="printMode === 'true'">Report3</h3>
+    </div><br>
+
+    <div class="col-sm-12">
+        <table class="table" style="margin-bottom: 0px">
+            <col style="width: 25%">
+            <col style="width: 15%">
+            <col style="width: 5%">
+            <col style="width: 5%">
+            <col style="width: 5%">
+            <col style="width: 5%">
+            <col style="width: 5%">
+            <col style="width: 5%">
+            <col style="width: 5%">
+            <col style="width: 5%">
+            <col style="width: 5%">
+            <col style="width: 5%">
+            <col style="width: 5%">
+            <col style="width: 5%">
+            <col style="width: 10%">
+            <thead style="background-color: #eeeeee">
+                <tr>
+                    <th>Department</th>
+                    <th>Annual Target</th>
+                    <th>Jan</th>
+                    <th>Feb</th>
+                    <th>Mar</th>
+                    <th>Apr</th>
+                    <th>May</th>
+                    <th>Jun</th>
+                    <th>Jul</th>
+                    <th>Aug</th>
+                    <th>Sap</th>
+                    <th>Oct</th>
+                    <th>Nov</th>
+                    <th>Dec</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+        </table>
+
+        <div class="smart-scroll-y" style="height: calc(100vh - 200px);" scrolly="showMore()">
+            <table class="table">
+                <col style="width: 25%">
+                <col style="width: 15%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 10%">
+                <tbody>
+                    <tr ng-repeat="summary in summaryList">
+                        <td>{{summary[1]}}</td>
+                        <td>{{summary[2]}}</td>
+                        <td>{{summary[0] | date:'MM'}}</td>
+                        <td></td>
+                        <td></td>
+                        <td>{{summary[3]}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <button class="pull-right btn btn-primary btn-flat" ng-click="print(summary)" ng-hide="printMode === 'true'">Print</button>
+    </div>
+</div>

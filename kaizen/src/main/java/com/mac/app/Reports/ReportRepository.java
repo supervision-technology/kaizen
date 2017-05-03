@@ -33,10 +33,35 @@ public interface ReportRepository extends JpaRepository<Target, Integer> {
             + "and\n"
             + " d.index_no=t.department\n"
             + "and \n"
-            + " k.manager_complete='MANAGER_COMPLETE'\n"
+            + " k.review_status='MANAGER_VIEW'\n"
             + "and\n"
             + " YEAR(k.introduce_date) = YEAR(t.target_year)\n"
             + "group by \n"
             + " d.index_no", nativeQuery = true)
     public List<Object[]> AllSummary();
+
+    @Query(value = "select\n"
+            + "t.target_year ,\n"
+            + "d.name ,\n"
+            + "t.target,\n"
+            + "count(k.review_status) as manager_view,\n"
+            + "count(k.committee_complete) as Evaluated\n"
+            + "from \n"
+            + "kaizen k ,\n"
+            + "employee e,\n"
+            + "department d ,\n"
+            + "target t\n"
+            + "where  \n"
+            + "e.index_no=k.employee \n"
+            + "and \n"
+            + "e.department=d.index_no \n"
+            + "and\n"
+            + "d.index_no=t.department \n"
+            + "and \n"
+            + "k.review_status='MANAGER_VIEW' \n"
+            + "and \n"
+            + "YEAR(k.introduce_date) = YEAR(t.target_year)\n"
+            + "GROUP BY \n"
+            + "d.index_no", nativeQuery = true)
+    public List<Object[]> viewCountDetails();
 }

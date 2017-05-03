@@ -27,5 +27,10 @@ public class ReportController {
     public List<Object[]> Summary() {
         return reportService.summary();
     }
+    
+    @RequestMapping(value = "/view-count", method = RequestMethod.GET)
+    public List<Object[]> viewCountDetails() {
+        return reportService.viewCountDetails();
+    }
 
 }

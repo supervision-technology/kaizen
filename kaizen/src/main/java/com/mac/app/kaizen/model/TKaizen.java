@@ -52,6 +52,9 @@ public class TKaizen implements Serializable {
 
     @Column(name = "manager_complete")
     private String managerComplete;
+    
+    @Column(name = "committee_complete")
+    private String committeeComplete;
 
     @Column(name = "appreciation")
     private String appreciation;
@@ -109,6 +112,7 @@ public class TKaizen implements Serializable {
 
     @Column(name = "actual_cost")
     private Double actualCost;
+    
 
     public TKaizen() {
     }
@@ -329,4 +333,13 @@ public class TKaizen implements Serializable {
         this.actualCost = actualCost;
     }
 
+    public String getCommitteeComplete() {
+        return committeeComplete;
+    }
+
+    public void setCommitteeComplete(String committeeComplete) {
+        this.committeeComplete = committeeComplete;
+    }
+
+    
 }
