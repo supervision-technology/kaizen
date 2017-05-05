@@ -22,12 +22,16 @@ public class ReportService {
     @Autowired
     private ReportRepository reportRepository;
 
-    public List<Object[]> summary() {
-        return reportRepository.AllSummary();
+    public List<Object[]> summary(String year) {
+        return reportRepository.AllSummary(year);
     }
-    
+
     public List<Object[]> viewCountDetails() {
         return reportRepository.viewCountDetails();
+    }
+
+    public List<Object[]> monthWiseDetailsByYear(String year) {
+        return reportRepository.monthWiseDetailByYear(year);
     }
 
 }

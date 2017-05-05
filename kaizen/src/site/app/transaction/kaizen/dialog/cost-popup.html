@@ -12,12 +12,18 @@
             <!--<label class="pull-right label label-default" style="font-size: 25px">Value {{rangeValueCost}}%</label>-->
         </div>
 
-        <div class="mt20 mb30">
-            <h6>Cost</h6>
-            <input type="range" ng-model="scoreCost" step="1" min="0" max="5" ng-change="ui.costChange(scoreCost)">                
-            <span class="badge bg-orange">0</span><span class="badge bg-orange" style="margin-left: 147px">1</span>
-            <span class="badge bg-orange" style="margin-left: 138px">2</span><span class="badge bg-orange" style="margin-left: 144px">3</span>
-            <span class="badge bg-orange" style="margin-left: 140px">4</span><span class="badge bg-orange" style="margin-left: 142px">5</span>
+        <div class="col-lg-12 mt20 mb30">
+            <div class="row">
+                <div class="col-lg-2">
+                    <h3 class="text-right">Cost</h3>
+                </div>
+                <div class="col-lg-10">
+                    <input type="range" ng-model="scoreCost" step="1" min="0" max="5" ng-change="ui.costChange(scoreCost)">                
+                    <span class="badge bg-grey" style="margin-left: 3px">0</span><span class="badge bg-yellow" style="margin-left: 111px">1</span>
+                    <span class="badge bg-orange" style="margin-left: 111px">2</span><span class="badge bg-lightblue" style="margin-left: 111px">3</span>
+                    <span class="badge bg-lightgreen" style="margin-left: 111px">4</span><span class="badge bg-success" style="margin-left: 111px">5</span>
+                </div>
+            </div>
         </div>
 
         <div class="mb30">
@@ -27,23 +33,24 @@
 
         <table class="table table-sm table-bordered">
             <thead>
-            <th class="bg-bluegrey">Score</th>
-            <th>0</th>
-            <th>1</th>
-            <th>2</th>
-            <th>3</th>
-            <th>4</th>
-            <th>5</th>
+                <th class="bg-bluegrey"  style="width: 111px">Score</th>
+                <!--<th>0</th>-->
+            <th style="width: 111px" class="text-center"><span class="badge bg-yellow">1</span></th>
+            <th style="width: 111px" class="text-center"><span class="badge bg-orange">2</span></th>
+            <th style="width: 111px" class="text-center"><span class="badge bg-lightblue">3</span></th>
+            <th style="width: 111px" class="text-center"><span class="badge bg-lightgreen">4</span></th>
+            <th style="width: 111px" class="text-center"><span class="badge bg-success">5</span></th>
+
             </thead>
             <tbody>
                 <tr>
                     <td class="bg-default-light">Cost Reduction/ Saving</td>
-                    <td>None</td>
-                    <td>0 – $5000</td>
-                    <td>$ 5000  - $10,000</td>
-                    <td>$10,000 - $15,000</td>
-                    <td>$15,000 - $20,000</td>
-                    <td>More than $20,000</td>
+                    <!--<td>None</td>-->
+                    <td class="text-center">0 – $5000 {{scoreCost}}</td>
+                    <td class="text-center">$ 5000  - $10,000</td>
+                    <td class="text-center">$10,000 - $15,000</td>
+                    <td class="text-center">$15,000 - $20,000</td>
+                    <td class="text-center">More than $20,000</td>
                 </tr>
             </tbody>
         </table>

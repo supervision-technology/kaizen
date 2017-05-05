@@ -1,34 +1,22 @@
 <div class="bt border-primary">
     <div class="col-sm-12" style="margin-bottom: 15px; margin-top: 15px">
         <div class="col-sm-4" ng-hide="printMode === 'true'">
-<!--            <div class="col-sm-2">
-                <label class="control-label" style="margin-top: 9px">Month </label>
-            </div>-->
-            <!--<div class="col-sm-8">-->
-                <!--<input type="date" class="form-control">-->
-<!--                <select name="yearpicker" id="yearpicker" class="form-control" ng-model="month" ng-change="changeMonth(month)">
-                    <option value=''>--Select Month--</option>
-                    <option selected value='01'>Janaury</option>
-                    <option value='02'>February</option>
-                    <option value='03'>March</option>
-                    <option value='04'>April</option>
-                    <option value='05'>May</option>
-                    <option value='06'>June</option>
-                    <option value='07'>July</option>
-                    <option value='08'>August</option>
-                    <option value='09'>September</option>
-                    <option value='10'>October</option>
-                    <option value='11'>November</option>
-                    <option value='12'>December</option>
-                </select>-->
-            <!--</div>-->
+            <div class="col-sm-2">
+                <label class="control-label" style="margin-top: 9px">Year :</label>
+            </div>
+            <div class="col-sm-8">
+                <select name="yearpicker" id="yearpicker" class="form-control" ng-model="year" ng-change="getMonthWiseDetails(year)">
+                    <option value=''>--Select Year--</option>
+                    <option ng-repeat="year in yearList">{{year}}</option>
+                </select>
+            </div>
         </div>
         <h3 class="text-center" ng-show="printMode === 'true'">Report3</h3>
     </div><br>
 
     <div class="col-sm-12">
         <table class="table" style="margin-bottom: 0px">
-            <col style="width: 25%">
+            <col style="width: 20%">
             <col style="width: 15%">
             <col style="width: 5%">
             <col style="width: 5%">
@@ -46,7 +34,7 @@
             <thead style="background-color: #eeeeee">
                 <tr>
                     <th>Department</th>
-                    <th>Annual Target</th>
+                    <th class="text-center">Annual Target</th>
                     <th>Jan</th>
                     <th>Feb</th>
                     <th>Mar</th>
@@ -64,9 +52,9 @@
             </thead>
         </table>
 
-        <div class="smart-scroll-y" style="height: calc(100vh - 200px);" scrolly="showMore()">
+        <div class="smart-scroll-y" style="height: calc(100vh - 245px);" scrolly="showMore()">
             <table class="table">
-                <col style="width: 25%">
+                <col style="width: 20%">
                 <col style="width: 15%">
                 <col style="width: 5%">
                 <col style="width: 5%">
@@ -82,27 +70,45 @@
                 <col style="width: 5%">
                 <col style="width: 10%">
                 <tbody>
-                    <tr ng-repeat="summary in summaryList">
-                        <td>{{summary[1]}}</td>
-                        <td>{{summary[2]}}</td>
-                        <td>{{summary[0] | date:'MM'}}</td>
-                        <td></td>
-                        <td></td>
-                        <td>{{summary[3]}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                    <tr ng-repeat="(key, value) in monthWiseList | unique: summary[1]">
+                        <td>{{key}}</td>
+<!--                        <td class="text-center">{{summary[2]}}</td>
+                        <td>{{getMonthlyCount(1,summary[1])}}</td>
+                        <td>{{getMonthlyCount(2,summary[1])}}</td>
+                        <td>{{getMonthlyCount(3,summary[1])}}</td>
+                        <td>{{getMonthlyCount(4,summary[1])}}</td>
+                        <td>{{getMonthlyCount(5,summary[1])}}</td>
+                        <td>{{getMonthlyCount(6,summary[1])}}</td>
+                        <td>{{getMonthlyCount(7,summary[1])}}</td>
+                        <td>{{getMonthlyCount(8,summary[1])}}</td>
+                        <td>{{getMonthlyCount(9,summary[1])}}</td>
+                        <td>{{getMonthlyCount(10,summary[1])}}</td>
+                        <td>{{getMonthlyCount(11,summary[1])}}</td>
+                        <td>{{getMonthlyCount(12,summary[1])}}</td>
+                        <td>{{totalKizanCount(summary[1])}}</td>-->
+                        
                     </tr>
                 </tbody>
             </table>
         </div>
+        <div class="col-sm-12" style="height: 30px; background-color: #d0d0d0">
+            <label style="margin-left: 270px;font-size: 20px;">{{getTotalTarget()}}Total</label>
+            <label style="margin-left: 60px;font-size: 20px;">{{getTotalTarget()}}total</label>
+            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
+            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
+            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
+            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
+            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
+            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
+            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
+            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
+            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
+            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
+            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
+            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
+        </div>
     </div>
     <div class="col-sm-12">
-        <button class="pull-right btn btn-primary btn-flat" ng-click="print(summary)" ng-hide="printMode === 'true'">Print</button>
+        <button style="margin-top: 18px" class="pull-right btn btn-primary btn-flat" ng-click="print(summary)" ng-hide="printMode === 'true'">Print</button>
     </div>
 </div>

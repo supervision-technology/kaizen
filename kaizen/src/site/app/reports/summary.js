@@ -4,8 +4,19 @@
                 var factory = {};
 
                 //load summary
-                factory.loadSummary = function (callback) {
-                    var url = systemConfig.apiUrl + "/summary";
+                factory.loadSummary = function (year, callback) {
+                    var url = systemConfig.apiUrl + "/summary/" + year;
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+
+                            });
+                };
+                // get monthWise details
+                factory.getMonthWiseDetails = function (year, callback) {
+                    var url = systemConfig.apiUrl + "/month-wise-details/" + year;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -41,12 +52,31 @@
                 $scope.print = function (summary) {
                     $scope.printMode = 'true';
 
-                    console.log($scope.printMode);
                     $timeout(function () {
                         $window.print();
                         $scope.printMode = 'false';
                     }, 500);
 
+                };
+
+                $scope.changeYear = function (year) {
+                    SummaryFactory.loadSummary(year
+                            , function (data) {
+                                $scope.summaryList = data;
+                            }
+                    , function (data) {
+//                        Notification.error(data);
+                    });
+                };
+
+                $scope.getMonthWiseDetails = function (year) {
+                    SummaryFactory.getMonthWiseDetails(year
+                            , function (data) {
+                                $scope.monthWiseList = data;
+                            }
+                    , function (data) {
+//                        Notification.error(data);
+                    });
                 };
 
                 $scope.changeMonth = function (month) {
@@ -60,18 +90,43 @@
 
                 };
 
+                $scope.getMonthlyCount = function (month, department) {
+                    var label = 0;
+
+                    angular.forEach($scope.monthWiseList, function (data) {
+
+                        var month1 = data[0];
+                        if (month === month1) {
+                            if (department === data[1]) {
+                                label = data[3];
+                                return;
+                            }
+                        }
+                    });
+                    console.log(label);
+                    return label;
+                };
+
+                $scope.totalKizanCount = function (department) {
+                    var totalKizan = 0;
+
+                    angular.forEach($scope.monthWiseList, function (data) {
+                        if (department === data[1]) {
+                            totalKizan += data[3];
+                            return;
+                        }
+
+                    });
+                    return totalKizan;
+                };
+
 
                 $scope.init = function () {
-                    for (var i = new Date().getFullYear(); i > 2005; i--)
+                    for (var j = new Date().getFullYear(); j > 2005; j--)
                     {
-                        $scope.yearList.push(i);
+                        $scope.yearList.push(j);
                     }
 
-                    SummaryFactory.loadSummary(
-                            function (data) {
-                                $scope.summaryList = data;
-                                console.log($scope.summaryList)
-                            });
                     SummaryFactory.loadEveluatedDetails(
                             function (data) {
                                 $scope.countList = data;

@@ -9,6 +9,7 @@ import com.mac.app.Reports.model.Target;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  *
@@ -35,10 +36,12 @@ public interface ReportRepository extends JpaRepository<Target, Integer> {
             + "and \n"
             + " k.review_status='MANAGER_VIEW'\n"
             + "and\n"
-            + " YEAR(k.introduce_date) = YEAR(t.target_year)\n"
+            + "YEAR(k.introduce_date) = YEAR(t.target_year)\n"
+            + "and \n"
+            + "YEAR(k.introduce_date)=:year \n"
             + "group by \n"
             + " d.index_no", nativeQuery = true)
-    public List<Object[]> AllSummary();
+    public List<Object[]> AllSummary(@Param("year") String year);
 
     @Query(value = "select\n"
             + "t.target_year ,\n"
@@ -64,4 +67,30 @@ public interface ReportRepository extends JpaRepository<Target, Integer> {
             + "GROUP BY \n"
             + "d.index_no", nativeQuery = true)
     public List<Object[]> viewCountDetails();
+
+    @Query(value = "select\n"
+            + "MONTH(k.introduce_date) as month,\n"
+            + " d.name ,\n"
+            + " t.target,\n"
+            + " COUNT(k.index_no) as qty\n"
+            + "from\n"
+            + " kaizen k ,\n"
+            + " employee e,\n"
+            + " department d ,\n"
+            + " target t\n"
+            + "where  \n"
+            + " e.index_no=k.employee \n"
+            + "and \n"
+            + " e.department=d.index_no \n"
+            + "and\n"
+            + " d.index_no=t.department\n"
+            + "and \n"
+            + " k.review_status='MANAGER_VIEW'\n"
+            + "and\n"
+            + " YEAR(k.introduce_date) = YEAR(t.target_year) "
+            + "and\n"
+            + "YEAR(k.introduce_date)=:year \n"
+            + "group by \n"
+            + " d.index_no,MONTH(k.introduce_date)", nativeQuery = true)
+    public List<Object[]> monthWiseDetailByYear(@Param("year") String year);
 }

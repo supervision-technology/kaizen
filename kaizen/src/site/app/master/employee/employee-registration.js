@@ -81,23 +81,23 @@
                 //save employee 
                 $scope.http.saveEmployee = function () {
 
-                    var file = document.getElementById('file-upload').files[0];
+//                    var file = document.getElementById('file-upload').files[0];
                     var json = JSON.stringify($scope.model);
 
-                    if (file) {
-                        var url = systemConfig.apiUrl + "/api/employee/save-employee";
-                        var formData = new FormData();
-                        formData.append("file", file);
-                        formData.append("ad", json);
-                        var xhr = new XMLHttpRequest();
-                        xhr.open("POST", url);
-                        xhr.send(formData);
-
-                        Notification.success("Employee Save Successfully");
-                        $scope.employeeList.push($scope.model);
-                        $scope.model = null;
-                        $scope.imagemodel = null;
-                    } else {
+//                    if (file) {
+//                        var url = systemConfig.apiUrl + "/api/employee/save-employee";
+//                        var formData = new FormData();
+//                        formData.append("file", file);
+//                        formData.append("ad", json);
+//                        var xhr = new XMLHttpRequest();
+//                        xhr.open("POST", url);
+//                        xhr.send(formData);
+//
+//                        Notification.success("Employee Save Successfully");
+//                        $scope.employeeList.push($scope.model);
+//                        $scope.model = null;
+//                        $scope.imagemodel = null;
+//                    } else {
                         employeeFactory.saveEmployee(
                                 json,
                                 function (data) {
@@ -107,7 +107,7 @@
                                     $scope.model = null;
                                 });
 
-                    }
+//                    }
                 };
 
 

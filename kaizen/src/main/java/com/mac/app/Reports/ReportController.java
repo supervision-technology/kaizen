@@ -6,8 +6,10 @@
 package com.mac.app.Reports;
 
 import java.util.List;
+import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,14 +25,19 @@ public class ReportController {
     @Autowired
     private ReportService reportService;
 
-    @RequestMapping(value = "/summary", method = RequestMethod.GET)
-    public List<Object[]> Summary() {
-        return reportService.summary();
+    @RequestMapping(value = "/summary/{year}", method = RequestMethod.GET)
+    public List<Object[]> SummaryByYear(@PathVariable("year") String year) {
+        return reportService.summary(year);
     }
-    
+
     @RequestMapping(value = "/view-count", method = RequestMethod.GET)
-    public List<Object[]> viewCountDetails() {
+    public List<Object[]> evaluatedAndManagerViewedDetails() {
         return reportService.viewCountDetails();
+    }
+
+    @RequestMapping(value = "/month-wise-details/{year}", method = RequestMethod.GET)
+    public List<Object[]> monthWiseDetailsByYear(@PathVariable("year") String year) {
+        return reportService.monthWiseDetailsByYear(year);
     }
 
 }
