@@ -26,8 +26,8 @@ public class ReportService {
         return reportRepository.AllSummary(year);
     }
 
-    public List<Object[]> viewCountDetails() {
-        return reportRepository.viewCountDetails();
+    public List<Object[]> viewCountDetails(String year) {
+        return reportRepository.viewCountDetails(year);
     }
 
     public List<Object[]> monthWiseDetailsByYear(String year) {

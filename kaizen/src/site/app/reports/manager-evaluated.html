@@ -1,10 +1,20 @@
 <div class="bt border-primary">
     <div class="col-sm-12" style="margin-bottom: 15px; margin-top: 15px">
-        <div class="col-sm-4" ng-hide="printMode === 'true'">
-            <div class="col-sm-2">
+        <div class="col-sm-8" ng-hide="printMode === 'true'">
+            <div class="col-sm-1">
+                <label class="control-label" style="margin-top: 9px">Year </label>
+            </div>
+            <div class="col-sm-4">
+                <!--<input type="date" class="form-control">-->
+                <select name="yearpicker" id="yearpicker" class="form-control" ng-model="year" ng-change="getEvaluateDetails(year)">
+                     <option value=''>--Select Year--</option>
+                    <option ng-repeat="year in yearList">{{year}}</option>
+                </select>
+            </div>
+            <div class="col-sm-1">
                 <label class="control-label" style="margin-top: 9px">Month </label>
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-4">
                 <!--<input type="date" class="form-control">-->
                 <select name="yearpicker" id="yearpicker" class="form-control" ng-model="month" ng-change="changeMonth(month)">
                     <option value=''>--Select Month--</option>

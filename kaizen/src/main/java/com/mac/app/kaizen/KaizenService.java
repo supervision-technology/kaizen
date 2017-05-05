@@ -97,7 +97,7 @@ public class KaizenService {
         kaizen1.setCommitteeQuality(kaizen.getCommitteeQuality());
         kaizen1.setCommitteeSafety(kaizen.getCommitteeSafety());
         kaizen1.setCommitteeUtilization(kaizen.getCommitteeUtilization());
-        kaizen1.setReviewStatus(COMMITTEE_COMPLETE);
+//        kaizen1.setReviewStatus(COMMITTEE_COMPLETE);
         kaizen1.setCommitteeComplete(COMMITTEE_COMPLETE);
         return kaizenRepository.save(kaizen1);
     }

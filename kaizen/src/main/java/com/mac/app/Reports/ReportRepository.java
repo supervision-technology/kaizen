@@ -64,9 +64,11 @@ public interface ReportRepository extends JpaRepository<Target, Integer> {
             + "k.review_status='MANAGER_VIEW' \n"
             + "and \n"
             + "YEAR(k.introduce_date) = YEAR(t.target_year)\n"
+            + "and \n"
+            + "YEAR(k.introduce_date)=:year \n"
             + "GROUP BY \n"
             + "d.index_no", nativeQuery = true)
-    public List<Object[]> viewCountDetails();
+    public List<Object[]> viewCountDetails(@Param("year") String year);
 
     @Query(value = "select\n"
             + "MONTH(k.introduce_date) as month,\n"

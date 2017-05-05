@@ -30,9 +30,9 @@ public class ReportController {
         return reportService.summary(year);
     }
 
-    @RequestMapping(value = "/view-count", method = RequestMethod.GET)
-    public List<Object[]> evaluatedAndManagerViewedDetails() {
-        return reportService.viewCountDetails();
+    @RequestMapping(value = "/view-count/{year}", method = RequestMethod.GET)
+    public List<Object[]> evaluatedAndManagerViewedDetails(@PathVariable("year") String year) {
+        return reportService.viewCountDetails(year);
     }
 
     @RequestMapping(value = "/month-wise-details/{year}", method = RequestMethod.GET)

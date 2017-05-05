@@ -70,8 +70,8 @@ public class KaizenController {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setFrom("kaizencommittee1@gmail.com");
-//            messageHelper.setTo(mail.getEmail());
-            messageHelper.setTo("niduraprageeth@gmail.com");
+            messageHelper.setTo(mail.getEmail());
+//            messageHelper.setTo("niduraprageeth@gmail.com");
             messageHelper.setSubject(mail.getSubject());
             messageHelper.setText(mail.getMessage());
         };

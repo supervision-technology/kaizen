@@ -70,42 +70,64 @@
                 <col style="width: 5%">
                 <col style="width: 10%">
                 <tbody>
-                    <tr ng-repeat="(key, value) in monthWiseList | unique: summary[1]">
-                        <td>{{key}}</td>
-<!--                        <td class="text-center">{{summary[2]}}</td>
-                        <td>{{getMonthlyCount(1,summary[1])}}</td>
-                        <td>{{getMonthlyCount(2,summary[1])}}</td>
-                        <td>{{getMonthlyCount(3,summary[1])}}</td>
-                        <td>{{getMonthlyCount(4,summary[1])}}</td>
-                        <td>{{getMonthlyCount(5,summary[1])}}</td>
-                        <td>{{getMonthlyCount(6,summary[1])}}</td>
-                        <td>{{getMonthlyCount(7,summary[1])}}</td>
-                        <td>{{getMonthlyCount(8,summary[1])}}</td>
-                        <td>{{getMonthlyCount(9,summary[1])}}</td>
-                        <td>{{getMonthlyCount(10,summary[1])}}</td>
-                        <td>{{getMonthlyCount(11,summary[1])}}</td>
-                        <td>{{getMonthlyCount(12,summary[1])}}</td>
-                        <td>{{totalKizanCount(summary[1])}}</td>-->
-                        
+                    <tr ng-repeat="summary in monthWiseList">
+                        <td>{{summary[1]}}</td>
+                        <td class="text-center">{{summary[2]}}</td>
+                        <td>{{getMonthlyCount(1, summary[1])}}</td>
+                        <td>{{getMonthlyCount(2, summary[1])}}</td>
+                        <td>{{getMonthlyCount(3, summary[1])}}</td>
+                        <td>{{getMonthlyCount(4, summary[1])}}</td>
+                        <td>{{getMonthlyCount(5, summary[1])}}</td>
+                        <td>{{getMonthlyCount(6, summary[1])}}</td>
+                        <td>{{getMonthlyCount(7, summary[1])}}</td>
+                        <td>{{getMonthlyCount(8, summary[1])}}</td>
+                        <td>{{getMonthlyCount(9, summary[1])}}</td>
+                        <td>{{getMonthlyCount(10, summary[1])}}</td>
+                        <td>{{getMonthlyCount(11, summary[1])}}</td>
+                        <td>{{getMonthlyCount(12, summary[1])}}</td>
+                        <td>{{totalKizanCount(summary[1])}}</td>
+
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="col-sm-12" style="height: 30px; background-color: #d0d0d0">
-            <label style="margin-left: 270px;font-size: 20px;">{{getTotalTarget()}}Total</label>
-            <label style="margin-left: 60px;font-size: 20px;">{{getTotalTarget()}}total</label>
-            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
-            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
-            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
-            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
-            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
-            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
-            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
-            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
-            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
-            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
-            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
-            <label style="margin-left: 12px;font-size: 20px;">{{getTotalTarget()}}total</label>
+        <div class="col-sm-12" style="height: 30px;" ng-show="showMode === 'selectyear'">
+            <table class="table">
+                <col style="width: 20%">
+                <col style="width: 15%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 10%">
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td class="text-center">{{totalTarget()}}</td>
+                        <td>{{monthTotal(1)}}</td>
+                        <td>{{monthTotal(2)}}</td>
+                        <td>{{monthTotal(3)}}</td>
+                        <td>{{monthTotal(4)}}</td>
+                        <td>{{monthTotal(5)}}</td>
+                        <td>{{monthTotal(6)}}</td>
+                        <td>{{monthTotal(7)}}</td>
+                        <td>{{monthTotal(8)}}</td>
+                        <td>{{monthTotal(9)}}</td>
+                        <td>{{monthTotal(10)}}</td>
+                        <td>{{monthTotal(11)}}</td>
+                        <td>{{monthTotal(12)}}</td>
+                        <td>{{achivedTotal()}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="col-sm-12">
