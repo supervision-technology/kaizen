@@ -168,9 +168,7 @@
                 };
 
                 $scope.showMore = function () {
-                    console.log("work");
                     $scope.numLimit += 5;
-                    console.log('show more triggered');
                 };
 
                 $scope.ui.edit = function (user) {

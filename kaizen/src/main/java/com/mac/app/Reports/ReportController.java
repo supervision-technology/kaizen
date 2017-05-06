@@ -5,6 +5,7 @@
  */
 package com.mac.app.Reports;
 
+import com.mac.app.Reports.model.MonthWise;
 import java.util.List;
 import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,18 @@ public class ReportController {
     }
 
     @RequestMapping(value = "/month-wise-details/{year}", method = RequestMethod.GET)
-    public List<Object[]> monthWiseDetailsByYear(@PathVariable("year") String year) {
+    public List<MonthWise> monthWiseDetailsByYear(@PathVariable("year") String year) {
         return reportService.monthWiseDetailsByYear(year);
+    }
+    
+    @RequestMapping(value = "/top-kaizen/{year}/{month}",method = RequestMethod.GET)
+    public List<Object[]> topKaizen(@PathVariable("year")String year,@PathVariable("month")String month){
+        return reportService.topKaizen(year,month);
+    }
+    
+    @RequestMapping(value = "/top-10-kaizen/{year}/{month}",method = RequestMethod.GET)
+    public List<Object[]> top10Kaizen(@PathVariable("year")String year,@PathVariable("month")String month){
+        return reportService.top10Kaizen(year,month);
     }
 
 }

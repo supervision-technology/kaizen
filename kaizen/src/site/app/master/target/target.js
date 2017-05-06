@@ -70,10 +70,16 @@
                 $scope.departmentList = [];
                 $scope.yearList = [];
 
-                //convert lovercase to uppercase 
-//                $scope.$watch('model.searchName', function (val) {
-//                    $scope.model.searchName = $filter('uppercase')(val);
-//                }, true);
+                //validate model
+                $scope.validateInput = function () {
+                    if ($scope.year!==null && $scope.model.target!==null
+                            && $rootScope.selectedDataIndex) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                };
+
 
 
                 //-------------------http funtion-------------
@@ -82,17 +88,12 @@
                     var details = $scope.model;
 
                     var detailJSON = JSON.stringify(details);
-                    console.log(detailJSON)
                     targetFactory.saveTarget(
                             detailJSON,
                             function (data) {
+                                $rootScope.selectedDataIndex=null;
+                                $scope.model.target=null;
                                 Notification.success(data.indexNo + " - " + " Saved Successfully.");
-//                                var id = null;
-//                                for (var i = 0; i < $scope.departments.length; i++) {
-//                                    if ($scope.departments[i].indexNo === data.indexNo) {
-//                                        id = i;
-//                                    }
-//                                }
                                 $scope.departments.splice($rootScope.departmentIndex, 1);
                                 $scope.targetKaizenList.push(data);
                             },
@@ -103,7 +104,6 @@
                 };
 
                 $scope.ui.selectDepartment = function (department, index) {
-                    console.log(index)
                     $scope.model.department = department;
                     $rootScope.selectedDataIndex = department.indexNo;
                     $rootScope.departmentIndex = index;
@@ -112,11 +112,18 @@
 
                 //-----------------ui  funtion-----------------
                 $scope.ui.save = function () {
-                    $scope.http.save();
+                    if ($scope.validateInput()) {
+                        $scope.http.save();
+                    } else {
+                        Notification.error("please input data..");
+                    }
                 };
 
                 $scope.ui.edit = function (index, user) {
+                    $scope.targetKaizenList.splice(index, 1);
                     $scope.model = user;
+                    $rootScope.selectedDataIndex = user.department.indexNo;
+//                    console.log($scope.model)
                 };
 
                 $scope.ui.changeTargetYear = function (year) {

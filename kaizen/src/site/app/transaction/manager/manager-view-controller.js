@@ -573,6 +573,7 @@
                                         Notification.success("Send successfully");
                                     })
                                     .error(function (data, status, headers) {
+                                         $rootScope.sendMode = null;
                                     });
                         } else {
                             Notification.error("Email is null");

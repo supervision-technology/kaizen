@@ -53,9 +53,6 @@ public class UserController {
     public User getUser(@RequestBody User user) {
         User user1 = userRepository.findByNameAndPassword(user.getName(), user.getPassword());
         if (user1 != null) {
-            System.out.println(user1.getName());
-            System.out.println(user1.getPassword());
-            System.out.println(user1.getRole());
             return user1;
         }
         return null;

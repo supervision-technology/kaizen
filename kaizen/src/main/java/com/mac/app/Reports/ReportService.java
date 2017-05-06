@@ -5,6 +5,10 @@
  */
 package com.mac.app.Reports;
 
+import com.mac.app.Reports.model.MonthWise;
+import java.lang.reflect.Array;
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +34,27 @@ public class ReportService {
         return reportRepository.viewCountDetails(year);
     }
 
-    public List<Object[]> monthWiseDetailsByYear(String year) {
-        return reportRepository.monthWiseDetailByYear(year);
+    public List<MonthWise> monthWiseDetailsByYear(String year) {
+        ArrayList<MonthWise> list = new ArrayList<>();
+
+        List<Object[]> monthWiseDetail = reportRepository.monthWiseDetailByYear(year);
+        for (Object[] objects : monthWiseDetail) {
+            MonthWise monthWise = new MonthWise();
+            monthWise.setDate(objects[0].toString());
+            monthWise.setDepartment(objects[1].toString());
+            monthWise.setTarget(objects[2].toString());
+            monthWise.setAchieved(objects[3].toString());
+            list.add(monthWise);
+        }
+        return list;
+    }
+
+    public List<Object[]> topKaizen(String year, String month) {
+        return reportRepository.topKaizen(year, month);
+    }
+
+    public List<Object[]> top10Kaizen(String year, String month) {
+       return reportRepository.top10Kaizen(year, month);
     }
 
 }

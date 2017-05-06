@@ -71,6 +71,10 @@
                             templateUrl: "app/reports/monthly-details.html",
                             controller: "SummaryController"
                         })
+                        .when("/reports/top5-kaizen", {
+                            templateUrl: "app/reports/top5-kaizen.html",
+                            controller: "SummaryController"
+                        })
 
                         .otherwise({
                             redirectTo: "/"

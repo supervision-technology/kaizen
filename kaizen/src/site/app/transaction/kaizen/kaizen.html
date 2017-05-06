@@ -52,7 +52,7 @@
                 <!--<div>-->
                 <table>
                     <tbody>
-                    <td ng-repeat="image in beforeImageModel track by $index">
+                    <td ng-repeat="image in beforeImageModel">
                         <div style="width: 110px; height: 120px; margin-top: 5px;margin-left: 5px">
                             <button class="btn btn-xs btn-danger btn-flat pull-right" ng-click="removeImage($index)"><span class="glyphicon glyphicon-remove"></span></button>
                             <img ng-src="{{image}}" style="width: 100%; height: 95px;border: 1px solid #cccccc; ">
@@ -75,7 +75,7 @@
             <div class="bordered border-default mygrid-wrapper-div" style="height: 130px" >
                 <table>
                     <tbody>
-                    <td ng-repeat="images in afterImageModel track by $index">
+                    <td ng-repeat="images in afterImageModel">
                         <div style="width: 110px; height: 120px; margin-top: 5px;margin-left: 5px">
                             <button class="btn btn-xs btn-danger btn-flat pull-right" ng-click="removeAfterImage($index)"><span class="glyphicon glyphicon-remove"></span></button>
                             <img src="{{images}}" style="width: 100%; height: 95px;border: 1px solid #cccccc; ">
