@@ -52,35 +52,25 @@ public class KaizenController {
         return kaizenService.saveKazen(kaizen);
     }
 
-    @RequestMapping(value = "/update-kaizen", method = RequestMethod.POST)
-    public TKaizen updateByManager(@RequestBody TKaizen kaizen) {
-        return kaizenService.kaizenUpdateByManager(kaizen);
-    }
-
+//    @RequestMapping(value = "/update-kaizen", method = RequestMethod.POST)
+//    public TKaizen updateByManager(@RequestBody TKaizen kaizen) {
+//        return kaizenService.kaizenUpdateByManager(kaizen);
+//    }
     @RequestMapping(value = "/update-committee-kaizen", method = RequestMethod.POST)
     public TKaizen updateByCommittee(@RequestBody TKaizen kaizen) {
         return kaizenService.kaizenUpdateByCommittee(kaizen);
     }
 
     // send appreciation mail
-    @RequestMapping(value = "/send-mail/{indexNo}", method = RequestMethod.POST)
-    public void sendEmail(@RequestBody Mail mail, @PathVariable Integer indexNo) {
-        kaizenService.updateKaizenByIndex(indexNo);
- 
-        MimeMessagePreparator messagePreparator = mimeMessage -> {
-            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-            messageHelper.setFrom("kaizencommittee1@gmail.com");
-//            messageHelper.setTo(mail.getEmail());
-            messageHelper.setTo("niduraprageeth@gmail.com");
-            messageHelper.setSubject(mail.getSubject());
-            messageHelper.setText(mail.getMessage());
-        };
-        try {
-            mailSender.send(messagePreparator);
-        } catch (MailException e) {
-            System.out.println(e);
-        }
-
+    @RequestMapping(value = "/send-mail", method = RequestMethod.POST)
+    public TKaizen sendEmail(@RequestBody Mail mail) {
+        TKaizen kaisenMail = kaizenService.kaizenUpdateByManager(mail);
+        return kaisenMail;
     }
 
+    // send suggesent mail
+    @RequestMapping(value = "/send-suggestion-mail/{indexNo}", method = RequestMethod.POST)
+    public TKaizen sendSuggestionEmail(@RequestBody Mail mail, @PathVariable("indexNo") Integer indexNo) {
+        return kaizenService.updateKaizenByIndex(mail, indexNo);
+    }
 }

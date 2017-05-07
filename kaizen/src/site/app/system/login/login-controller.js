@@ -11,7 +11,7 @@
                 AuthenticationService.ClearCredentials();
 
                 $scope.login = function () {
-                    $scope.error =null;
+                    $rootScope.error =null;
                     $rootScope.loading = "loading";
                     AuthenticationService.Login($scope.username, $scope.password, function (response) {
                         if (response) {
@@ -28,7 +28,7 @@
 
                         } else {
                             $rootScope.loading = null;
-                            $scope.error = 'Username or password is incorrect';
+//                            $rootScope.error = 'Username or password is incorrect';
                         }
                     });
                 };

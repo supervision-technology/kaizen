@@ -75,6 +75,10 @@
                             templateUrl: "app/reports/top5-kaizen.html",
                             controller: "SummaryController"
                         })
+                        .when("/reports/top10-kaizen", {
+                            templateUrl: "app/reports/top10-kaizen.html",
+                            controller: "SummaryController"
+                        })
 
                         .otherwise({
                             redirectTo: "/"
@@ -103,6 +107,7 @@
                 $scope.$watch('UserMode', function (mode) {
                     if (!mode) {
                         $location.path("/");
+                        $rootScope.error =null;
                     }
                 });
 ////

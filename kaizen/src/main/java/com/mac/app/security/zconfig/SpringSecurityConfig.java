@@ -36,12 +36,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //    private AuthenticationEntryPoint authEntryPoint;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-         http.authorizeRequests()
-                 .antMatchers(HttpMethod.OPTIONS).permitAll()
+        http.authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/api/***").fullyAuthenticated().and()
                 .httpBasic()
                 .and().csrf().disable();
-        
+
 //        http
 //                .authorizeRequests()
 //                .antMatchers(HttpMethod.OPTIONS).permitAll()
@@ -56,6 +56,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        System.out.println("user service");
         auth.userDetailsService(userDetailService());
 //        auth.inMemoryAuthentication().withUser("JANAKA").password("445").roles("USER");
     }
@@ -69,11 +70,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 String password = name.split("--")[1];
 
                 User user = userRepository.findByNameAndPassword(userName, password);
-
                 Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
                 grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));
 
                 return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), grantedAuthorities);
+
             }
         };
 

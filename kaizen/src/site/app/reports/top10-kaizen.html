@@ -6,7 +6,7 @@
             </div>
             <div class="col-sm-4">
                 <!--<input type="date" class="form-control">-->
-                <select name="yearpicker" id="yearpicker" class="form-control" ng-model="year" ng-change="selectTop5Year(year)">
+                <select name="yearpicker" id="yearpicker" class="form-control" ng-model="year" ng-change="selectTop10Year(year)">
                      <option value=''>--Select Year--</option>
                     <option ng-repeat="year in yearList">{{year}}</option>
                 </select>
@@ -16,7 +16,7 @@
             </div>
             <div class="col-sm-4">
                 <!--<input type="date" class="form-control">-->
-                <select name="yearpicker" id="yearpicker" class="form-control" ng-model="month" ng-change="selectTop5Month(month)">
+                <select name="yearpicker" id="yearpicker" class="form-control" ng-model="month" ng-change="selectTop10Month(month)">
                     <option value=''>--Select Month--</option>
                     <option selected value='01'>Janaury</option>
                     <option value='02'>February</option>
@@ -33,7 +33,7 @@
                 </select>
             </div>
         </div>
-        <h3 class="text-center" ng-show="printMode === 'true'">Report2</h3>
+        <h3 class="text-center" ng-show="printMode === 'true'">TOP 10 KAIZEN SUBMISSIONS</h3>
     </div><br>
 
     <div class="col-sm-12">
@@ -62,7 +62,7 @@
                 <col style="width: 27%">
                 <col style="width: 20%">
                 <tbody>
-                    <tr ng-repeat="summary in top5KaizenList">
+                    <tr ng-repeat="summary in top10KaizenList">
                         <td>{{summary[0]| date:"MM"}}</td>
                         <td>{{summary[1]}}</td>
                         <td>{{summary[3]}}</td>

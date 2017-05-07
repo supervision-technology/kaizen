@@ -51,13 +51,9 @@ public class UserController {
 //    }
     @RequestMapping(path = "/user/login", method = RequestMethod.POST)
     public User getUser(@RequestBody User user) {
-        User user1 = userRepository.findByNameAndPassword(user.getName(), user.getPassword());
-        if (user1 != null) {
-            return user1;
-        }
-        return null;
+       return userRepository.findByNameAndPassword(user.getName(), user.getPassword());
     }
-
+    
     @RequestMapping(path = "/save-user", method = RequestMethod.POST)
     public User saveUser(@RequestBody User user) {
         user.setEpfNo(user.getPassword());
@@ -78,5 +74,4 @@ public class UserController {
 //    public HttpEntity optionRequest() {
 //        return new HttpEntity(HttpEntity.EMPTY);
 //    }
-
 }

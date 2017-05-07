@@ -51,6 +51,7 @@
                 //load top 5 kaizen 
                 factory.loadTop10Kaizen = function (year, month, callback) {
                     var url = systemConfig.apiUrl + "/top-10-kaizen/" + year + "/" + month;
+                    console.log(url)
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -215,6 +216,25 @@
                     SummaryFactory.loadTop5Kaizen(year, month
                             , function (data) {
                                 $scope.top5KaizenList = data;
+                            }
+                    , function (data) {
+//                        Notification.error(data);
+                    });
+                };
+                
+                $scope.selectTop10Year = function (year) {
+                    $rootScope.top10year = year;
+                };
+
+                $scope.selectTop10Month = function (month) {
+                    $scope.getTop10Kaizen($rootScope.top10year, month);
+                };
+
+                $scope.getTop10Kaizen = function (year, month) {
+                    SummaryFactory.loadTop10Kaizen(year, month
+                            , function (data) {
+                                $scope.top10KaizenList = data;
+                                console.log($scope.top10KaizenList)
                             }
                     , function (data) {
 //                        Notification.error(data);

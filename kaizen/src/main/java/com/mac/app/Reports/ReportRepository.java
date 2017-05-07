@@ -157,11 +157,11 @@ public interface ReportRepository extends JpaRepository<Target, Integer> {
             + "and \n"
             + " k.employee_complete='EMPLOYEE_COMPLETE'\n"
             + "and\n"
-            + "YEAR(k.introduce_date)=:year\n"
+            + "YEAR(k.introduce_date)=:year \n"
             + "and\n"
-            + "MONTH(k.introduce_date)=:month\n"
+            + "MONTH(k.introduce_date)=:month \n"
             + "group by \n"
             + " d.index_no,MONTH(k.introduce_date)\n"
             + " order by qty desc limit 10",nativeQuery = true)
-    public List<Object[]> top10Kaizen(String year, String month);
+    public List<Object[]> top10Kaizen(@Param("year") String year, @Param("month") String month);
 }
