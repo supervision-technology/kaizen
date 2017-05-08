@@ -1,5 +1,11 @@
 'use strict';
 
+angular.module("AppModule")
+        .config(function ($httpProvider) {
+            $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+            $httpProvider.defaults.withCredentials = true;
+        });
+
 angular.module('AppModule')
         .factory('AuthenticationService', function (systemConfig, $base64, $http, $cookieStore, $rootScope, $timeout) {
             var service = {};
@@ -32,7 +38,8 @@ angular.module('AppModule')
                 auth = "Basic " + btoa(auth);
 
                 var headers = {
-                    "Authorization": auth
+                    "Authorization": auth,
+                    "X-Requested-With": "XMLHttpRequest"
                 };
 
                 var url = systemConfig.apiUrl + "/user/login";
@@ -66,7 +73,7 @@ angular.module('AppModule')
                         authdata: authdata
                     }
                 };
-
+                
                 $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
                 $cookieStore.put('globals', $rootScope.globals);
             };

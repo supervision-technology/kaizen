@@ -55,14 +55,14 @@
             </thead>
         </table>
 
-        <div class="smart-scroll-y" style="height: calc(100vh - 200px);" scrolly="showMore()">
+        <div class="smart-scroll-y" style="height: calc(100vh - 200px);">
             <table class="table">
                 <col style="width: 15%">
                 <col style="width: 50%">
                 <col style="width: 20%">
                 <col style="width: 15%">
                 <tbody>
-                    <tr ng-repeat="target in targetKaizenList| filter : year | limitTo: numLimit">
+                    <tr ng-repeat="target in targetKaizenList| filter : year">
                         <td>{{target.targetYear| date :  "yyyy"}}</td>
                         <td>{{target.department.name}}</td>
                         <td>{{target.target}}</td>

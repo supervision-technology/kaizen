@@ -70,6 +70,7 @@ public class KaizenService {
         return kaizen;
     }
 
+    @Transactional
     public TKaizen saveKazen(TKaizen kaizen) {
         kaizen.setIntroduceDate(new Date());
         kaizen.setReviewStatus(KAIZEN_PENDING);
@@ -84,6 +85,7 @@ public class KaizenService {
         return kaizenRepository.save(kaizen);
     }
 
+    @Transactional
     public TKaizen kaizenUpdateByManager(Mail mail) {
         TKaizen kaizen1 = kaizenRepository.findOne(mail.getIndexNo());
 
@@ -113,6 +115,7 @@ public class KaizenService {
         return save;
     }
 
+    @Transactional
     public TKaizen kaizenUpdateByCommittee(TKaizen kaizen) {
         TKaizen kaizen1 = kaizenRepository.findOne(kaizen.getIndexNo());
 
@@ -126,7 +129,8 @@ public class KaizenService {
         return kaizenRepository.save(kaizen1);
     }
 
-    public TKaizen updateKaizenByIndex(Mail mail,Integer indexNo) {
+    @Transactional
+    public TKaizen updateKaizenByIndex(Mail mail, Integer indexNo) {
         TKaizen kaizen = kaizenRepository.findOne(indexNo);
         kaizen.setManagerCost(mail.getManagerCost());
         kaizen.setManagerCreativity(mail.getManagerCreativity());

@@ -67,25 +67,6 @@
                                 <span>Committee View</span>
                             </a>
                         </li>
-                        <li ng-show="UserMode === 'committee'">
-                            <a href="javascript:;">
-                                <!--<i class="fa fa-toggle-on"></i>-->
-                                <span>Reports</span>
-                            </a>
-                            <ul class="sub-menu">
-                        
-                                <li>
-                                    <a href="#/reports/top5-kaizen">
-                                        <span>Top 5 Kaizen</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#/reports/top10-kaizen">
-                                        <span>Top 10 Kaizen</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
                         <!--</ul>-->
                         <!-- /transaction-->
                         <!-- master -->
@@ -111,7 +92,7 @@
                             <!--</li>-->
                             <!--</ul>-->
                         </li>
-                        <li ng-show="UserMode === 'admin'">
+                 <li> <!--       -->
                             <a href="javascript:;">
                                 <!--<i class="fa fa-toggle-on"></i>-->
                                 <span>Reports</span>
@@ -122,12 +103,23 @@
                                         <span>Summary</span>
                                     </a>
                                 </li>-->
+                                <li ng-show="UserMode !== 'user'">
+                                    <a href="#/reports/top5-kaizen">
+                                        <span>Top 5 Kaizen</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#/reports/top10-kaizen">
+                                        <span>Top 10 Kaizen</span>
+                                    </a>
+                                </li>
+
                                 <li>
                                     <a href="#/reports/annual-achievement">
                                         <span>Annual Achievement</span>
                                     </a>
                                 </li>
-                                <li>
+                                <li ng-show="UserMode !== 'user'">
                                     <a href="#/reports/evaluated-details">
                                         <span>Evaluated Details</span>
                                     </a>
