@@ -535,6 +535,53 @@
                         Notification.error("Please select kaizen ");
                     }
                 };
+                
+                $scope.sendAppreciationMail2 = function (a) {
+                    if ($scope.ui.selectedDataIndex) {
+                        if ($rootScope.managerTotalScore < 70 || a === 1) {
+                            if ($scope.emailModel.email) {
+                                $rootScope.sendMode = "loading2";
+                                var date = $filter('date')(new Date(), 'yyyy-MM-dd');
+                                $scope.emailModel.message = "Hi (" + $rootScope.employeeName + "),\n\nTHANK YOU !!! for your effort towards improving the continues improvement culture in Linea Aqua.\n\nWe have considered your Kaizen in the " + date + " kaizen forum and found it as a valuable idea for Linea Aqua.\n\n\We hope you will keep doing Kaizens to bring Linea Aqua to the next level.\n\nThanks & Regards,\nKaizen Committee";
+                                $scope.emailModel.subject = "Kaizen Appreciation";
+                                $scope.emailModel.indexNo = $rootScope.kaizenIndex;
+                                $scope.emailModel.managerCost = $rootScope.ManagerScoreCost;
+                                $scope.emailModel.managerCreativity = $rootScope.ManagerScoreCreativity;
+                                $scope.emailModel.managerQuality = $rootScope.ManagerScoreQuality;
+                                $scope.emailModel.managerSafety = $rootScope.ManagerScoreSafety;
+                                $scope.emailModel.managerUtilization = $rootScope.ManagerScoreUtilization;
+
+
+                                 var url = systemConfig.apiUrl + "/api/kaizen/send-suggestion-mail/" + $scope.ui.selectedDataIndex;
+
+
+                                var JsonDetail = JSON.stringify($scope.emailModel);
+                                console.log(JsonDetail)
+                                $http.post(url, JsonDetail)
+                                        .success(function (data, status, headers) {
+                                            console.log(data);
+                                            $rootScope.sendMode = null;
+                                            var id = null;
+                                            for (var i = 0; i < $scope.model.kaizenList.length; i++) {
+                                                if ($scope.model.kaizenList[i].indexNo === data.indexNo) {
+                                                    id = i;
+                                                }
+                                            }
+                                            $scope.model.kaizenList.splice(id, 1);
+                                            Notification.success("Send successfully");
+                                        })
+                                        .error(function (data, status, headers) {
+                                        });
+                            } else {
+                                Notification.error("Email is null");
+                            }
+                        } else {
+                            Notification.error("Selected kaizen should be less than 70%");
+                        }
+                    } else {
+                        Notification.error("Please select kaizen ");
+                    }
+                };
 
                 $scope.sendSuggestion = function () {
                     if ($scope.ui.selectedDataIndex) {

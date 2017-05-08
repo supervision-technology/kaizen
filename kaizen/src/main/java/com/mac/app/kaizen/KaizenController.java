@@ -61,14 +61,14 @@ public class KaizenController {
         return kaizenService.kaizenUpdateByCommittee(kaizen);
     }
 
-    // send appreciation mail
+    // send appreciation mail and kaizen save
     @RequestMapping(value = "/send-mail", method = RequestMethod.POST)
     public TKaizen sendEmail(@RequestBody Mail mail) {
         TKaizen kaisenMail = kaizenService.kaizenUpdateByManager(mail);
         return kaisenMail;
     }
 
-    // send suggesent mail
+    // send suggesent mail and appreciation mail
     @RequestMapping(value = "/send-suggestion-mail/{indexNo}", method = RequestMethod.POST)
     public TKaizen sendSuggestionEmail(@RequestBody Mail mail, @PathVariable("indexNo") Integer indexNo) {
         return kaizenService.updateKaizenByIndex(mail, indexNo);
