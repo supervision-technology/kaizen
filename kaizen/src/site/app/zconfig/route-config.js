@@ -54,6 +54,12 @@
                             templateUrl: "app/master/target/target.html",
                             controller: "targetController"
                         })
+                        .when("/master/create-topkaizen-monthly", {
+                            templateUrl: "app/master/topKaizen/create-topkaizen-monthly.html",
+                            controller: "TopkaizenController"
+                        })
+
+
                         //reports
                         .when("/reports/summary", {
                             templateUrl: "app/reports/summary.html",
@@ -107,7 +113,7 @@
                 $scope.$watch('UserMode', function (mode) {
                     if (!mode) {
                         $location.path("/");
-                        $rootScope.error =null;
+                        $rootScope.error = null;
                     }
                 });
 ////

@@ -1,6 +1,7 @@
 <div class="bt border-primary">
     <div class="col-sm-4 bg-default-light">
-        <div class="row text-center" style="background-color: darkgray; height: 40px;"><label style="color: #ffffff; font-size: 20px">DEPARTMENTS</label></div>
+        <!--<div class="row text-center" style="background-color: darkgray; height: 40px;"><label style="color: #ffffff; font-size: 20px">DEPARTMENTS</label></div>-->
+         <div class="row text-center" style="height: 40px; background-color: #2b5f92; color: white;font-size: 20px;padding-top: 4px;">DEPARTMENTS</div>
         <!--<div style="height: calc(100vh - 57px)">-->
         <div class="smart-scroll-y row" style="height: calc(100vh - 100px)" ng-show="departments.length">
             <section class="bg-white post-comments" ng-repeat="department in departments" ng-click="ui.selectDepartment(department,$index)" ng-class="selectedDataIndex === department.indexNo ? 'selected' : ''" > 

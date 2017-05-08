@@ -90,4 +90,11 @@ public class User implements Serializable {
         this.department = department;
     }
 
+    @Override
+    public String toString() {
+        return "User{" + "indexNo=" + indexNo + ", name=" + name + ", password=" + password + ", role=" + role + ", epfNo=" + epfNo + ", department=" + department + '}';
+    }
+    
+    
+
 }

@@ -1,0 +1,97 @@
+<div class="bt border-primary">
+    <div class="col-sm-4 bg-default-light">
+        <div style="height: calc(100vh - 57px)">
+            <table class="table" style="background: none">
+                <tbody>
+                    <tr>
+                        <td class="col-sm-4">
+                            <label for="date" class="control-label" style="margin-top: 9px">Month :</label>
+                        </td>
+                        <td class="col-sm-8"> 
+                           <input type="month" class="form-control" id="date" ng-model="model.date">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-sm-4">
+                            <label for="epf" class="control-label" style="margin-top: 9px">EPF No :</label>
+                        </td>
+                        <td class="col-sm-8"> 
+                            <input type="text" ng-model="model.epfNo" class="form-control" id="epf" ng-keypress="keyEvent($event);">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-sm-4">
+                            <label for="empname" class="control-label" style="margin-top: 9px">Name :</label>
+                        </td>
+                        <td class="col-sm-8"> 
+                            <input type="text" ng-model="model.name" class="form-control" id="empname">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-sm-4">
+                            <label for="department" class="control-label" style="margin-top: 9px">Department :</label>
+                        </td>
+                        <td class="col-sm-8"> 
+                            <input type="text" ng-model="model.department"  class="form-control" id="department" uib-typeahead="department as (department.name) for department in departmentList|filter:$viewValue|limitTo:10">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-sm-4">
+                            <label  class="control-label" style="margin-top: 9px">Image :</label>
+                        </td>
+                        <td class="col-sm-8">
+                            <img style="width: 150px; height: 150px" src="{{imageUrl}}">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-sm-8 bg-white ">
+        <table class="table" style="margin-bottom: 0px; margin-top: 10px">
+            <col style="width: 15%">
+            <col style="width: 15%">
+            <col style="width: 15%">
+            <col style="width: 20%">
+            <col style="width: 25%">
+            <col style="width: 10%">
+            <thead style="background-color: #eeeeee">
+                <tr>
+                    <td>Month</td>
+                    <td>EpfNo</td>
+                    <td>Name</td>
+                    <td>Department</td>
+                    <td>Picture</td>
+                    <td></td>
+                </tr>
+            </thead>
+        </table>
+
+        <div class="smart-scroll-y" style="height: calc(100vh - 140px);">
+            <table class="table">
+                <col style="width: 15%">
+                <col style="width: 15%">
+                <col style="width: 15%">
+                <col style="width: 20%">
+                <col style="width: 25%">
+                <col style="width: 10%">
+                <tbody>
+                    <tr ng-repeat="employee in topKaizenList">
+                        <td>{{employee.date | date:'yyyy-MM'}}</td>
+                        <td>{{employee.epfNo}}</td>
+                        <td>{{employee.name}}</td>
+                        <td>{{employee.department}}</td>
+                        <td><img style="width: 100px; height: 100px" src="{{imageUrl}}"></td>
+                        <td><button style="width: 63px;margin-bottom: 5px" class="btn btn-xs btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                            <button style="width: 63px" class="btn btn-xs btn-primary pull-right" ng-click="ui.edit(employee)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button type="button" class="btn btn-success btn-sm pull-right" style="width: 100px; border-radius: 0px" ng-click="saveTopKaizen()">
+            <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Save
+        </button>
+    </div>
+</div>

@@ -51,7 +51,18 @@
                 //load top 5 kaizen 
                 factory.loadTop10Kaizen = function (year, month, callback) {
                     var url = systemConfig.apiUrl + "/top-10-kaizen/" + year + "/" + month;
-                    console.log(url)
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+
+                            });
+                };
+
+                //load employee
+                factory.loadEmployee = function (callback) {
+                    var url = systemConfig.apiUrl + "/api/employee";
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -65,14 +76,38 @@
             });
 
     angular.module("AppModule")
-            .controller("SummaryController", function (systemConfig, $timeout, $rootScope, $scope, $window, SummaryFactory, $filter) {
+            .controller("SummaryController", function (Notification,systemConfig, $timeout, $rootScope, $scope, $window, SummaryFactory, $filter) {
+
+                $scope.model = {};
+
+                $scope.http = {};
 
                 $scope.yearList = [];
                 $scope.monthList = [];
-
                 $scope.countList = [];
+                $scope.topKaizenList = [];
 
                 $scope.monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+
+
+                // ---------------- http funtion -------------------
+
+                $scope.http.saveTopkaizen = function () {
+                    var json = JSON.stringify($scope.model);
+                    console.log(json);
+                    $scope.topKaizenList.push($scope.model);
+//                    SummaryFactory.saveEmployee(
+//                            json,
+//                            function (data) {
+//                                Notification.success(data.indexNo + " Employee Save Successfully");
+//                                $scope.topKaizenList.push($scope.model);
+//                                $scope.imagemodel = null;
+//                                $scope.model = null;
+//                            });
+
+                };
+
 
                 $scope.print = function (summary) {
                     $scope.printMode = 'true';
@@ -81,7 +116,6 @@
                         $window.print();
                         $scope.printMode = 'false';
                     }, 500);
-
                 };
 
                 $scope.changeYear = function (year) {
@@ -221,7 +255,7 @@
 //                        Notification.error(data);
                     });
                 };
-                
+
                 $scope.selectTop10Year = function (year) {
                     $rootScope.top10year = year;
                 };
@@ -234,7 +268,6 @@
                     SummaryFactory.loadTop10Kaizen(year, month
                             , function (data) {
                                 $scope.top10KaizenList = data;
-                                console.log($scope.top10KaizenList)
                             }
                     , function (data) {
 //                        Notification.error(data);
@@ -244,8 +277,33 @@
                 $scope.getEmployeeImage = function (epfNo) {
                     var imageUrl;
                     var url = systemConfig.apiUrl + "/api/document/download-image/" + epfNo + "/";
+                    $scope.imageUrl = url;
                     return  imageUrl = url;
                 };
+
+
+                //create new top kaizen 
+                $scope.keyEvent = function (e) {
+                    var code = e ? e.keyCode || e.which : 13;
+                    if (code === 13) {
+                        $scope.EmployeeByEpfNo($scope.model.epfNo);
+                    }
+                };
+
+                $scope.EmployeeByEpfNo = function (epfNo) {
+                    angular.forEach($scope.employeeList, function (value) {
+                        if (value.epfNo === epfNo) {
+                            $scope.getEmployeeImage(epfNo);
+                            $scope.model.empName = value.name;
+                            $scope.model.department = value.department.name;
+                        }
+                    });
+                };
+                
+                $scope.saveTopKaizen =function (){
+                  $scope.http.saveTopkaizen();  
+                };
+
 
 
                 $scope.init = function () {
@@ -253,11 +311,11 @@
                     {
                         $scope.yearList.push(j);
                     }
-//
-//                    SummaryFactory.loadEveluatedDetails(
-//                            function (data) {
-//                                $scope.countList = data;
-//                            });
+
+                    SummaryFactory.loadEmployee(
+                            function (data) {
+                                $scope.employeeList = data;
+                            });
 
                 };
 

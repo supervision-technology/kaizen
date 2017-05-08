@@ -99,9 +99,14 @@
                     userFactory.saveUser(
                             JSONDetail,
                             function (data) {
-                                $scope.model = null;
-                                Notification.success(data.indexNo + " User Save Successfully..");
-                                $scope.userList.push(data);
+                                console.log(data);
+                                if (data) {
+                                    $scope.model = null;
+                                    $scope.userList.push(data);
+                                    Notification.success(data.indexNo + " User Save Successfully..");
+                                } else {
+                                    Notification.error("User Name and Password Duplicate..");
+                                }
                             });
                 };
 

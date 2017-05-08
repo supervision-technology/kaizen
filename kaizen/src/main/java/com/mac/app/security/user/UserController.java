@@ -51,13 +51,17 @@ public class UserController {
 //    }
     @RequestMapping(path = "/user/login", method = RequestMethod.POST)
     public User getUser(@RequestBody User user) {
-       return userRepository.findByNameAndPassword(user.getName(), user.getPassword());
+        return userRepository.findByNameAndPassword(user.getName(), user.getPassword());
     }
-    
+
     @RequestMapping(path = "/save-user", method = RequestMethod.POST)
     public User saveUser(@RequestBody User user) {
-        user.setEpfNo(user.getPassword());
-        return userRepository.save(user);
+        User user1 = userRepository.findByNameAndPassword(user.getName(), user.getPassword());
+        if (user1 == null) {
+            System.out.println(user.toString());
+            return userRepository.save(user);
+        }
+        return null;
     }
 
     @RequestMapping(path = "/all-user", method = RequestMethod.GET)

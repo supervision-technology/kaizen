@@ -491,7 +491,7 @@
 
                 $scope.sendAppreciationMail = function (a) {
                     if ($scope.ui.selectedDataIndex) {
-                        if ($rootScope.managerTotalScore < 70 || a === 1) {
+                        if (a === 1) {
                             if ($scope.emailModel.email) {
                                 $rootScope.sendMode = "loading2";
                                 var date = $filter('date')(new Date(), 'yyyy-MM-dd');
@@ -509,10 +509,8 @@
 
 
                                 var JsonDetail = JSON.stringify($scope.emailModel);
-                                console.log(JsonDetail)
                                 $http.post(url, JsonDetail)
                                         .success(function (data, status, headers) {
-                                            console.log(data);
                                             $rootScope.sendMode = null;
                                             var id = null;
                                             for (var i = 0; i < $scope.model.kaizenList.length; i++) {
@@ -524,6 +522,8 @@
                                             Notification.success("Send successfully");
                                         })
                                         .error(function (data, status, headers) {
+                                            $rootScope.sendMode = null;
+                                            Notification.error("Send fail");
                                         });
                             } else {
                                 Notification.error("Email is null");
@@ -535,7 +535,7 @@
                         Notification.error("Please select kaizen ");
                     }
                 };
-                
+
                 $scope.sendAppreciationMail2 = function (a) {
                     if ($scope.ui.selectedDataIndex) {
                         if ($rootScope.managerTotalScore < 70 || a === 1) {
@@ -552,14 +552,12 @@
                                 $scope.emailModel.managerUtilization = $rootScope.ManagerScoreUtilization;
 
 
-                                 var url = systemConfig.apiUrl + "/api/kaizen/send-suggestion-mail/" + $scope.ui.selectedDataIndex;
+                                var url = systemConfig.apiUrl + "/api/kaizen/send-suggestion-mail/" + $scope.ui.selectedDataIndex;
 
 
                                 var JsonDetail = JSON.stringify($scope.emailModel);
-                                console.log(JsonDetail)
                                 $http.post(url, JsonDetail)
                                         .success(function (data, status, headers) {
-                                            console.log(data);
                                             $rootScope.sendMode = null;
                                             var id = null;
                                             for (var i = 0; i < $scope.model.kaizenList.length; i++) {
@@ -571,6 +569,8 @@
                                             Notification.success("Send successfully");
                                         })
                                         .error(function (data, status, headers) {
+                                            $rootScope.sendMode = null;
+                                            Notification.error("Send fail");
                                         });
                             } else {
                                 Notification.error("Email is null");
@@ -610,6 +610,7 @@
                                     })
                                     .error(function (data, status, headers) {
                                         $rootScope.sendMode = null;
+                                        Notification.error("Send fail");
                                     });
                         } else {
                             Notification.error("Email is null");
