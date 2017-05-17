@@ -32,7 +32,17 @@ public class EmployeeService {
     }
 
     public Employee saveEmployee(Employee employee) {
-        return employeeRepository.save(employee);
+        if (employee.getIndexNo() != null) {
+            Employee findOne = employeeRepository.findOne(employee.getIndexNo());
+            return employeeRepository.save(employee);
+        } else {
+            Employee user1 = employeeRepository.findByNameAndEpfNo(employee.getName(), employee.getEpfNo());
+            if (user1 != null) {
+                return null;
+            } else {
+                return employeeRepository.save(employee);
+            }
+        }
     }
 
     public void deleteEmployee(Integer indexNo) {
@@ -42,6 +52,14 @@ public class EmployeeService {
     // department methods
     public List<Department> allDepartment() {
         return departmentRepository.findAll();
+    }
+
+    public void deleteDepartment(Integer indexNo) {
+        departmentRepository.delete(indexNo);
+    }
+
+    public Department saveDepartment(Department department) {
+        return departmentRepository.save(department);
     }
 
 }

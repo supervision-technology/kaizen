@@ -43,6 +43,7 @@
                     <ul class="nav">
                         <!-- transaction -->
                         <li ng-hide="UserMode === 'admin'">
+
                             <!--                            <a href="javascript:;">
                                                             <i class="fa fa-list-alt"></i>
                                                             <span>Transaction</span>
@@ -66,6 +67,11 @@
                             <a href="#/transaction/kaizen-committee-view" ng-show="UserMode === 'committee'">
                                 <span>Committee View</span>
                             </a>
+                            <i class="sub-menu"></i>
+                            <a href="#/master/kaizens">
+                                <span>Kaizens</span>
+                            </a>
+
                         </li>
                         <!--</ul>-->
                         <!-- /transaction-->
@@ -86,15 +92,23 @@
                                 <span>User Registration</span>
                             </a>
                             <i class="sub-menu"></i>
+                            <a href="#/master/department">
+                                <span>Create Department</span>
+                            </a>
+                            <i class="sub-menu"></i>
                             <a href="#/master/create-target">
                                 <span>Create Target</span>
                             </a>
-                             <i class="sub-menu"></i>
+                            <i class="sub-menu"></i>
                             <a href="#/master/create-topkaizen-monthly">
-                                <span>Create Top Kaizen</span>
+                                <span>Create Best Kaizen</span>
                             </a>
-                        <!--</li>-->
-                        <!--</ul>-->
+                            <i class="sub-menu"></i>
+                            <a href="#/master/delete-kaizen">
+                                <span>Delete Kaizen</span>
+                            </a>
+                            <!--</li>-->
+                            <!--</ul>-->
                         </li>
                         <li> <!--       -->
                             <a href="javascript:;">
@@ -107,7 +121,7 @@
                                                                         <span>Summary</span>
                                                                     </a>
                                                                 </li>-->
-                                <li ng-show="UserMode !== 'user'">
+                                <li ng-hide="UserMode === 'user'">
                                     <a href="#/reports/top5-kaizen">
                                         <span>Top 5 Kaizen</span>
                                     </a>
@@ -117,14 +131,18 @@
                                         <span>Top 10 Kaizen</span>
                                     </a>
                                 </li>
-
+                                <li>
+                                    <a href="#/reports/top-kaizen-monthly">
+                                        <span>Best Kaizens</span>
+                                    </a>
+                                </li>
 
                                 <li>
                                     <a href="#/reports/annual-achievement">
                                         <span>Annual Achievement</span>
                                     </a>
                                 </li>
-                                <li ng-show="UserMode !== 'user'">
+                                <li ng-hide="UserMode === 'user' || UserMode === 'group_user'">
                                     <a href="#/reports/evaluated-details">
                                         <span>Evaluated Details</span>
                                     </a>

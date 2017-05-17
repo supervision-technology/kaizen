@@ -47,15 +47,21 @@ public class KaizenController {
         return kaizenService.getKaizenByDepartment(indexNo);
     }
 
+    @RequestMapping(value = "/employee-kaizen/{epfNo}", method = RequestMethod.GET)
+    public List<TKaizen> getKaizenByEmployee(@PathVariable String epfNo) {
+        return kaizenService.getKaizenByEmployee(epfNo);
+    }
+
     @RequestMapping(value = "/save-kaizen", method = RequestMethod.POST)
     public TKaizen saveKaizen(@RequestBody TKaizen kaizen) {
         return kaizenService.saveKazen(kaizen);
     }
 
-//    @RequestMapping(value = "/update-kaizen", method = RequestMethod.POST)
-//    public TKaizen updateByManager(@RequestBody TKaizen kaizen) {
-//        return kaizenService.kaizenUpdateByManager(kaizen);
-//    }
+    @RequestMapping(value = "/delete-kaizen/{indexNo}", method = RequestMethod.POST)
+    public void deleteKaizen(@PathVariable Integer indexNo, @RequestBody Mail mail) {
+        kaizenService.deleteKaizen(indexNo,mail);
+    }
+
     @RequestMapping(value = "/update-committee-kaizen", method = RequestMethod.POST)
     public TKaizen updateByCommittee(@RequestBody TKaizen kaizen) {
         return kaizenService.kaizenUpdateByCommittee(kaizen);

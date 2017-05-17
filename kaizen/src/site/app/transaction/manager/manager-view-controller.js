@@ -406,6 +406,7 @@
                     $scope.model.kaizenList = [];
                     document.getElementById("appreciationBtn").disabled = true;
                     document.getElementById("suggestionBtn").disabled = true;
+                    document.getElementById("submitBtn").disabled = true;
                     $scope.model.reset();
                     $scope.ui.selectedDataIndex = null;
 
@@ -427,6 +428,7 @@
                     $scope.model.kaizenList = [];
                     document.getElementById("appreciationBtn").disabled = false;
                     document.getElementById("suggestionBtn").disabled = false;
+                    document.getElementById("submitBtn").disabled = false;
                     $scope.ui.selectedDataIndex = null;
                     $scope.model.reset();
 

@@ -743,8 +743,8 @@ tr.ng-leave {
 
 
 .mygrid-wrapper-div{
-/*    white-space: nowrap;
-    overflow-x: visible;*/
+    /*    white-space: nowrap;
+        overflow-x: visible;*/
     overflow-y: hidden;
     border: 1px solid #cccccc; 
 }
@@ -754,4 +754,108 @@ tr.ng-leave {
 }
 
 
+.modal-content{
+    border-radius: 0 !important;
+}
+
+.option-pane{
+    width: 100%;
+    display: block;
+    text-align: center;
+    border: 1.5px solid;
+
+    .option-pane-body{
+        padding: 20px;
+
+        .option-pane-icon{
+            color: #FFF;
+            padding: 20px;
+            font-size: 36px;
+            border-radius: 100%;
+        }
+
+        .option-pane-title{
+            margin-top: 10px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .option-pane-message{
+        }
+
+        .option-pane-input{
+            margin-top: 10px;
+        }
+        input{
+            height: 45px;
+            border-color:#cccccc;
+            font-weight: normal !important;
+            border-radius: 0 !important;
+        }
+    }
+
+    .option-pane-footer{
+        padding: 30px;
+        border-top: 2px solid;
+
+        .btn{
+            padding: 10px 20px 10px 20px;
+            border-radius: 0px;
+        }
+
+        .btn.clear{
+            background: transparent !important;
+        }
+
+        .progress{
+            margin-bottom: 0px !important;
+        }
+    }
+}
+
+/*default option-pane*/
+.option-pane.option-pane-default{
+    border-color: #cccccc;
+
+    .option-pane-title{
+        color: #cccccc;
+    }
+
+    .option-pane-footer{
+        background-color:  #cccccc;
+        border-top-color: #cccccc;
+
+        .btn{
+            background:#cccccc;
+            border: #cccccc 2px solid;
+        }
+
+        .progress-bar{
+            background-color:#cccccc;
+        }
+    }
+}
+
+/*danger option-pane*/
+.option-pane.option-pane-danger{
+    border-color: #cccccc;
+
+    .option-pane-title{
+        color: #cccccc;
+    }
+
+    .option-pane-footer{
+        background-color:  #cccccc;
+        border-top-color: #cccccc;
+
+        .btn{
+            background:#cccccc;
+            border: #cccccc 2px solid;
+        }
+
+        .progress-bar{
+            background-color:#cccccc;
+        }
+    }
+}
 

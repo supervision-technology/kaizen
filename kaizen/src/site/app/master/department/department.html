@@ -1,0 +1,72 @@
+<div class="bt border-primary">
+    <div class="col-sm-4 bg-default-light">
+        <div class="row text-center" style="height: 40px; background-color: #2b5f92; color: white;font-size: 20px;padding-top: 4px;">DEPARTMENT DETAILS</div>
+        <div style="margin-top: 15px;height: calc(100vh - 111px)">
+            <table class="table" style="background: none">
+                <tbody>
+                    <tr>
+                        <td class="col-sm-4">
+                            <label for="empname" class="control-label" style="margin-top: 9px">Name :</label>
+                        </td>
+                        <td class="col-sm-8"> 
+                            <input type="text" ng-model="model.name" class="form-control" id="empname">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-sm-8 bg-white ">
+
+        <div style="margin-top: 15px">
+            <div class="col-sm-1" style="margin-right: 10px;">
+                <label class="control-label" style="margin-top: 9px;">Department </label>
+            </div>
+            <div class="col-sm-5">
+                <input class="form-control" ng-model="searchName" placeholder="Search department...."><br>
+            </div>
+        </div>
+
+        <table class="table" style="margin-bottom: 0px;">
+            <col style="width: 25%">
+            <col style="width: 50%">
+            <col style="width: 25%">
+            <thead style="background-color: #eeeeee">
+                <tr>
+                    <td>#</td>
+                    <td>Name</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </thead>
+        </table>
+
+        <div class="smart-scroll-y" style="height: calc(100vh - 210px);" scrolly="showMore()">
+            <table class="table">
+                <col style="width: 25%">
+                <col style="width: 50%">
+                <col style="width: 25%">
+                <tbody>
+                    <tr ng-repeat="department in departmentList| filter : searchName">
+                        <td>{{department.indexNo}}</td>
+                        <td>{{department.name}}</td>
+                        <td><button style="margin-left: 5px" class="btn btn-xs btn-danger pull-right" ng-click="http.deleteDepartment(department.indexNo)"><span class="glyphicon glyphicon-trash"></span></button>
+                            <button class="btn btn-xs btn-icon pull-right" ng-click="ui.edit(department)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="row" style="height: 47px; border-top: 1px solid #cccccc">
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-success btn-sm pull-right" style="margin-top: 8px;border-radius: 0px" ng-click="ui.save()">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Save
+                </button>
+                <button type="button" class="btn btn-primary btn-sm pull-right" style="margin-right: 10px;margin-top: 8px;border-radius: 0px" ng-click="ui.clear()">
+                    <span class="glyphicon glyphicon-refresh" aria-hidden="true" ></span> Clear
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -33,10 +33,10 @@
                 </select>
             </div>
         </div>
-        <h3 class="text-center" ng-show="printMode === 'true'">Report2</h3>
     </div><br>
 
-    <div class="col-sm-12">
+    <div class="col-sm-12" id="printDiv">
+        <h3 class="text-center" ng-show="printMode === 'true'">Evaluated Detail Report</h3>
         <table class="table" style="margin-bottom: 0px">
             <col style="width: 10%">
             <col style="width: 30%">
@@ -54,7 +54,7 @@
             </thead>
         </table>
 
-        <div class="smart-scroll-y" style="height: calc(100vh - 200px);" scrolly="showMore()">
+        <div class="smart-scroll-y" style="height: calc(100vh - 200px);"  ng-show="tempList.length">
             <table class="table">
                 <col style="width: 10%">
                 <col style="width: 30%">
@@ -73,7 +73,10 @@
             </table>
         </div>
     </div>
+          <div class="col-lg-12 placeholder bordered border-default" style="height: calc(100vh - 200px)"  ng-hide="tempList.length">
+            <h1 class="text-center mt200" style="">REPORT DETAILS ARE EMPTY</h1>
+        </div>
     <div class="col-sm-12">
-        <button class="pull-right btn btn-primary btn-flat" ng-click="print(summary)" ng-hide="printMode === 'true'">Print</button>
+        <button class="pull-right btn btn-primary btn-flat" ng-click="print('printDiv')" ng-hide="printMode === 'true'">Print</button>
     </div>
 </div>

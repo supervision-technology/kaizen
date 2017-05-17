@@ -81,7 +81,7 @@
                     employeeCreativity: 0,
                     employeeSafety: 0,
                     employeeQuality: 0,
-                    actualCost:null
+                    actualCost: null
                 };
                 $scope.model.document = {
                     indexNo: null,
@@ -183,6 +183,9 @@
                                     $rootScope.fileList = [[]];
                                     Notification.success(data.indexNo + " - " + "Kaizen Saved Successfully.");
                                     $scope.model.reset();
+                                    $scope.beforeImageModel = [];
+                                    $scope.afterImageModel = [];
+                                    $rootScope.sendMode = null;
                                 } else {
                                     angular.forEach($scope.employees, function (val) {
                                         if (val.indexNo === data.employee) {
@@ -225,7 +228,11 @@
                 //save function 
                 $scope.ui.save = function () {
                     if ($scope.validateInput()) {
-                        $scope.http.saveKaizen();
+                        if ($rootScope.cost > 0 && $rootScope.actualCost === null) {
+                            Notification.error("Actual cost empty.please enter actual cost");
+                        } else {
+                            $scope.http.saveKaizen();
+                        }
                     } else {
                         Notification.error("Please input details");
                     }
@@ -553,6 +560,9 @@
                     }
                     if (!$rootScope.scoreQuality) {
                         $rootScope.scoreQuality = 0;
+                    }
+                    if (!$rootScope.actualCost) {
+                        $rootScope.actualCost = null;
                     }
 //                    if (!$rootScope.actualCost) {
 //                        $rootScope.actualCost = 0;

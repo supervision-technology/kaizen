@@ -48,9 +48,20 @@
 
                             });
                 };
-                //load top 5 kaizen 
+                //load top 10 kaizen 
                 factory.loadTop10Kaizen = function (year, month, callback) {
                     var url = systemConfig.apiUrl + "/top-10-kaizen/" + year + "/" + month;
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+
+                            });
+                };
+                //load best kaizens
+                factory.BestKaizens = function (year, callback) {
+                    var url = systemConfig.apiUrl + "/best-kaizen/" + year;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -76,7 +87,7 @@
             });
 
     angular.module("AppModule")
-            .controller("SummaryController", function (Notification,systemConfig, $timeout, $rootScope, $scope, $window, SummaryFactory, $filter) {
+            .controller("SummaryController", function (Notification, systemConfig, $timeout, $rootScope, $scope, $window, SummaryFactory, $filter) {
 
                 $scope.model = {};
 
@@ -109,13 +120,26 @@
                 };
 
 
-                $scope.print = function (summary) {
+                $scope.print = function (divName) {
                     $scope.printMode = 'true';
 
                     $timeout(function () {
+//                        w = window.open();
+//                        w.document.write(document.getElementById('printDiv').innerHTML);
+//                        w.print();
+//                        w.close();
                         $window.print();
                         $scope.printMode = 'false';
                     }, 500);
+
+//                    var printContents = document.getElementById(divName).innerHTML;
+//                    var originalContents = document.body.innerHTML;
+//
+//                    document.body.innerHTML = "<html><head><title></title></head><body>" + printContents + "</body>";
+//
+//                    window.print();
+//
+//                    document.body.innerHTML = originalContents;
                 };
 
                 $scope.changeYear = function (year) {
@@ -274,6 +298,16 @@
                     });
                 };
 
+                $scope.getBestKaizenByYear = function (year) {
+                    SummaryFactory.BestKaizens(year
+                            , function (data) {
+                                $scope.BestKaizenList = data;
+                            }
+                    , function (data) {
+//                        Notification.error(data);
+                    });
+                };
+
                 $scope.getEmployeeImage = function (epfNo) {
                     var imageUrl;
                     var url = systemConfig.apiUrl + "/api/document/download-image/" + epfNo + "/";
@@ -299,9 +333,9 @@
                         }
                     });
                 };
-                
-                $scope.saveTopKaizen =function (){
-                  $scope.http.saveTopkaizen();  
+
+                $scope.saveTopKaizen = function () {
+                    $scope.http.saveTopkaizen();
                 };
 
 

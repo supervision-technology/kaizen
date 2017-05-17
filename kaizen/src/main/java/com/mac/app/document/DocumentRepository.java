@@ -7,6 +7,7 @@ package com.mac.app.document;
 
 import com.mac.app.document.model.Document;
 import java.io.Serializable;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -14,5 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Nidura Prageeth
  */
 public interface DocumentRepository extends JpaRepository<Document, Serializable>{
+
+    public List<Document> findByKaizen(Integer IndexNo);
     
 }

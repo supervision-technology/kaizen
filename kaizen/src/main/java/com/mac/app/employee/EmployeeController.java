@@ -84,14 +84,24 @@ public class EmployeeController {
         return saveEmployee;
     }
 
-    @RequestMapping(value = "/delete-employee", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete-employee/{indexNo}", method = RequestMethod.DELETE)
     public void deleteEmployee(@PathVariable Integer indexNo) {
         employeeService.deleteEmployee(indexNo);
     }
 
-    //department
+    //department controllers
     @RequestMapping(value = "/all-department", method = RequestMethod.GET)
     public List<Department> allDepartment() {
         return employeeService.allDepartment();
+    }
+
+    @RequestMapping(value = "/delete-department/{indexNo}", method = RequestMethod.DELETE)
+    public void deleteDepartment(@PathVariable Integer indexNo) {
+        employeeService.deleteDepartment(indexNo);
+    }
+
+    @RequestMapping(value = "/save-department", method = RequestMethod.POST)
+    public Department saveEmployee(@RequestBody Department department) {
+        return employeeService.saveDepartment(department);
     }
 }

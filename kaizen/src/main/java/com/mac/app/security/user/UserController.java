@@ -56,12 +56,17 @@ public class UserController {
 
     @RequestMapping(path = "/save-user", method = RequestMethod.POST)
     public User saveUser(@RequestBody User user) {
-        User user1 = userRepository.findByNameAndPassword(user.getName(), user.getPassword());
-        if (user1 == null) {
-            System.out.println(user.toString());
+        if (user.getIndexNo() != null) {
+            User findOne = userRepository.findOne(user.getIndexNo());
             return userRepository.save(user);
+        } else {
+            User user1 = userRepository.findByNameAndPassword(user.getName(), user.getPassword());
+            if (user1 != null) {
+                return null;
+            } else {
+                return userRepository.save(user);
+            }
         }
-        return null;
     }
 
     @RequestMapping(path = "/all-user", method = RequestMethod.GET)
@@ -70,8 +75,9 @@ public class UserController {
     }
 
     @RequestMapping(path = "/delete-user/{indexNo}", method = RequestMethod.DELETE)
-    public void deleteUser(@PathVariable Integer indexNo) {
+    public int deleteUser(@PathVariable Integer indexNo) {
         userRepository.delete(indexNo);
+        return indexNo;
     }
 
 //    @RequestMapping(value = "/**", method = RequestMethod.OPTIONS)

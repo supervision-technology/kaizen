@@ -58,6 +58,18 @@
                             templateUrl: "app/master/topKaizen/create-topkaizen-monthly.html",
                             controller: "TopkaizenController"
                         })
+                        .when("/master/department", {
+                            templateUrl: "app/master/department/department.html",
+                            controller: "departmentController"
+                        })
+                        .when("/master/kaizens", {
+                            templateUrl: "app/master/kaizens/kaizen-view.html",
+                            controller: "KaizenViewController"
+                        })
+                        .when("/master/delete-kaizen", {
+                            templateUrl: "app/master/kaizens/delete-kaizen.html",
+                            controller: "KaizenViewController"
+                        })
 
 
                         //reports
@@ -83,6 +95,10 @@
                         })
                         .when("/reports/top10-kaizen", {
                             templateUrl: "app/reports/top10-kaizen.html",
+                            controller: "SummaryController"
+                        })
+                        .when("/reports/top-kaizen-monthly", {
+                            templateUrl: "app/reports/top-kaizen-monthly.html",
                             controller: "SummaryController"
                         })
 

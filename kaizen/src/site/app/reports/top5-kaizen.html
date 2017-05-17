@@ -54,7 +54,7 @@
             </thead>
         </table>
 
-        <div class="smart-scroll-y" style="height: calc(100vh - 200px);" scrolly="showMore()">
+        <div class="smart-scroll-y" style="height: calc(100vh - 200px);"  ng-show="top5KaizenList.length">
             <table class="table">
                 <col style="width: 10%">
                 <col style="width: 30%">
@@ -71,6 +71,10 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        
+       <div class="col-lg-12 placeholder bordered border-default" style="height: calc(100vh - 200px)"  ng-hide="top5KaizenList.length">
+            <h1 class="text-center mt200">REPORT DETAILS ARE EMPTY</h1>
         </div>
     </div>
     <div class="col-sm-12">

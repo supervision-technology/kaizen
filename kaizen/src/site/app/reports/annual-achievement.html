@@ -7,12 +7,12 @@
             <div class="col-sm-8">
                 <!--<input type="date" class="form-control">-->
                 <select name="yearpicker" id="yearpicker" class="form-control" ng-model="year" ng-change="changeYear(year)">
-                     <option value=''>--Select Year--</option>
+                    <option value=''>--Select Year--</option>
                     <option ng-repeat="year in yearList">{{year}}</option>
                 </select>
             </div>
         </div>
-        <h3 class="text-center" ng-show="printMode === 'true'">Annual Achievement</h3>
+        <h3 class="text-center" ng-show="printMode === 'true'">Annual Achievement Report</h3>
     </div><br>
 
     <div class="col-sm-12">
@@ -31,7 +31,7 @@
             </thead>
         </table>
 
-        <div class="smart-scroll-y" style="height: calc(100vh - 200px);" scrolly="showMore()">
+        <div class="smart-scroll-y" style="height: calc(100vh - 200px);" ng-show="summaryList.length">
             <table class="table">
                 <col style="width: 25%">
                 <col style="width: 15%">
@@ -43,14 +43,18 @@
                         <td>{{summary[2]}}</td>
                         <td >{{summary[3]}}</td>
                         <td><label class="label label-success" ng-if="summary[2] === summary[3]" ng-show="summary[2] === summary[3]">Achieved</label>
-                        <label class="label label-danger" ng-if="summary[2] > summary[3]" ng-show="summary[2] > summary[3]">Not Achieved</label>
+                            <label class="label label-danger" ng-if="summary[2] > summary[3]" ng-show="summary[2] > summary[3]">Not Achieved</label>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+
+        <div class="col-lg-12 placeholder bordered border-default" style="height: calc(100vh - 200px)"  ng-hide="summaryList.length">
+            <h1 class="text-center mt200" style="">REPORT DETAILS ARE EMPTY</h1>
+        </div>
     </div>
     <div class="col-sm-12">
-        <button class="pull-right btn btn-primary btn-flat" ng-click="print(summary)" ng-hide="printMode ==='true'">Print</button>
+        <button class="pull-right btn btn-primary btn-flat" ng-click="print(summary)" ng-hide="printMode === 'true'">Print</button>
     </div>
 </div>

@@ -27,9 +27,22 @@
                             });
                 };
 
+                // save employee
                 factory.saveEmployee = function (employee, callback) {
                     var url = systemConfig.apiUrl + "/api/employee/upload-employee";
                     $http.post(url, employee)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+
+                            });
+                };
+
+                // delete employee
+                factory.deleteEmployee = function (indexNo, callback) {
+                    var url = systemConfig.apiUrl + "/api/employee/delete-employee/" + indexNo;
+                    $http.delete(url)
                             .success(function (data, status, headers) {
                                 callback(data);
                             })
@@ -44,7 +57,7 @@
 
 
     angular.module("AppModule")
-            .controller("employeeController", function (systemConfig, $scope, employeeFactory, Notification) {
+            .controller("employeeController", function (ConfirmPane,systemConfig, $scope, employeeFactory, Notification) {
 
                 //data models 
                 $scope.model = {};
@@ -61,10 +74,21 @@
                     type: "",
                     epfNo: "",
                     department: null,
-                    email: null
+                    email: ""
                 };
 
                 $scope.employeeList = [];
+
+                $scope.resetModel = function () {
+                    $scope.model = {
+                        name: "",
+                        type: "",
+                        epfNo: "",
+                        department: null,
+                        email: ""
+                    };
+
+                };
 
                 //validate model
                 $scope.validateInput = function () {
@@ -98,14 +122,18 @@
 //                        $scope.model = null;
 //                        $scope.imagemodel = null;
 //                    } else {
-                        employeeFactory.saveEmployee(
-                                json,
-                                function (data) {
+                    employeeFactory.saveEmployee(
+                            json,
+                            function (data) {
+                                if (data) {
                                     Notification.success(data.indexNo + " Employee Save Successfully");
-                                    $scope.employeeList.push($scope.model);
+                                    $scope.employeeList.unshift(data);
                                     $scope.imagemodel = null;
                                     $scope.model = null;
-                                });
+                                } else {
+                                    Notification.error("Employee Name and EPF No Duplicate..");
+                                }
+                            });
 
 //                    }
                 };
@@ -114,20 +142,21 @@
 
                 //delete employee
                 $scope.http.deleteEmployee = function (indexNo) {
-                    employeeFactory.deleteEmployee(indexNo
-                            , function () {
-                                var id = -1;
-                                for (var i = 0; i < $scope.employeeList.length; i++) {
-                                    if ($scope.employeeList[i].indexNo === indexNo) {
-                                        id = i;
-                                    }
-                                }
-                                Notification.success(indexNo + " - " + "Employee Delete Successfully.");
-                                $scope.employeeList.splice(id, 1);
-                            },
-                            function (data) {
-//                                Notification.error(data);
+                    ConfirmPane.primaryConfirm("Are you sure you want to delete?")
+                            .confirm(function () {
+                                employeeFactory.deleteEmployee(indexNo
+                                        , function () {
+                                            var id = -1;
+                                            for (var i = 0; i < $scope.employeeList.length; i++) {
+                                                if ($scope.employeeList[i].indexNo === indexNo) {
+                                                    id = i;
+                                                }
+                                            }
+                                            Notification.success(indexNo + " - " + "Employee Delete Successfully.");
+                                            $scope.employeeList.splice(id, 1);
+                                        });
                             });
+
                 };
 
                 //get employee image
@@ -135,8 +164,6 @@
                     var url = systemConfig.apiUrl + "/api/document/download-image/" + path + "/";
                     $scope.imagemodel = url;
                 };
-
-
 
                 //---------------ui funtion--------------
 
@@ -146,6 +173,11 @@
                     } else {
                         Notification.error("Please Input Value");
                     }
+                };
+
+                $scope.ui.clear = function () {
+                    $scope.resetModel();
+//                    $scope.model = null; TODO
                 };
 
                 // upload file

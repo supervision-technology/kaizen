@@ -4,20 +4,8 @@
                 var factory = {};
 
 
-                //load top 5 kaizen 
-                factory.loadTop5Kaizen = function (year, month, callback) {
-                    var url = systemConfig.apiUrl + "/top-kaizen/" + year + "/" + month;
-                    $http.get(url)
-                            .success(function (data, status, headers) {
-                                callback(data);
-                            })
-                            .error(function (data, status, headers) {
-
-                            });
-                };
-
                 factory.saveTopKaizen = function (employee, callback) {
-                    var url = systemConfig.apiUrl + "/api/save-topkaizen";
+                    var url = systemConfig.apiUrl + "/save-top-kaizen";
                     $http.post(url, employee)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -49,11 +37,23 @@
                             });
                 };
 
+                // delete top kaizen
+                factory.deleteTopKaizen = function (indexNo, callback) {
+                    var url = systemConfig.apiUrl + "/delete-top-kaizen/" + indexNo;
+                    $http.delete(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+
+                            });
+                };
+
                 return factory;
             });
 
     angular.module("AppModule")
-            .controller("TopkaizenController", function (Notification, systemConfig,$rootScope, $scope, TopkaizenFactory) {
+            .controller("TopkaizenController", function ($filter, Notification, systemConfig, $rootScope, $scope, TopkaizenFactory) {
 
                 $scope.model = {};
 
@@ -70,12 +70,34 @@
                     TopkaizenFactory.saveTopKaizen(
                             json,
                             function (data) {
-                                Notification.success(data.indexNo + " Employee Save Successfully");
-                                $scope.topKaizenList.push($scope.model);
-                                $scope.imagemodel = null;
-                                $scope.model = null;
+                                if (data) {
+                                    Notification.success(data.indexNo + " Employee Save Successfully");
+                                    $scope.imageUrl = null;
+                                    $scope.topKaizenList.push(data);
+                                    $scope.model = null;
+                                } else {
+                                    Notification.error("Top kaizen has been already selected for this month");
+                                }
                             });
 
+                };
+
+                //delete top kaizen
+                $scope.http.deleteTopKaizen = function (indexNo) {
+                    TopkaizenFactory.deleteTopKaizen(indexNo
+                            , function () {
+                                var id = -1;
+                                for (var i = 0; i < $scope.topKaizenList.length; i++) {
+                                    if ($scope.topKaizenList[i].indexNo === indexNo) {
+                                        id = i;
+                                    }
+                                }
+                                Notification.success(indexNo + " - " + "Delete Successfully.");
+                                $scope.topKaizenList.splice(id, 1);
+                            },
+                            function (data) {
+//                                Notification.error(data);
+                            });
                 };
 
                 //------------------ ui funtion-----------------
@@ -84,6 +106,7 @@
                     var imageUrl;
                     var url = systemConfig.apiUrl + "/api/document/download-image/" + epfNo + "/";
                     $scope.imageUrl = url;
+                    $scope.imagemodel = url;
                     return  imageUrl = url;
                 };
 
@@ -110,6 +133,24 @@
                     $scope.http.saveTopkaizen();
                 };
 
+                $scope.clear = function () {
+                    $scope.model = null;
+                    $scope.imageUrl = null;
+                };
+
+                $scope.edit = function (employee, imageModel) {
+                    $scope.model = employee;
+                    $scope.imageUrl = imageModel;
+                    $scope.model.date = new Date(employee.date);
+                    console.log($scope.model.date);
+                    var id = -1;
+                    for (var i = 0; i < $scope.topKaizenList.length; i++) {
+                        if ($scope.topKaizenList[i].indexNo === employee.indexNo) {
+                            id = i;
+                        }
+                    }
+                    $scope.topKaizenList.splice(id, 1);
+                };
 
 
                 $scope.init = function () {
@@ -125,8 +166,8 @@
 
                     TopkaizenFactory.allTopKaizen(
                             function (data) {
-                                console.log(data)
-//                                $scope.employeeList = data;
+//                                console.log(data)
+//                                $scope.topKaizenList = data;
                             });
 
                 };

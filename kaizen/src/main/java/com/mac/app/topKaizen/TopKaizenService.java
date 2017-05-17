@@ -26,4 +26,20 @@ public class TopKaizenService {
     public List<TopKaizen> allTopKaizen() {
         return topKaizenRepository.findAll();
     }
+
+    public TopKaizen saveTopKaizen(TopKaizen topKaizen) {
+        TopKaizen kaizen = topKaizenRepository.findByDate(topKaizen.getDate());
+        if (kaizen == null) {
+            return topKaizenRepository.save(topKaizen);
+        }
+        return null;
+    }
+
+    public void deleteTopkaizen(Integer indexNo) {
+        topKaizenRepository.delete(indexNo);
+    }
+
+    public List<TopKaizen> getTopKaizenByYear(String year) {
+        return topKaizenRepository.findByYear(year);
+    }
 }

@@ -98,7 +98,7 @@
             </thead>
         </table>
 
-        <div class="smart-scroll-y" style="height: calc(100vh - 200px);" scrolly="showMore()">
+        <div class="smart-scroll-y" style="height: calc(100vh - 210px);" scrolly="showMore()">
             <table class="table">
                 <col style="width: 25%">
                 <col style="width: 15%">
@@ -111,16 +111,24 @@
                         <td>{{employee.type}}</td>
                         <td>{{employee.epfNo}}</td>
                         <td>{{employee.department.name}}</td>
-                        <td><button style="margin-left: 5px" class="btn btn-xs btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span> Delete</button>
-                            <button class="btn btn-xs btn-primary pull-right" ng-click="ui.edit(employee)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                        <td><button style="margin-left: 5px" class="btn btn-xs btn-danger pull-right" ng-click="http.deleteEmployee(employee.indexNo)"><span class="glyphicon glyphicon-trash"></span></button>
+                            <button class="btn btn-xs btn-icon pull-right" ng-click="ui.edit(employee)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-
-        <button type="button" class="btn btn-success btn-sm pull-right" style="width: 100px; border-radius: 0px" ng-click="ui.save()">
-            <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Save
-        </button>
+        
+        
+        <div class="row" style="height: 47px; border-top: 1px solid #cccccc">
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-success btn-sm pull-right" style="margin-top: 8px;border-radius: 0px" ng-click="ui.save()">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Save
+                </button>
+                <button type="button" class="btn btn-primary btn-sm pull-right" style="margin-right: 10px;margin-top: 8px;border-radius: 0px" ng-click="ui.clear()">
+                    <span class="glyphicon glyphicon-refresh" aria-hidden="true" ></span> Clear
+                </button>
+            </div>
+        </div>
     </div>
 </div>

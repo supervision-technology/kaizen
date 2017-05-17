@@ -17,6 +17,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
 
     public List<Employee> findByDepartmentIndexNo(Integer index);
 
+    public Employee findByNameAndEpfNo(String name, String epfNo);
 
+    public Employee findByEpfNo(String epfNo);
     
 }

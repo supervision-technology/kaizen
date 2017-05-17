@@ -70,6 +70,14 @@ public class KaizenService {
         return kaizen;
     }
 
+    public List<TKaizen> getKaizenByEmployee(String epfNo) {
+        Employee employee = employeeRepository.findByEpfNo(epfNo);
+        if (employee != null) {
+            return kaizenRepository.findByEmployee(employee.getIndexNo());
+        }
+        return null;
+    }
+
     @Transactional
     public TKaizen saveKazen(TKaizen kaizen) {
         kaizen.setIntroduceDate(new Date());
@@ -156,7 +164,45 @@ public class KaizenService {
             }
         }
         return save;
+    }
 
+    @Transactional
+    public void deleteKaizen(Integer IndexNo,Mail mail) {
+        List<Document> document = documentRepository.findByKaizen(IndexNo);
+        
+        if (document != null) {
+            MimeMessagePreparator messagePreparator = mimeMessage -> {
+                MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+                messageHelper.setFrom("kaizencommittee1@gmail.com");
+                messageHelper.setTo(mail.getEmail());
+//                messageHelper.setTo("niduraprageeth@gmail.com");
+                messageHelper.setSubject("Kaizen Deleted..");
+                messageHelper.setText("Your kaizen deleted by admin");
+            };
+            try {
+                mailSender.send(messagePreparator);
+            } catch (MailException e) {
+                System.out.println(e);
+            }
+            documentRepository.delete(document);
+            kaizenRepository.delete(IndexNo);
+
+        } else {
+             MimeMessagePreparator messagePreparator = mimeMessage -> {
+                MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+                messageHelper.setFrom("kaizencommittee1@gmail.com");
+                messageHelper.setTo(mail.getEmail());
+//                messageHelper.setTo("niduraprageeth@gmail.com");
+                messageHelper.setSubject("Kaizen Deleted..");
+                messageHelper.setText("Your kaizen deleted by admin");
+            };
+            try {
+                mailSender.send(messagePreparator);
+            } catch (MailException e) {
+                System.out.println(e);
+            }
+            kaizenRepository.delete(IndexNo);
+        }
     }
 
 }

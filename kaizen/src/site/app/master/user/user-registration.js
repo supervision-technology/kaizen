@@ -59,15 +59,10 @@
 
 
     angular.module("AppModule")
-            .controller("userController", function ($filter, $scope, userFactory, Notification) {
+            .controller("userController", function ($filter, $scope, userFactory, Notification, ConfirmPane, $uibModalStack, $rootScope) {
 
                 //data models 
-                $scope.model = {
-                    name: null,
-                    password: null,
-                    role: null,
-                    department: null
-                };
+                $scope.model = {};
 
                 //ui models
                 $scope.ui = {};
@@ -92,6 +87,7 @@
                     });
                     return label;
                 };
+
                 //-------------------http funtion-------------
                 $scope.http.save = function () {
                     var JSONDetail = JSON.stringify($scope.model);
@@ -101,9 +97,10 @@
                             function (data) {
                                 console.log(data);
                                 if (data) {
-                                    $scope.model = null;
-                                    $scope.userList.push(data);
+                                    $scope.model = {};
                                     Notification.success(data.indexNo + " User Save Successfully..");
+                                    $scope.userList.unshift(data);
+
                                 } else {
                                     Notification.error("User Name and Password Duplicate..");
                                 }
@@ -111,31 +108,45 @@
                 };
 
                 //delete user
-                $scope.http.deleteUser = function (indexNo) {
-                    userFactory.deleteUser(indexNo
-                            , function () {
-                                var id = -1;
-                                for (var i = 0; i < $scope.userList.length; i++) {
-                                    if ($scope.userList[i].indexNo === indexNo) {
-                                        id = i;
-                                    }
-                                }
-                                $scope.userList.splice(id, 1);
-                                Notification.success(indexNo + " - " + "User Delete Successfully.");
-                            },
-                            function (data) {
+                $scope.http.deleteUser = function (user) {
+                    ConfirmPane.primaryConfirm("Are you sure you want to delete?")
+                            .confirm(function () {
+                                userFactory.deleteUser(user.indexNo
+                                        , function (indexNo) {
+                                            var id = -1;
+                                            for (var i = 0; i < $scope.userList.length; i++) {
+                                                if ($scope.userList[i].indexNo === indexNo) {
+                                                    id = i;
+                                                }
+                                            }
+                                            $scope.userList.splice(id, 1);
+                                            Notification.success(user.indexNo + " - " + "User Delete Successfully.");
+                                        }
+                                );
                             });
                 };
 
+                $scope.close = function () {
+                    $uibModalStack.dismissAll();
+                };
 
                 $scope.ui.save = function () {
                     $scope.http.save();
                 };
 
-                $scope.ui.edit = function (index, user) {
-//                    console.log(user)
+                $scope.ui.clear = function () {
+                    $scope.model = null;
+                };
+
+                $scope.ui.edit = function (user) {
                     $scope.model = user;
-                    $scope.userList.splice(index, 1);
+                    var id = -1;
+                    for (var i = 0; i < $scope.userList.length; i++) {
+                        if ($scope.userList[i].indexNo === user.indexNo) {
+                            id = i;
+                        }
+                    }
+                    $scope.userList.splice(id, 1);
                 };
 
                 $scope.ui.getDepartment = function (indexNo) {
@@ -152,7 +163,7 @@
 
 
                 $scope.showMore = function () {
-                    $scope.numLimit += 5;
+                    $scope.numLimit += 10;
                 };
 
                 $scope.init = function () {

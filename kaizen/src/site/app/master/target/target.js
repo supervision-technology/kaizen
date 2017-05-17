@@ -72,7 +72,7 @@
 
                 //validate model
                 $scope.validateInput = function () {
-                    if ($scope.year!==null && $scope.model.target!==null
+                    if ($scope.year !== null && $scope.model.target !== null
                             && $rootScope.selectedDataIndex) {
                         return true;
                     } else {
@@ -91,8 +91,8 @@
                     targetFactory.saveTarget(
                             detailJSON,
                             function (data) {
-                                $rootScope.selectedDataIndex=null;
-                                $scope.model.target=null;
+                                $rootScope.selectedDataIndex = null;
+                                $scope.model.target = null;
                                 Notification.success(data.indexNo + " - " + " Saved Successfully.");
                                 $scope.departments.splice($rootScope.departmentIndex, 1);
                                 $scope.targetKaizenList.push(data);
@@ -128,14 +128,20 @@
 
                 $scope.ui.changeTargetYear = function (year) {
                     $scope.departments = [];
+                    $scope.targetKaizenList = [];
+                    
+                    targetFactory.loadTargetKaizen(function (data) {
+                        $scope.targetKaizen = data;
+                    });
 
                     targetFactory.loadDepartment(function (data) {
                         $scope.departmentList = data;
                     });
 
-                    angular.forEach($scope.targetKaizenList, function (value) {
+                    angular.forEach($scope.targetKaizen, function (value) {
                         var year2 = $filter('date')(new Date(value.targetYear), 'yyyy');
                         if (year2 === year) {
+                            $scope.targetKaizenList.push(value);
                             angular.forEach($scope.departmentList, function (value2, key) {
                                 if (value.department.name === value2.name) {
                                     $scope.departmentList.splice(key, 1);
@@ -165,7 +171,7 @@
                         $scope.departmentList = data;
                     });
                     targetFactory.loadTargetKaizen(function (data) {
-                        $scope.targetKaizenList = data;
+                        $scope.targetKaizen = data;
                     });
                 };
 
