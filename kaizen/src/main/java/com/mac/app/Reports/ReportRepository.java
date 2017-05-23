@@ -42,7 +42,6 @@ public interface ReportRepository extends JpaRepository<Target, Integer> {
 //            + "group by \n"
 //            + " d.index_no", nativeQuery = true)
 //    public List<Object[]> AllSummary(@Param("year") String year);
-   
     @Query(value = "SELECT\n"
             + "target.target_year,\n"
             + "department.name,\n"
@@ -56,31 +55,22 @@ public interface ReportRepository extends JpaRepository<Target, Integer> {
             + "GROUP BY department.index_no", nativeQuery = true)
     public List<Object[]> AllSummary(@Param("year") String year);
 
-    @Query(value = "select\n"
-            + "t.target_year ,\n"
-            + "d.name ,\n"
-            + "t.target,\n"
-            + "count(k.review_status) as manager_view,\n"
-            + "count(k.committee_complete) as Evaluated\n"
-            + "from \n"
-            + "kaizen k ,\n"
-            + "employee e,\n"
-            + "department d ,\n"
-            + "target t\n"
-            + "where  \n"
-            + "e.index_no=k.employee \n"
-            + "and \n"
-            + "e.department=d.index_no \n"
-            + "and\n"
-            + "d.index_no=t.department \n"
-            //      + "and \n"
-            //      + "k.review_status='MANAGER_VIEW' \n"
-            + "and \n"
-            + "YEAR(k.introduce_date) = YEAR(t.target_year)\n"
-            + "and \n"
-            + "YEAR(k.introduce_date)=:year \n"
-            + "GROUP BY \n"
-            + "d.index_no", nativeQuery = true)
+    @Query(value = "SELECT\n"
+            + "target.target_year,\n"
+            + "department.name,\n"
+            + "target.target,\n"
+            + "COUNT(kaizen.manager_complete ='MANAGER_COMPLETE') AS manager_view,\n"
+            + "COUNT(kaizen.review_status ='MANAGER_VIEW') AS Evaluated\n"
+            + "FROM \n"
+            + "target\n"
+            + "LEFT JOIN department ON target.department = department.index_no\n"
+            + "LEFT JOIN employee ON department.index_no= employee.department\n"
+            + "LEFT JOIN kaizen ON kaizen.employee = employee.index_no\n"
+            + "WHERE  \n"
+            + " YEAR(kaizen.introduce_date) = YEAR(target.target_year) \n"
+            + " AND \n"
+            + " YEAR(target.target_year)=:year \n"
+            + "GROUP BY department.index_no", nativeQuery = true)
     public List<Object[]> viewCountDetails(@Param("year") String year);
 
     @Query(value = "select\n"

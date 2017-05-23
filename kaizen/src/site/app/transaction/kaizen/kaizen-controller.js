@@ -524,7 +524,11 @@
                             var d = [];
                             angular.forEach(data, function (val) {
                                 if (val.department.indexNo === $rootScope.user.department) {
-                                    d.push(val);
+                                    if (val.epfNo === $rootScope.user.epfNo) {
+                                        $scope.model.kaizen.employee = val.name;
+                                        $scope.ui.selectEmployee(val);
+                                        d.push(val);
+                                    }
                                 }
                             });
                             $scope.model.employeeList = d;

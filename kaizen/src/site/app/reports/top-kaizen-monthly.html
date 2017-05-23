@@ -41,7 +41,7 @@
                 <col style="width: 25%">
                 <col style="width: 15%">
                 <tbody>
-                    <tr ng-repeat="employee in BestKaizenList">
+                    <tr ng-repeat="employee in BestKaizenList | orderBy:'date'">
                         <td>{{employee.date| date:'MMMM'}}</td>
                         <td>{{employee.epfNo}}</td>
                         <td>{{employee.name}}</td>

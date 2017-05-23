@@ -109,8 +109,8 @@ public class KaizenService {
             MimeMessagePreparator messagePreparator = mimeMessage -> {
                 MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
                 messageHelper.setFrom("kaizencommittee1@gmail.com");
-                messageHelper.setTo(mail.getEmail());
-//                messageHelper.setTo("niduraprageeth@gmail.com");
+//                messageHelper.setTo(mail.getEmail());
+                messageHelper.setTo("niduraprageeth@gmail.com");
                 messageHelper.setSubject(mail.getSubject());
                 messageHelper.setText(mail.getMessage());
             };
@@ -119,8 +119,9 @@ public class KaizenService {
             } catch (MailException e) {
                 System.out.println(e);
             }
+            return save;
         }
-        return save;
+        return null;
     }
 
     @Transactional
@@ -152,8 +153,8 @@ public class KaizenService {
             MimeMessagePreparator messagePreparator = mimeMessage -> {
                 MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
                 messageHelper.setFrom("kaizencommittee1@gmail.com");
-                messageHelper.setTo(mail.getEmail());
-//                messageHelper.setTo("niduraprageeth@gmail.com");
+//                messageHelper.setTo(mail.getEmail());
+                messageHelper.setTo("niduraprageeth@gmail.com");
                 messageHelper.setSubject(mail.getSubject());
                 messageHelper.setText(mail.getMessage());
             };
@@ -162,20 +163,21 @@ public class KaizenService {
             } catch (MailException e) {
                 System.out.println(e);
             }
+            return save;
         }
-        return save;
+        return null;
     }
 
     @Transactional
-    public void deleteKaizen(Integer IndexNo,Mail mail) {
+    public void deleteKaizen(Integer IndexNo, Mail mail) {
         List<Document> document = documentRepository.findByKaizen(IndexNo);
-        
+
         if (document != null) {
             MimeMessagePreparator messagePreparator = mimeMessage -> {
                 MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
                 messageHelper.setFrom("kaizencommittee1@gmail.com");
-                messageHelper.setTo(mail.getEmail());
-//                messageHelper.setTo("niduraprageeth@gmail.com");
+//                messageHelper.setTo(mail.getEmail());
+                messageHelper.setTo("niduraprageeth@gmail.com");
                 messageHelper.setSubject("Kaizen Deleted..");
                 messageHelper.setText("Your kaizen deleted by admin");
             };
@@ -188,11 +190,11 @@ public class KaizenService {
             kaizenRepository.delete(IndexNo);
 
         } else {
-             MimeMessagePreparator messagePreparator = mimeMessage -> {
+            MimeMessagePreparator messagePreparator = mimeMessage -> {
                 MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
                 messageHelper.setFrom("kaizencommittee1@gmail.com");
-                messageHelper.setTo(mail.getEmail());
-//                messageHelper.setTo("niduraprageeth@gmail.com");
+//                messageHelper.setTo(mail.getEmail());
+                messageHelper.setTo("niduraprageeth@gmail.com");
                 messageHelper.setSubject("Kaizen Deleted..");
                 messageHelper.setText("Your kaizen deleted by admin");
             };
