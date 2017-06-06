@@ -430,51 +430,68 @@
                 };
 
                 $scope.ui.modalOpenUtilization = function () {
-                    $uibModal.open({
-                        animation: true,
-                        ariaLabelledBy: 'modal-title',
-                        ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/transaction/kaizen/dialog/utilization-popup.html',
-                        controller: 'KaizenController',
-                        size: 'lg',
-                        windowClass: 'zindex'
-                    });
+                    if ($rootScope.cost > 0 && $rootScope.actualCost === null) {
+                        Notification.error("Actual cost empty.please enter actual cost");
+                    } else {
+                        $uibModal.open({
+                            animation: true,
+                            ariaLabelledBy: 'modal-title',
+                            ariaDescribedBy: 'modal-body',
+                            templateUrl: 'app/transaction/kaizen/dialog/utilization-popup.html',
+                            controller: 'KaizenController',
+                            size: 'lg',
+                            windowClass: 'zindex'
+                        });
+                    }
+
                 };
 
                 $scope.ui.modalOpenCreativity = function () {
-                    $uibModal.open({
-                        animation: true,
-                        ariaLabelledBy: 'modal-title',
-                        ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/transaction/kaizen/dialog/creativity-popup.html',
-                        controller: 'KaizenController',
-                        size: 'lg',
-                        windowClass: 'zindex'
-                    });
+                    if ($rootScope.cost > 0 && $rootScope.actualCost === null) {
+                        Notification.error("Actual cost empty.please enter actual cost");
+                    } else {
+                        $uibModal.open({
+                            animation: true,
+                            ariaLabelledBy: 'modal-title',
+                            ariaDescribedBy: 'modal-body',
+                            templateUrl: 'app/transaction/kaizen/dialog/creativity-popup.html',
+                            controller: 'KaizenController',
+                            size: 'lg',
+                            windowClass: 'zindex'
+                        });
+                    }
                 };
 
                 $scope.ui.modalOpenSafety = function () {
-                    $uibModal.open({
-                        animation: true,
-                        ariaLabelledBy: 'modal-title',
-                        ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/transaction/kaizen/dialog/safety-popup.html',
-                        controller: 'KaizenController',
-                        size: 'lg',
-                        windowClass: 'zindex'
-                    });
+                    if ($rootScope.cost > 0 && $rootScope.actualCost === null) {
+                        Notification.error("Actual cost empty.please enter actual cost");
+                    } else {
+                        $uibModal.open({
+                            animation: true,
+                            ariaLabelledBy: 'modal-title',
+                            ariaDescribedBy: 'modal-body',
+                            templateUrl: 'app/transaction/kaizen/dialog/safety-popup.html',
+                            controller: 'KaizenController',
+                            size: 'lg',
+                            windowClass: 'zindex'
+                        });
+                    }
                 };
 
                 $scope.ui.modalOpenQuality = function () {
-                    $uibModal.open({
-                        animation: true,
-                        ariaLabelledBy: 'modal-title',
-                        ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/transaction/kaizen/dialog/quality-popup.html',
-                        controller: 'KaizenController',
-                        size: 'lg',
-                        windowClass: 'zindex'
-                    });
+                    if ($rootScope.cost > 0 && $rootScope.actualCost === null) {
+                        Notification.error("Actual cost empty.please enter actual cost");
+                    } else {
+                        $uibModal.open({
+                            animation: true,
+                            ariaLabelledBy: 'modal-title',
+                            ariaDescribedBy: 'modal-body',
+                            templateUrl: 'app/transaction/kaizen/dialog/quality-popup.html',
+                            controller: 'KaizenController',
+                            size: 'lg',
+                            windowClass: 'zindex'
+                        });
+                    }
                 };
 
                 $scope.ui.close = function () {
@@ -524,10 +541,12 @@
                             var d = [];
                             angular.forEach(data, function (val) {
                                 if (val.department.indexNo === $rootScope.user.department) {
+                                    d.push(val);
                                     if (val.epfNo === $rootScope.user.epfNo) {
+//                                        console.log(val)
                                         $scope.model.kaizen.employee = val.name;
                                         $scope.ui.selectEmployee(val);
-                                        d.push(val);
+
                                     }
                                 }
                             });

@@ -87,7 +87,7 @@
             });
 
     angular.module("AppModule")
-            .controller("SummaryController", function (Notification, systemConfig, $timeout, $rootScope, $scope, $window, SummaryFactory, $filter) {
+            .controller("SummaryController", function (FileSaver,Notification, systemConfig, $timeout, $rootScope, $scope, $window, SummaryFactory, $filter) {
 
                 $scope.model = {};
 
@@ -119,18 +119,33 @@
 
                 };
 
+                $scope.exportData = function () {
+                    var blob = new Blob([document.getElementById('printDiv').innerHTML], {
+                        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+                    });
+                    FileSaver.saveAs(blob, "Report.xls");
+                };
+
+                $scope.printFuntion = function () {
+                    var divToPrint = document.getElementById("printDiv");
+                    newWin = window.open("");
+                    newWin.document.write(divToPrint.outerHTML);
+                    newWin.print();
+                    newWin.close();
+                };
 
                 $scope.print = function (divName) {
-                    $scope.printMode = 'true';
+                    $scope.printFuntion();
+//                    $scope.printMode = 'true';
 
-                    $timeout(function () {
+//                    $timeout(function () {
 //                        w = window.open();
 //                        w.document.write(document.getElementById('printDiv').innerHTML);
 //                        w.print();
 //                        w.close();
-                        $window.print();
-                        $scope.printMode = 'false';
-                    }, 500);
+//                        $window.print();
+//                        $scope.printMode = 'false';
+//                    }, 500);
 
 //                    var printContents = document.getElementById(divName).innerHTML;
 //                    var originalContents = document.body.innerHTML;
@@ -176,6 +191,14 @@
                     }
 
                 };
+
+//                $scope.getHitRate = function (value1, value2) {
+////                      console.log(value1,value2);
+//
+//                    var rate = value1 / value2 * 100;
+//                    return rate + "%";
+//                };
+
                 $scope.getEvaluateDetails = function (year) {
                     SummaryFactory.loadEveluatedDetails(year
                             , function (data) {

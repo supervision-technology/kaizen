@@ -59,16 +59,14 @@ public interface ReportRepository extends JpaRepository<Target, Integer> {
             + "target.target_year,\n"
             + "department.name,\n"
             + "target.target,\n"
-            + "COUNT(kaizen.manager_complete ='MANAGER_COMPLETE') AS manager_view,\n"
-            + "COUNT(kaizen.review_status ='MANAGER_VIEW') AS Evaluated\n"
+            + "COUNT(kaizen.index_no) AS receved,\n"
+            + "COUNT(kaizen.manager_complete ='MANAGER_COMPLETE') AS Evaluated\n"
             + "FROM \n"
             + "target\n"
             + "LEFT JOIN department ON target.department = department.index_no\n"
             + "LEFT JOIN employee ON department.index_no= employee.department\n"
             + "LEFT JOIN kaizen ON kaizen.employee = employee.index_no\n"
             + "WHERE  \n"
-            + " YEAR(kaizen.introduce_date) = YEAR(target.target_year) \n"
-            + " AND \n"
             + " YEAR(target.target_year)=:year \n"
             + "GROUP BY department.index_no", nativeQuery = true)
     public List<Object[]> viewCountDetails(@Param("year") String year);
@@ -164,7 +162,7 @@ public interface ReportRepository extends JpaRepository<Target, Integer> {
             + "and\n"
             + "MONTH(k.introduce_date)=:month \n"
             + "group by \n"
-            + " d.index_no,MONTH(k.introduce_date)\n"
+            + " e.index_no,MONTH(k.introduce_date)\n"
             + " order by qty desc limit 10", nativeQuery = true)
     public List<Object[]> top10Kaizen(@Param("year") String year, @Param("month") String month);
 }

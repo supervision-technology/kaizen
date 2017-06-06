@@ -1,6 +1,6 @@
 <div class="bt border-primary">
 
-    <div class="col-sm-7">
+    <div class="col-sm-6">
         <div  class="row  br border-primary">
             <div class="bg-default-light bb border-primary" style="height: 112px">
                 <table class="table">
@@ -70,9 +70,9 @@
     </div>
 
 
-    <div class="col-sm-5">
+    <div class="col-sm-6">
         <div class="row bg-default-light bb border-primary">
-            <div class="col-xs-12" style="margin: 10px 0 10px 0">
+            <div class="col-xs-12" style="margin: 4px 0 1px 0">
                 <label class="form-control"><b>Actual Cost:</b> {{model.kaizen.actualCost|number:2}}</label>
             </div>
         </div>
@@ -83,11 +83,11 @@
             <label class="pull-left">Description</label>
         </div>
 
-        <div class="bordered border-default smart-scroll-y mb5" style="height: 80px; margin-top: 35px;">
+        <div class="bordered border-default smart-scroll-y mb5" style="height: 80px; margin-top: 30px;">
             <p style="padding: 5px">{{model.kaizen.description}}</p>
         </div>
 
-        <div style="height: calc(100vh - 377px);">
+                <div style="height: calc(100vh - 330px);">
             <table class="table table-bordered">
                 <thead>
                 <th>Criteria</th>
@@ -130,14 +130,14 @@
             </table>
         </div>
 
-        <div class="col-lg-7 text-center">
+        <div class="col-sm-7 text-center">
             <div class="row br border-default">
-                <label style="font-size: 16px;" class="pt30">EMPLOYEE SCORE <br>{{empTotalScore}}%</label>
+                <label style="font-size: 16px;" >EMPLOYEE SCORE <br>{{empTotalScore}}%</label>
             </div>
         </div>
-        <div class="col-lg-5 text-center">
+        <div class="col-sm-5 text-center">
             <div class="row">
-                <label style="font-size: 16px;" class="pt30">MANAGER SCORE <br>{{managerTotalScore}} %</label>
+                <label style="font-size: 16px;">MANAGER SCORE <br>{{managerTotalScore}} %</label>
             </div>
         </div>
 

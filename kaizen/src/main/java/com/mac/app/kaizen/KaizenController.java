@@ -11,10 +11,6 @@ import com.mac.app.kaizen.model.Mail;
 import com.mac.app.kaizen.model.TKaizen;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,8 +30,6 @@ public class KaizenController {
     @Autowired
     private KaizenService kaizenService;
 
-    @Autowired
-    private JavaMailSender mailSender;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<TKaizen> allKaizen() {

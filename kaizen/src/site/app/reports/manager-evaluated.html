@@ -7,7 +7,7 @@
             <div class="col-sm-4">
                 <!--<input type="date" class="form-control">-->
                 <select name="yearpicker" id="yearpicker" class="form-control" ng-model="year" ng-change="getEvaluateDetails(year)">
-                     <option value=''>--Select Year--</option>
+                    <option value=''>--Select Year--</option>
                     <option ng-repeat="year in yearList">{{year}}</option>
                 </select>
             </div>
@@ -35,32 +35,34 @@
         </div>
     </div><br>
 
-    <div class="col-sm-12" id="printDiv">
-        <h3 class="text-center" ng-show="printMode === 'true'">Evaluated Detail Report</h3>
-        <table class="table" style="margin-bottom: 0px">
+    <div class="col-sm-12 ">
+        <table class="table" style="margin-bottom: 0px" >
             <col style="width: 10%">
-            <col style="width: 30%">
-            <col style="width: 13%">
-            <col style="width: 27%">
+            <col style="width: 25%">
+            <col style="width: 15%">
             <col style="width: 20%">
+            <col style="width: 20%">
+            <col style="width: 10%">
             <thead style="background-color: #eeeeee">
                 <tr>
                     <th>Month</th>
                     <th>Department</th>
                     <th>Annual Target</th>
-                    <th>No.of Kaizens received by the manager</th>
-                    <th>No. of Evaluated kaizens</th>
+                    <th>received by the manager</th>
+                    <th>Evaluated kaizens</th>
+                    <th>Status</th>
                 </tr>
             </thead>
         </table>
 
-        <div class="smart-scroll-y" style="height: calc(100vh - 200px);"  ng-show="tempList.length">
+        <div ng-show="tempList.length" class="smart-scroll-y" style="height: calc(100vh - 225px);">
             <table class="table">
                 <col style="width: 10%">
-                <col style="width: 30%">
-                <col style="width: 13%">
-                <col style="width: 27%">
+                <col style="width: 25%">
+                <col style="width: 15%">
                 <col style="width: 20%">
+                <col style="width: 20%">
+                <col style="width: 10%">
                 <tbody>
                     <tr ng-repeat="summary in tempList">
                         <td>{{summary[0]| date:"MMMM"}}</td>
@@ -68,15 +70,70 @@
                         <td>{{summary[2]}}</td>
                         <td>{{summary[3]}}</td>
                         <td >{{summary[4]}}</td>
+                        <td>
+                            <label class="label label-success" ng-if="summary[4] / summary[3] * 100 === 100">complete</label>
+                            <label class="label label-danger" ng-if="summary[4] / summary[3] !== 1">Not complete</label>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-          <div class="col-lg-12 placeholder bordered border-default" style="height: calc(100vh - 200px)"  ng-hide="tempList.length">
-            <h1 class="text-center mt200" style="">REPORT DETAILS ARE EMPTY</h1>
+    <!--print report-->
+    <div class="col-sm-12" style="display: none" id="printDiv">
+        <h3 class="text-center">Evaluated Detail Report</h3>
+        <table class="table table-bordered" style="margin-bottom: 0px">
+            <col style="width: 10%">
+            <col style="width: 25%">
+            <col style="width: 15%">
+            <col style="width: 20%">
+            <col style="width: 20%">
+            <col style="width: 10%">
+            <thead style="background-color: #eeeeee">
+                <tr>
+                    <th>Month</th>
+                    <th>Department</th>
+                    <th>Annual Target</th>
+                    <th>received by the manager</th>
+                    <th>Evaluated kaizens</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+        </table>
+
+        <div ng-show="tempList.length" class="smart-scroll-y" style="height: calc(100vh - 225px);">
+            <table class="table table-bordered">
+                <col style="width: 10%">
+                <col style="width: 25%">
+                <col style="width: 15%">
+                <col style="width: 20%">
+                <col style="width: 20%">
+                <col style="width: 10%">
+                <tbody>
+                    <tr ng-repeat="summary in tempList">
+                        <td class="text-center">{{summary[0]| date:"MMMM"}}</td>
+                        <td class="text-center">{{summary[1]}}</td>
+                        <td class="text-center">{{summary[2]}}</td>
+                        <td class="text-center">{{summary[3]}}</td>
+                        <td class="text-center">{{summary[4]}}</td>
+                        <td>
+                            <label class="label label-success" ng-if="summary[4] / summary[3] * 100 === 100">complete</label>
+                            <label class="label label-danger" ng-if="summary[4] / summary[3] !== 1">Not complete</label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    <div class="col-sm-12">
-        <button class="pull-right btn btn-primary btn-flat" ng-click="print('printDiv')" ng-hide="printMode === 'true'">Print</button>
+    </div>
+    <div class="col-lg-12 placeholder bordered border-default" style="height: calc(100vh - 225px)"  ng-hide="tempList.length">
+        <h1 class="text-center mt200" style="">REPORT DETAILS ARE EMPTY</h1>
+    </div>
+    <div class="col-sm-12" style="margin-top: 14px;margin-bottom: 14px;">
+        <button type="button" class="pull-right btn btn-info" ng-click="print('printDiv')" ng-hide="printMode === 'true'">
+            <span class="glyphicon glyphicon-print"></span> Print
+        </button>
+        <button style="margin-right: 10px;" type="button" class="pull-right btn btn-info" ng-click="exportData()" ng-hide="printMode === 'true'">
+            <span class="glyphicon glyphicon-download"></span> Export Excel
+        </button>
     </div>
 </div>

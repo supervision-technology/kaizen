@@ -56,6 +56,11 @@
             <h1 class="text-center mt200" style="">REPORT DETAILS ARE EMPTY</h1>
         </div>
     <div class="col-sm-12">
-        <button class="pull-right btn btn-primary btn-flat" ng-click="print('printDiv')" ng-hide="printMode === 'true'">Print</button>
+        <button type="button" class="pull-right btn btn-info" ng-click="print('printDiv')" ng-hide="printMode === 'true'">
+            <span class="glyphicon glyphicon-print"></span> Print
+        </button>
+        <button style="margin-right: 10px;" type="button" class="pull-right btn btn-info" ng-click="exportData()" ng-hide="printMode === 'true'">
+            <span class="glyphicon glyphicon-download"></span> Export Excel
+        </button>
     </div>
 </div>

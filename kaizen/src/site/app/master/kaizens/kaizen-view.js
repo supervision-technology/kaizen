@@ -504,6 +504,7 @@
                 };
 
                 $scope.ui.selectComplete = function () {
+                    $rootScope.selectStatus = 1;
                     $scope.model.kaizenList = [];
                     $scope.model.reset();
                     kaizenViewFactory.loadKaizen(function (data) {
@@ -517,15 +518,16 @@
                 };
 
                 $scope.ui.selectPending = function () {
+                    $rootScope.selectStatus = 0;
                     $scope.model.kaizenList = [];
                     $scope.model.reset();
                     kaizenViewFactory.loadKaizen(function (data) {
-                        $scope.model.kaizenList = data;
-//                        angular.forEach(data, function (value) {
-//                            if (value.reviewStatus === "MANAGER_VIEW" && value.committeeComplete !== "COMMITTEE_COMPLETE") {
-//                                $scope.model.kaizenList.push(value);
-//                            }
-//                        });
+//                        $scope.model.kaizenList = data;
+                        angular.forEach(data, function (value) {
+                            if (value.reviewStatus !== "MANAGER_VIEW") {
+                                $scope.model.kaizenList.push(value);
+                            }
+                        });
                     });
                 };
 
@@ -573,8 +575,21 @@
 
                         $http.get(url)
                                 .success(function (data) {
-                                    $scope.model.kaizenList = [];
-                                    $scope.model.kaizenList = data;
+                                    if ($rootScope.selectStatus === 0) {
+                                        $scope.model.kaizenList = [];
+                                        angular.forEach(data, function (value) {
+                                            if (value.reviewStatus !== "MANAGER_VIEW") {
+                                                $scope.model.kaizenList.push(value);
+                                            }
+                                        });
+                                    } else {
+                                        $scope.model.kaizenList = [];
+                                        angular.forEach(data, function (value) {
+                                            if (value.reviewStatus === "MANAGER_VIEW") {
+                                                $scope.model.kaizenList.push(value);
+                                            }
+                                        });
+                                    }
                                 });
                     }
                 };
@@ -594,31 +609,69 @@
 
                     $http.get(url)
                             .success(function (data) {
-                                $scope.model.kaizenList = [];
-                                $scope.model.kaizenList = data;
-//                                angular.forEach(data, function (value) {
-//                                    if (value.reviewStatus === "MANAGER_VIEW") {
-//                                        $scope.model.kaizenList.push(value);
-//                                    }
-//                                });
+                                if ($rootScope.selectStatus === 0) {
+                                    $scope.model.kaizenList = [];
+                                    angular.forEach(data, function (value) {
+                                        if (value.reviewStatus !== "MANAGER_VIEW") {
+                                            $scope.model.kaizenList.push(value);
+                                        }
+                                    });
+                                } else {
+                                    $scope.model.kaizenList = [];
+                                    angular.forEach(data, function (value) {
+                                        if (value.reviewStatus === "MANAGER_VIEW") {
+                                            $scope.model.kaizenList.push(value);
+                                        }
+                                    });
+                                }
                             });
                 };
 
                 $scope.$watch('model.employee', function (val) {
                     if (val === "") {
-                        $scope.model.kaizenList = [];
-                        kaizenViewFactory.loadKaizen(function (data) {
-                            $scope.model.kaizenList = data;
-                        });
+                        if ($rootScope.selectStatus === 0) {
+                            $scope.model.kaizenList = [];
+                            kaizenViewFactory.loadKaizen(function (data) {
+                                angular.forEach(data, function (value) {
+                                    if (value.reviewStatus !== "MANAGER_VIEW") {
+                                        $scope.model.kaizenList.push(value);
+                                    }
+                                });
+                            });
+                        } else {
+                            $scope.model.kaizenList = [];
+                            kaizenViewFactory.loadKaizen(function (data) {
+                                angular.forEach(data, function (value) {
+                                    if (value.reviewStatus === "MANAGER_VIEW") {
+                                        $scope.model.kaizenList.push(value);
+                                    }
+                                });
+                            });
+                        }
                     }
                 }, true);
 
                 $scope.$watch('model.department', function (val) {
                     if (val === "") {
-                        $scope.model.kaizenList = [];
-                        kaizenViewFactory.loadKaizen(function (data) {
-                            $scope.model.kaizenList = data;
-                        });
+                        if ($rootScope.selectStatus === 0) {
+                            $scope.model.kaizenList = [];
+                            kaizenViewFactory.loadKaizen(function (data) {
+                                angular.forEach(data, function (value) {
+                                    if (value.reviewStatus !== "MANAGER_VIEW") {
+                                        $scope.model.kaizenList.push(value);
+                                    }
+                                });
+                            });
+                        } else {
+                            $scope.model.kaizenList = [];
+                            kaizenViewFactory.loadKaizen(function (data) {
+                                angular.forEach(data, function (value) {
+                                    if (value.reviewStatus === "MANAGER_VIEW") {
+                                        $scope.model.kaizenList.push(value);
+                                    }
+                                });
+                            });
+                        }
                     }
                 }, true);
 
@@ -632,15 +685,14 @@
                     $scope.numLimit = 10;
                     //set date
                     $scope.model.date = new Date();
-
+                    $rootScope.selectStatus = 0
                     //laod kaizen
                     kaizenViewFactory.loadKaizen(function (data) {
-//                        angular.forEach(data, function (value) {
-//                            if (value.reviewStatus === "MANAGER_VIEW" && value.committeeComplete !== "COMMITTEE_COMPLETE") {
-//                                $scope.model.kaizenList.push(value);
-                        $scope.model.kaizenList = data;
-//                            }
-//                        });
+                        angular.forEach(data, function (value) {
+                            if (value.reviewStatus !== "MANAGER_VIEW") {
+                                $scope.model.kaizenList.push(value);
+                            }
+                        });
                     });
 
                     //load employee

@@ -7,6 +7,7 @@
         "ngAnimate",
         "base64",
         "angular.filter",
-        'ngCookies'
+        "ngCookies",
+        "ngFileSaver"
     ]);
 }());
