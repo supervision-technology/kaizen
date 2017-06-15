@@ -61,7 +61,9 @@ gulp.task('build-js', function () {
         "bower_components/bootstrap/dist/js/bootstrap.min.js",
         "bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js",
         "bower_components/fastclick/click/fastclick.js",
-        "bower_components/angular-filter/dist/angular-filter.js"
+        "bower_components/angular-filter/dist/angular-filter.js",
+        "bower_components/angular-file-saver/dist/angular-file-saver.js",
+        "bower_components/angular-file-saver/dist/angular-file-saver.bundle.js"
     ])
             .pipe(debug())
             .pipe(concat('vendor.min.js'))

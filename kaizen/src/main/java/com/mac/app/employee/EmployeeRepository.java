@@ -20,5 +20,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
     public Employee findByNameAndEpfNo(String name, String epfNo);
 
     public Employee findByEpfNo(String epfNo);
+
+    public List<Employee> findByType(String EMPLOYEE_TYPE);
     
 }

@@ -20,9 +20,10 @@
                             controller: "LoginController"
                         })
 
-                        .when("/home", {
-                            redirectTo: "/transaction/kaizen"
+                        .when("/admin", {
+                            templateUrl: "app/system/home/home.html"
                         })
+                   
                         //  Transaction
                         .when("/transaction/job", {
                             templateUrl: "app/transaction/job/job.html",
@@ -70,6 +71,10 @@
                             templateUrl: "app/master/kaizens/delete-kaizen.html",
                             controller: "KaizenViewController"
                         })
+                        .when("/master/send-mail", {
+                            templateUrl: "app/master/mail/mail.html",
+                            controller: "mailController"
+                        })
 
 
                         //reports
@@ -101,6 +106,7 @@
                             templateUrl: "app/reports/top-kaizen-monthly.html",
                             controller: "SummaryController"
                         })
+                        
 
                         .otherwise({
                             redirectTo: "/"

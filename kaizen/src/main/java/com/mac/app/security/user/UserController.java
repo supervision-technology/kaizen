@@ -5,6 +5,8 @@
  */
 package com.mac.app.security.user;
 
+import com.mac.app.employee.EmployeeRepository;
+import com.mac.app.employee.model.Employee;
 import com.mac.app.security.user.model.User;
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +15,11 @@ import org.springframework.http.HttpEntity;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,26 +36,10 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-//    @RequestMapping(path = "/user", method = RequestMethod.GET)
-//    public ResponseEntity listUser() {
-//        return new ResponseEntity(getUsers(), HttpStatus.OK);
-//    }
-//
-//    @RequestMapping(path = "/user/{id}", method = RequestMethod.GET)
-//    public ResponseEntity listUser(@PathVariable(value = "id") String id) {
-//        return new ResponseEntity(getUsers().stream().filter(user -> user.getIndexNo().equals(id)).findFirst().orElse(null), HttpStatus.OK);
-//
-//    }
-//
-//    @RequestMapping(path = "/user", method = RequestMethod.POST)
-//    public ResponseEntity listUser(@RequestBody User user) {
-//        return new ResponseEntity("18", HttpStatus.OK);
-//    }
-//
-//    private List<User> getUsers() {
-//        return userRepository.findAll();
-//
-//    }
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
+
     @RequestMapping(path = "/user/login", method = RequestMethod.POST)
     public User getUser(@RequestBody User user) {
         return userRepository.findByNameAndPassword(user.getName(), user.getPassword());
@@ -80,8 +71,4 @@ public class UserController {
         return indexNo;
     }
 
-//    @RequestMapping(value = "/**", method = RequestMethod.OPTIONS)
-//    public HttpEntity optionRequest() {
-//        return new HttpEntity(HttpEntity.EMPTY);
-//    }
 }

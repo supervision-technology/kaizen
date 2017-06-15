@@ -15,6 +15,7 @@
     "angular-cookies": "1.5.8",
     "angular-ui-notification": "latest",
     "angular-filter": "latest",
+    "angular-file-saver":"latest",
      
       
     
@@ -27,6 +28,5 @@
     "bootstrap": "3.3.7",
     "animate.css": "3.5.2",
     "font-awesome":"4.7.0"
-    
   }
 }

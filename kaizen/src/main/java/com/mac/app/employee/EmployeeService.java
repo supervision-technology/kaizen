@@ -7,8 +7,13 @@ package com.mac.app.employee;
 
 import com.mac.app.employee.model.Department;
 import com.mac.app.employee.model.Employee;
+import com.mac.app.kaizen.model.Mail;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +31,11 @@ public class EmployeeService {
 
     @Autowired
     private DepartmentRepository departmentRepository;
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    private String EMPLOYEE_TYPE = "manager";
 
     public List<Employee> allEmployee() {
         return employeeRepository.findAll();
@@ -60,6 +70,28 @@ public class EmployeeService {
 
     public Department saveDepartment(Department department) {
         return departmentRepository.save(department);
+    }
+
+    public void sendMail(Mail mail) {
+        //send email to all managers
+        List<Employee> empoyees = employeeRepository.findByType(EMPLOYEE_TYPE);
+        for (Employee empoyee : empoyees) {
+            if (empoyee.getEmail() != null) {
+                try{
+                    MimeMessagePreparator messagePreparator = mimeMessage -> {
+                        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+                        messageHelper.setFrom("kaizencommittee1@gmail.com");
+                        messageHelper.setTo(empoyee.getEmail());
+//                      messageHelper.setTo("niduraprageeth@gmail.com");
+                        messageHelper.setSubject(mail.getSubject());
+                        messageHelper.setText(mail.getMessage());
+                    };
+                    mailSender.send(messagePreparator);
+                   }catch (MailException e) {
+                    System.out.println(e);
+                   }
+            }
+        }
     }
 
 }

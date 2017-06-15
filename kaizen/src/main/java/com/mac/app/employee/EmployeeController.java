@@ -8,6 +8,7 @@ package com.mac.app.employee;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mac.app.employee.model.Department;
 import com.mac.app.employee.model.Employee;
+import com.mac.app.kaizen.model.Mail;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -103,5 +104,11 @@ public class EmployeeController {
     @RequestMapping(value = "/save-department", method = RequestMethod.POST)
     public Department saveEmployee(@RequestBody Department department) {
         return employeeService.saveDepartment(department);
+    }
+    
+    @RequestMapping(value = "/send-mail", method = RequestMethod.POST)
+    public void sendMail(@RequestBody Mail mail) {  
+//        System.out.println(mail.toString());
+        employeeService.sendMail(mail);
     }
 }

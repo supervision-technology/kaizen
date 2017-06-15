@@ -30,8 +30,8 @@ public class ReportService {
         return reportRepository.AllSummary(year);
     }
 
-    public List<Object[]> viewCountDetails(String year) {
-        return reportRepository.viewCountDetails(year);
+    public List<Object[]> viewCountDetails(String year,String month) {
+        return reportRepository.viewCountDetails(year,month);
     }
 
     public List<MonthWise> monthWiseDetailsByYear(String year) {

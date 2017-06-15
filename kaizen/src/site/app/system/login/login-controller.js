@@ -21,9 +21,9 @@
 //                            $rootScope.userName = response.name;
                             $rootScope.user = response;
                             if (response.role === 'admin') {
-                                $location.path('/master/user-registration');
+                                $location.path('/admin');
                             } else {
-                                $location.path('/home');
+                                $location.path('/transaction/kaizen');
                             }
 
                         } else {

@@ -1,0 +1,18 @@
+<div class="col-sm-12">
+    <div class="col-sm-12" style="height: calc(100vh - 70px); margin-top: 15px;">
+        <div class="col-sm-8 text-center" style="margin-top: 230px;padding-left: 48vh;">
+            <img src="./images/sending.gif" ng-show="mode === 'sending'" alt=""/>
+        </div>
+        <div class="col-sm-12 text-center" style="margin-top: 20px;padding-left: 31vh;">
+            <div class="col-sm-3"><label class="checkbox-inline"><input type="radio" id="managerRadio" name="radio" value="" ng-model="manager" ng-click="changeRadio(true)">Manager</label>
+                <label class="checkbox-inline"><input type="radio" name="radio" id="committeeRadio" value="" ng-model="committee" ng-click="changeRadio(false)">Committee</label></div>
+                <div class="col-sm-4"><input ng-model="selectDate" id="date" type="date" class="form-control"></div>
+            <div class="col-sm-3">
+                <button class="btn btn-primary pull-left" ng-click="sendMail()">
+                    SEND MAIL <span class="glyphicon glyphicon-send"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

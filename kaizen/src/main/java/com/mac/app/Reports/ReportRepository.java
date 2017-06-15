@@ -55,21 +55,36 @@ public interface ReportRepository extends JpaRepository<Target, Integer> {
             + "GROUP BY department.index_no", nativeQuery = true)
     public List<Object[]> AllSummary(@Param("year") String year);
 
+//    @Query(value = "SELECT\n"
+//            + "target.target_year,\n"
+//            + "department.name,\n"
+//            + "target.target,\n"
+//            + "COUNT(kaizen.index_no) AS receved,\n"
+//            + "COUNT(kaizen.manager_complete ='MANAGER_COMPLETE') AS Evaluated\n"
+//            + "FROM \n"
+//            + "target\n"
+//            + "LEFT JOIN department ON target.department = department.index_no\n"
+//            + "LEFT JOIN employee ON department.index_no= employee.department\n"
+//            + "LEFT JOIN kaizen ON kaizen.employee = employee.index_no\n"
+//            + "WHERE  \n"
+//            + " YEAR(target.target_year)=:year \n"
+//            + "GROUP BY department.index_no", nativeQuery = true)
+//    public List<Object[]> viewCountDetails(@Param("year") String year);
     @Query(value = "SELECT\n"
-            + "target.target_year,\n"
-            + "department.name,\n"
-            + "target.target,\n"
-            + "COUNT(kaizen.index_no) AS receved,\n"
-            + "COUNT(kaizen.manager_complete ='MANAGER_COMPLETE') AS Evaluated\n"
+            + " kaizen.introduce_date,\n"
+            + " department.name,\n"
+            + " target.target, \n"
+            + " COUNT(kaizen.index_no) AS receved, \n"
+            + " COUNT(kaizen.manager_complete ='MANAGER_COMPLETE') AS Evaluated\n"
             + "FROM \n"
-            + "target\n"
+            + " target\n"
             + "LEFT JOIN department ON target.department = department.index_no\n"
             + "LEFT JOIN employee ON department.index_no= employee.department\n"
             + "LEFT JOIN kaizen ON kaizen.employee = employee.index_no\n"
-            + "WHERE  \n"
-            + " YEAR(target.target_year)=:year \n"
+            + "WHERE YEAR(target.target_year)=:year \n"
+            + "and MONTH(kaizen.introduce_date)=:month\n"
             + "GROUP BY department.index_no", nativeQuery = true)
-    public List<Object[]> viewCountDetails(@Param("year") String year);
+    public List<Object[]> viewCountDetails(@Param("year") String year,@Param("month") String month);
 
     @Query(value = "select\n"
             + "MONTH(k.introduce_date) as month,\n"

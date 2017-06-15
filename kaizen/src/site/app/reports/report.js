@@ -27,8 +27,8 @@
                 };
 
                 //load manager view and eveluated kaizen details
-                factory.loadEveluatedDetails = function (year, callback) {
-                    var url = systemConfig.apiUrl + "/view-count/" + year;
+                factory.loadEveluatedDetails = function (year, month, callback) {
+                    var url = systemConfig.apiUrl + "/view-count/" + year + "/" + month;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -87,7 +87,7 @@
             });
 
     angular.module("AppModule")
-            .controller("SummaryController", function (FileSaver,Notification, systemConfig, $timeout, $rootScope, $scope, $window, SummaryFactory, $filter) {
+            .controller("SummaryController", function (FileSaver, Notification, systemConfig, $timeout, $rootScope, $scope, $window, SummaryFactory, $filter) {
 
                 $scope.model = {};
 
@@ -128,6 +128,7 @@
 
                 $scope.printFuntion = function () {
                     var divToPrint = document.getElementById("printDiv");
+                    console.log(divToPrint)
                     newWin = window.open("");
                     newWin.document.write(divToPrint.outerHTML);
                     newWin.print();
@@ -179,28 +180,31 @@
                     });
                 };
 
-                $scope.changeMonth = function (month) {
-                    if ($scope.countList.length > 0) {
-                        $scope.tempList = [];
-                        angular.forEach($scope.countList, function (data) {
-                            var month1 = $filter('date')(data[0], 'MM');
-                            if (month1 === month) {
-                                $scope.tempList.push(data);
-                            }
-                        });
-                    }
-
-                };
-
-//                $scope.getHitRate = function (value1, value2) {
-////                      console.log(value1,value2);
+//                $scope.changeMonth = function (month) {
+//                    if ($scope.countList.length > 0) {
+//                        $scope.tempList = [];
+//                        angular.forEach($scope.countList, function (data) {
+//                            var month1 = $filter('date')(data[0], 'MM');
+//                            if (month1 === month) {
+//                                $scope.tempList.push(data);
+//                            }
+//                        });
+//                    }
 //
-//                    var rate = value1 / value2 * 100;
-//                    return rate + "%";
 //                };
 
-                $scope.getEvaluateDetails = function (year) {
-                    SummaryFactory.loadEveluatedDetails(year
+
+
+                $scope.selectEvaluateYear = function (year) {
+                    $rootScope.evaluateYear = year;
+                };
+
+                $scope.selectEvaluateMonth = function (month) {
+                    $scope.getEvaluateDetails($rootScope.evaluateYear, month);
+                };
+
+                $scope.getEvaluateDetails = function (year,month) {
+                    SummaryFactory.loadEveluatedDetails(year, month
                             , function (data) {
                                 $scope.countList = data;
                             }

@@ -6,7 +6,7 @@
             </div>
             <div class="col-sm-4">
                 <!--<input type="date" class="form-control">-->
-                <select name="yearpicker" id="yearpicker" class="form-control" ng-model="year" ng-change="getEvaluateDetails(year)">
+                <select name="yearpicker" id="yearpicker" class="form-control" ng-model="year" ng-change="selectEvaluateYear(year)">
                     <option value=''>--Select Year--</option>
                     <option ng-repeat="year in yearList">{{year}}</option>
                 </select>
@@ -16,7 +16,7 @@
             </div>
             <div class="col-sm-4">
                 <!--<input type="date" class="form-control">-->
-                <select name="yearpicker" id="yearpicker" class="form-control" ng-model="month" ng-change="changeMonth(month)">
+                <select name="yearpicker" id="yearpicker" class="form-control" ng-model="month" ng-change="selectEvaluateMonth(month)">
                     <option value=''>--Select Month--</option>
                     <option selected value='01'>Janaury</option>
                     <option value='02'>February</option>
@@ -55,7 +55,7 @@
             </thead>
         </table>
 
-        <div ng-show="tempList.length" class="smart-scroll-y" style="height: calc(100vh - 225px);">
+        <div ng-show="countList.length" class="smart-scroll-y" style="height: calc(100vh - 225px);">
             <table class="table">
                 <col style="width: 10%">
                 <col style="width: 25%">
@@ -64,7 +64,7 @@
                 <col style="width: 20%">
                 <col style="width: 10%">
                 <tbody>
-                    <tr ng-repeat="summary in tempList">
+                    <tr ng-repeat="summary in countList">
                         <td>{{summary[0]| date:"MMMM"}}</td>
                         <td>{{summary[1]}}</td>
                         <td>{{summary[2]}}</td>
@@ -94,7 +94,7 @@
                     <th>Month</th>
                     <th>Department</th>
                     <th>Annual Target</th>
-                    <th>received by the manager</th>
+                    <th>Received by the manager</th>
                     <th>Evaluated kaizens</th>
                     <th>Status</th>
                 </tr>
@@ -125,7 +125,7 @@
             </table>
         </div>
     </div>
-    <div class="col-lg-12 placeholder bordered border-default" style="height: calc(100vh - 225px)"  ng-hide="tempList.length">
+    <div class="col-lg-12 placeholder bordered border-default" style="height: calc(100vh - 225px)"  ng-hide="countList.length">
         <h1 class="text-center mt200" style="">REPORT DETAILS ARE EMPTY</h1>
     </div>
     <div class="col-sm-12" style="margin-top: 14px;margin-bottom: 14px;">
