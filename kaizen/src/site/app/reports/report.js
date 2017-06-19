@@ -161,7 +161,12 @@
                 $scope.changeYear = function (year) {
                     SummaryFactory.loadSummary(year
                             , function (data) {
-                                $scope.summaryList = data;
+                                $scope.summaryList = [];
+                                angular.forEach(data, function (value) {
+                                    if (value[2] !== 0) {
+                                        $scope.summaryList.push(value);
+                                    }
+                                });
 
                             }
                     , function (data) {
@@ -203,7 +208,7 @@
                     $scope.getEvaluateDetails($rootScope.evaluateYear, month);
                 };
 
-                $scope.getEvaluateDetails = function (year,month) {
+                $scope.getEvaluateDetails = function (year, month) {
                     SummaryFactory.loadEveluatedDetails(year, month
                             , function (data) {
                                 $scope.countList = data;
@@ -368,6 +373,10 @@
 
 
                 $scope.init = function () {
+                    
+                    var valu= 0 / 0;
+                    console.log(valu)
+                    
                     for (var j = new Date().getFullYear(); j > 2005; j--)
                     {
                         $scope.yearList.push(j);

@@ -35,20 +35,21 @@
         </div>
     </div><br>
 
-    <div class="col-sm-12 ">
+    <div class="col-sm-12 " id="printDiv">
+        <h3 class="text-center" ng-show="printMode ==='true'" >Evaluated Detail Report in {{month}} month </h3>
         <table class="table" style="margin-bottom: 0px" >
-            <col style="width: 10%">
-            <col style="width: 25%">
+            <!--<col style="width: 10%">-->
+            <col style="width: 30%">
             <col style="width: 15%">
             <col style="width: 20%">
             <col style="width: 20%">
-            <col style="width: 10%">
+            <col style="width: 15%">
             <thead style="background-color: #eeeeee">
                 <tr>
-                    <th>Month</th>
+                    <!--<th>Month</th>-->
                     <th>Department</th>
                     <th>Annual Target</th>
-                    <th>received by the manager</th>
+                    <th>Received by the manager</th>
                     <th>Evaluated kaizens</th>
                     <th>Status</th>
                 </tr>
@@ -57,22 +58,23 @@
 
         <div ng-show="countList.length" class="smart-scroll-y" style="height: calc(100vh - 225px);">
             <table class="table">
-                <col style="width: 10%">
-                <col style="width: 25%">
+                <!--<col style="width: 10%">-->
+                <col style="width: 30%">
                 <col style="width: 15%">
                 <col style="width: 20%">
                 <col style="width: 20%">
-                <col style="width: 10%">
+                <col style="width: 15%">
                 <tbody>
                     <tr ng-repeat="summary in countList">
-                        <td>{{summary[0]| date:"MMMM"}}</td>
+                        <!--<td>{{summary[0]| date:"MMMM"}}</td>-->
                         <td>{{summary[1]}}</td>
                         <td>{{summary[2]}}</td>
                         <td>{{summary[3]}}</td>
                         <td >{{summary[4]}}</td>
                         <td>
-                            <label class="label label-success" ng-if="summary[4] / summary[3] * 100 === 100">complete</label>
-                            <label class="label label-danger" ng-if="summary[4] / summary[3] !== 1">Not complete</label>
+                            <label class="label label-success" ng-if="summary[4] / summary[3] * 100 === 100">{{summary[4] / summary[3] * 100 |number:0}}% complete</label>
+                            <!--<label class="label label-danger" ng-if="summary[4] / summary[3] !== 1">{{isNaN(parseFloat(summary[4] / summary[3]))?0.00: parseFloat(summary[4] / summary[3])* 100}}% Not complete</label>-->
+                            <label class="label label-danger" ng-if="summary[4] / summary[3] !== 1">{{summary[4] / summary[3] * 100 | number:0}}% Not complete</label>
                         </td>
                     </tr>
                 </tbody>

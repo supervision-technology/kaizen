@@ -83,6 +83,7 @@ public interface ReportRepository extends JpaRepository<Target, Integer> {
             + "LEFT JOIN kaizen ON kaizen.employee = employee.index_no\n"
             + "WHERE YEAR(target.target_year)=:year \n"
             + "and MONTH(kaizen.introduce_date)=:month\n"
+            + "or ISNULL(kaizen.introduce_date)\n"
             + "GROUP BY department.index_no", nativeQuery = true)
     public List<Object[]> viewCountDetails(@Param("year") String year,@Param("month") String month);
 
