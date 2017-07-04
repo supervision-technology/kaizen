@@ -179,7 +179,7 @@ public class KaizenService {
                     MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
                     messageHelper.setFrom("kaizencommittee1@gmail.com");
                     messageHelper.setTo(mail.getEmail());
-//                messageHelper.setTo("niduraprageeth@gmail.com");
+//                    messageHelper.setTo("niduraprageeth@gmail.com");
                     messageHelper.setSubject("Kaizen Deleted..");
                     messageHelper.setText("Your kaizen deleted by admin");
                 };
@@ -196,7 +196,7 @@ public class KaizenService {
                     MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
                     messageHelper.setFrom("kaizencommittee1@gmail.com");
                     messageHelper.setTo(mail.getEmail());
-//                messageHelper.setTo("niduraprageeth@gmail.com");
+//                    messageHelper.setTo("niduraprageeth@gmail.com");
                     messageHelper.setSubject("Kaizen Deleted..");
                     messageHelper.setText("Your kaizen deleted by admin");
                 };

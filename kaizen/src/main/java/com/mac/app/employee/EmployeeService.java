@@ -36,6 +36,7 @@ public class EmployeeService {
     private JavaMailSender mailSender;
 
     private String EMPLOYEE_TYPE = "manager";
+    private String EMPLOYEE_TYPE2 = "committee";
 
     public List<Employee> allEmployee() {
         return employeeRepository.findAll();
@@ -74,22 +75,41 @@ public class EmployeeService {
 
     public void sendMail(Mail mail) {
         //send email to all managers
-        List<Employee> empoyees = employeeRepository.findByType(EMPLOYEE_TYPE);
-        for (Employee empoyee : empoyees) {
-            if (empoyee.getEmail() != null) {
-                try{
+        List<Employee> managers = employeeRepository.findByType(EMPLOYEE_TYPE);
+        for (Employee manager : managers) {
+            if (manager.getEmail() != null) {
+                try {
                     MimeMessagePreparator messagePreparator = mimeMessage -> {
                         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
                         messageHelper.setFrom("kaizencommittee1@gmail.com");
-                        messageHelper.setTo(empoyee.getEmail());
-//                      messageHelper.setTo("niduraprageeth@gmail.com");
+                        messageHelper.setTo(manager.getEmail());
+//                        messageHelper.setTo("niduraprageeth@gmail.com");
                         messageHelper.setSubject(mail.getSubject());
                         messageHelper.setText(mail.getMessage());
                     };
                     mailSender.send(messagePreparator);
-                   }catch (MailException e) {
+                } catch (MailException e) {
                     System.out.println(e);
-                   }
+                }
+            }
+        }
+
+        List<Employee> committeees = employeeRepository.findByType(EMPLOYEE_TYPE2);
+        for (Employee committeee : committeees) {
+            if (committeee.getEmail() != null) {
+                try {
+                    MimeMessagePreparator messagePreparator = mimeMessage -> {
+                        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+                        messageHelper.setFrom("kaizencommittee1@gmail.com");
+                        messageHelper.setTo(committeee.getEmail());
+//                        messageHelper.setTo("niduraprageeth@gmail.com");
+                        messageHelper.setSubject(mail.getSubject());
+                        messageHelper.setText(mail.getMessage());
+                    };
+                    mailSender.send(messagePreparator);
+                } catch (MailException e) {
+                    System.out.println(e);
+                }
             }
         }
     }

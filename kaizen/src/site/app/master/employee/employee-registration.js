@@ -14,6 +14,17 @@
 
                             });
                 };
+                //load branch
+                factory.loadBranch = function (callback) {
+                    var url = systemConfig.apiUrl + "/api/branch";
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+
+                            });
+                };
 
                 //load department
                 factory.loadDepartment = function (callback) {
@@ -57,7 +68,7 @@
 
 
     angular.module("AppModule")
-            .controller("employeeController", function (ConfirmPane,systemConfig, $scope, employeeFactory, Notification) {
+            .controller("employeeController", function (ConfirmPane, systemConfig, $scope, employeeFactory, Notification) {
 
                 //data models 
                 $scope.model = {};
@@ -74,6 +85,7 @@
                     type: "",
                     epfNo: "",
                     department: null,
+                    branch: null,
                     email: ""
                 };
 
@@ -85,6 +97,7 @@
                         type: "",
                         epfNo: "",
                         department: null,
+                        branch: null,
                         email: ""
                     };
 
@@ -93,7 +106,8 @@
                 //validate model
                 $scope.validateInput = function () {
                     if ($scope.model.name && $scope.model.type
-                            && $scope.model.epfNo && $scope.model.department && $scope.model.email) {
+                            && $scope.model.epfNo && $scope.model.department && $scope.model.email 
+                            && $scope.model.branch) {
                         return true;
                     } else {
                         return false;
@@ -204,6 +218,7 @@
                 };
 
                 $scope.ui.edit = function (user) {
+                    console.log(user)
                     var id = -1;
                     for (var i = 0; i < $scope.employeeList.length; i++) {
                         if ($scope.employeeList[i].indexNo === user.indexNo) {
@@ -237,6 +252,11 @@
                     //load department
                     employeeFactory.loadDepartment(function (data) {
                         $scope.departmentList = data;
+                    });
+                    //load branch
+                    employeeFactory.loadBranch(function (data) {
+                        console.log(data)
+                        $scope.branchList = data;
                     });
 
                 };

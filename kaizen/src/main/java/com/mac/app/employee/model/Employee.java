@@ -5,6 +5,7 @@
  */
 package com.mac.app.employee.model;
 
+import com.mac.app.branch.model.Branch;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,23 +46,26 @@ public class Employee implements Serializable {
     @Column(name = "email")
     private String email;
 
-    
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "department")
     private Department department;
-    
+
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "branch")
+    private Branch branch;
 
     public Employee() {
-        
+
     }
 
-    public Employee(Integer indexNo, String name, String epfNo, String type, String email, Department department) {
+    public Employee(Integer indexNo, String name, String epfNo, String type, String email, Department department, Branch branch) {
         this.indexNo = indexNo;
         this.name = name;
         this.epfNo = epfNo;
         this.type = type;
         this.email = email;
         this.department = department;
+        this.branch = branch;
     }
 
     public Integer getIndexNo() {
@@ -112,7 +116,14 @@ public class Employee implements Serializable {
         this.department = department;
     }
 
-   
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
+    }
+
     
-  
+
 }

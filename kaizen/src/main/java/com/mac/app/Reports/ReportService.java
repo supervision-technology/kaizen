@@ -30,8 +30,8 @@ public class ReportService {
         return reportRepository.AllSummary(year);
     }
 
-    public List<Object[]> viewCountDetails(String year,String month) {
-        return reportRepository.viewCountDetails(year,month);
+    public List<Object[]> viewCountDetails(String year, String month) {
+        return reportRepository.viewCountDetails(year, month);
     }
 
     public List<MonthWise> monthWiseDetailsByYear(String year) {
@@ -39,12 +39,22 @@ public class ReportService {
 
         List<Object[]> monthWiseDetail = reportRepository.monthWiseDetailByYear(year);
         for (Object[] objects : monthWiseDetail) {
+            if (objects[0] == null) {
+                objects[0] = "";
+            }
             MonthWise monthWise = new MonthWise();
             monthWise.setDate(objects[0].toString());
             monthWise.setDepartment(objects[1].toString());
             monthWise.setTarget(objects[2].toString());
             monthWise.setAchieved(objects[3].toString());
+            monthWise.setTargetYear(objects[4].toString());
+
+//            System.out.println(year + "this is target year");
+//            if (year.equals(monthWise.getTargetYear())) {
+//                System.out.println(monthWise.toString());
             list.add(monthWise);
+//            }
+
         }
         return list;
     }
@@ -54,7 +64,11 @@ public class ReportService {
     }
 
     public List<Object[]> top10Kaizen(String year, String month) {
-       return reportRepository.top10Kaizen(year, month);
+        return reportRepository.top10Kaizen(year, month);
+    }
+    
+    public List<Object[]> costSaving(String year, String month) {
+        return reportRepository.costSaving(year, month);
     }
 
 }

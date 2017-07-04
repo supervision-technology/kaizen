@@ -56,7 +56,6 @@ angular.module('AppModule')
                             .error(function (data) {
                                 $rootScope.loading = null;
                                 $rootScope.error = 'Username or password is incorrect';
-                                console.log(data)
                             });
                     ;
 

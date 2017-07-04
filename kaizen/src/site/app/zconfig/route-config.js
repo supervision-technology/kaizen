@@ -75,6 +75,10 @@
                             templateUrl: "app/master/mail/mail.html",
                             controller: "mailController"
                         })
+                        .when("/master/branch", {
+                            templateUrl: "app/master/branch/branch.html",
+                            controller: "branchController"
+                        })
 
 
                         //reports
@@ -104,6 +108,10 @@
                         })
                         .when("/reports/top-kaizen-monthly", {
                             templateUrl: "app/reports/top-kaizen-monthly.html",
+                            controller: "SummaryController"
+                        })
+                        .when("/reports/cost-saving", {
+                            templateUrl: "app/reports/cost-saving.html",
                             controller: "SummaryController"
                         })
                         
@@ -138,11 +146,12 @@
                         $rootScope.error = null;
                     }
                 });
-////
-//                //log out 
-//                $scope.logout = function () {
-//                    $location.path("/");
-//                };
+
+              //log out 
+                $scope.logout = function () {
+                    $rootScope.value = null;
+                    $location.path("/");
+                };
 
 
             });

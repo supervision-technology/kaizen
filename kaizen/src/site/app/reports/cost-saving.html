@@ -1,0 +1,111 @@
+<div class="bt border-primary">
+    <div class="col-sm-12" style="margin-bottom: 15px; margin-top: 15px">
+        <div class="col-sm-10" ng-hide="printMode === 'true'">
+            <div class="col-sm-1">
+                <label class="control-label" style="margin-top: 9px">Year </label>
+            </div>
+            <div class="col-sm-3">
+                <!--<input type="date" class="form-control">-->
+                <select name="yearpicker" id="yearpicker" class="form-control" ng-model="year" ng-change="costSavingYear(year)">
+                    <option value=''>--Select Year--</option>
+                    <option ng-repeat="year in yearList">{{year}}</option>
+                </select>
+            </div>
+            <div class="col-sm-1">
+                <label class="control-label" style="margin-top: 9px">Month </label>
+            </div>
+            <div class="col-sm-3">
+                <!--<input type="date" class="form-control">-->
+                <select name="yearpicker" id="yearpicker" class="form-control" ng-model="month" ng-change="costSavingMonth(month)">
+                    <option value=''>--Select Month--</option>
+                    <option selected value='01'>Janaury</option>
+                    <option value='02'>February</option>
+                    <option value='03'>March</option>
+                    <option value='04'>April</option>
+                    <option value='05'>May</option>
+                    <option value='06'>June</option>
+                    <option value='07'>July</option>
+                    <option value='08'>August</option>
+                    <option value='09'>September</option>
+                    <option value='10'>October</option>
+                    <option value='11'>November</option>
+                    <option value='12'>December</option>
+                </select>
+            </div>
+            <div class="col-sm-1">
+                <label class="control-label" style="margin-top: 9px">Department </label>
+            </div>
+            <div class="col-sm-3">
+                <input type="text" ng-model="department"  class="form-control" id="department" uib-typeahead="department.name for department in departmentList|filter:$viewValue|limitTo:10"  typeahead-on-select="onSelect($model)">
+            </div>
+        </div>
+    </div><br>
+
+    <div class="col-sm-12" id="printDiv">
+        <h3 class="text-center" ng-show="printMode === 'true'">Cost Saving Report</h3>
+        <table class="table" style="margin-bottom: 0px">
+            <col style="width: 15%">
+            <col style="width: 25%">
+            <col style="width: 30%">
+            <col style="width: 10%">
+            <col style="width: 20%">
+            <thead style="background-color: #eeeeee">
+                <tr>
+                    <th>Month</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>EpfNo</th>
+                    <th>Cost</th>
+                </tr>
+            </thead>
+        </table>
+
+        <div class="smart-scroll-y" style="height: calc(100vh - 255px);" ng-show="costSavingList.length">
+            <table class="table">
+                <col style="width: 15%">
+                <col style="width: 25%">
+                <col style="width: 30%">
+                <col style="width: 10%">
+                <col style="width: 20%">
+                <tbody>
+                    <tr ng-repeat="Cost in costSavingList">
+                        <td>{{Cost[0]| date:'MMMM'}}</td>
+                        <td>{{Cost[1]}}</td>
+                        <td>{{Cost[2]}}</td>
+                        <td>{{Cost[3]}}</td>
+                        <td>{{Cost[4]}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-sm-12" style="height: 30px;" ng-show="costSavingList.length">
+            <table class="table">
+                <col style="width: 15%">
+                <col style="width: 25%">
+                <col style="width: 30%">
+                <col style="width: 10%">
+                <col style="width: 20%">
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Total Cost</td>
+                        <td>{{value}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    <div class="col-lg-12 placeholder bordered border-default" style="height: calc(100vh - 255px)"  ng-hide="costSavingList.length">
+        <h1 class="text-center mt200" style="">REPORT DETAILS ARE EMPTY</h1>
+    </div>
+    <div class="col-sm-12" style="margin-top: 15px;margin-bottom: 8px;">
+        <button type="button" class="pull-right btn btn-info" ng-click="print('printDiv')" ng-hide="printMode === 'true'">
+            <span class="glyphicon glyphicon-print"></span> Print
+        </button>
+        <button style="margin-right: 10px;" type="button" class="pull-right btn btn-info" ng-click="exportData()" ng-hide="printMode === 'true'">
+            <span class="glyphicon glyphicon-download"></span> Export Excel
+        </button>
+    </div>
+</div>

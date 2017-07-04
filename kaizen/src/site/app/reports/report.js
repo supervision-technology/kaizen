@@ -71,9 +71,33 @@
                             });
                 };
 
+                //cost saving
+                factory.costSaving = function (year, month, callback) {
+                    var url = systemConfig.apiUrl + "/cost-saving/" + year + "/" + month;
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+
+                            });
+                };
+
                 //load employee
                 factory.loadEmployee = function (callback) {
                     var url = systemConfig.apiUrl + "/api/employee";
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+
+                            });
+                };
+
+                //load department
+                factory.loadDepartment = function (callback) {
+                    var url = systemConfig.apiUrl + "/api/employee/all-department";
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -178,6 +202,12 @@
                     SummaryFactory.getMonthWiseDetails(year
                             , function (data) {
                                 $scope.monthWiseList = data;
+//                                angular.forEach(data, function (value){
+//                                    if(value.targetYear === year){
+//                                        console.log("success")
+//                                        $scope.monthWiseList = value;
+//                                    }
+//                                });
                                 $scope.showMode = 'selectyear';
                             }
                     , function (data) {
@@ -330,6 +360,84 @@
                     });
                 };
 
+                //cost saving 
+                $scope.costSavingYear = function (year) {
+                    if($scope.month){
+                        $scope.month ="";
+                        $scope.costSavingList= [];
+                    }
+                    $rootScope.costSavingYear = year;
+                };
+
+                $scope.costSavingMonth = function (month) {
+                    $rootScope.costSavingMonth = month;
+                    $scope.getCostSaving($rootScope.costSavingYear, month);
+                };
+
+                $scope.getCostSaving = function (year, month) {
+                    SummaryFactory.costSaving(year, month
+                            , function (data) {
+                                $scope.costSavingList = data;
+                                $scope.totalCost();
+                            }
+                    , function (data) {
+//                        Notification.error(data);
+                    });
+                };
+
+                $scope.totalCost = function (list) {
+//                    var sum = 0;
+                    $rootScope.value = 0;
+                    if (list) {
+                        angular.forEach(list, function (value) {
+                            $rootScope.value += parseInt(value[4]);
+                        });
+                    } else {
+                        angular.forEach($scope.costSavingList, function (value) {
+                            $rootScope.value += parseInt(value[4]);
+                        });
+                    }
+                };
+                $scope.onSelect = function (model) {
+                    $scope.tempList = [];
+                    angular.forEach($scope.costSavingList, function (value) {
+                        if (model === value[2]) {
+                            $scope.tempList.push(value);
+                        }
+                    });
+                    $scope.costSavingList = $scope.tempList;
+                    $scope.totalCost($scope.tempList);
+                };
+
+                $scope.$watch('department', function (val) {
+                    if (val === "") {
+                        console.log("1")
+                        $scope.getCostSaving($rootScope.costSavingYear, $rootScope.costSavingMonth);
+
+                        $scope.getCostSaving = function (year, month) {
+                            SummaryFactory.costSaving(year, month
+                                    , function (data) {
+                                        $scope.costSavingList = data;
+                                        $scope.totalCost();
+                                    }
+                            , function (data) {
+//                        Notification.error(data);
+                            });
+                        }
+                        ;
+                    }
+                }, true);
+
+//                $scope.onSelect = function ($item, $model, $label) {
+//                    $scope.tempList = [];
+//                    angular.forEach($scope.costSavingList, function (value) {
+//                        if ($label === value[2]) {
+//                            $scope.tempList = value;
+//                        }
+//                    });
+//                    console.log($scope.tempList)
+//                };
+
                 $scope.getBestKaizenByYear = function (year) {
                     SummaryFactory.BestKaizens(year
                             , function (data) {
@@ -373,10 +481,8 @@
 
 
                 $scope.init = function () {
-                    
-                    var valu= 0 / 0;
-                    console.log(valu)
-                    
+
+
                     for (var j = new Date().getFullYear(); j > 2005; j--)
                     {
                         $scope.yearList.push(j);
@@ -385,6 +491,10 @@
                     SummaryFactory.loadEmployee(
                             function (data) {
                                 $scope.employeeList = data;
+                            });
+                    SummaryFactory.loadDepartment(
+                            function (data) {
+                                $scope.departmentList = data;
                             });
 
                 };

@@ -118,41 +118,43 @@
                     $rootScope.scoreSafety = 0;
                     $rootScope.scoreQuality = 0;
                     $rootScope.totalScore = 0;
-                    $scope.model.employee.epfNo = null;
-                    $scope.model.employee.department = null;
-                    $scope.imageUrl = null;
+//                    $rootScope.employeeEpfNo = null;
+//                    $rootScope.employeeName = null;
+                    $rootScope.imageUrl = null;
                     $rootScope.actualCost = "";
 
                 };
 
                 $scope.model.resetEmployee = function () {
-                    $scope.model.employee = {
-                        name: null,
-                        epfNo: null,
-                        department: null,
-                        type: null
-                    };
-                    $scope.model.kaizen.employee = null;
+                    $rootScope.employeeEpfNo = null;
+                    $rootScope.employeeEpfNo1 = null;
+                    $rootScope.employeeName = null;
+                    $rootScope.employeeName1 = null;
+                    $rootScope.department = null;
+                    $rootScope.employee = null;
+                    console.log($rootScope.employeeEpfNo)
+                    console.log($rootScope.employeeName)
                 };
+      
 
-                $scope.$watch('model.employee.epfNo', function (val) {
+                $scope.$watch('employeeEpfNo', function (val) {
                     if (val === "") {
                         $scope.model.resetEmployee();
-                        $scope.imageUrl = null;
+                        $rootScope.imageUrl = null;
                     }
                 }, true);
-
-                $scope.$watch('model.kaizen.employee', function (val) {
+//
+                $scope.$watch('employeeName', function (val) {
                     if (val === "") {
-                        $scope.imageUrl = null;
-                        $scope.model.resetEmployee();
+                        $scope.model.resetEmployee2();
+                        $rootScope.imageUrl = null;
                     }
                 }, true);
 
 
                 //validate model
                 $scope.validateInput = function () {
-                    if ($scope.model.kaizen.title
+                    if ($rootScope.employee && $scope.model.kaizen.title
                             && $scope.model.kaizen.description) {
                         return true;
                     } else {
@@ -180,8 +182,10 @@
                             detailJSON,
                             function (data) {
                                 if ($rootScope.UserMode === "group_user") {
+                                    $rootScope.employeeEpfNo = null;
                                     $rootScope.fileList = [[]];
                                     Notification.success(data.indexNo + " - " + "Kaizen Saved Successfully.");
+                                    $scope.model.resetEmployee();
                                     $scope.model.reset();
                                     $scope.beforeImageModel = [];
                                     $scope.afterImageModel = [];
@@ -189,7 +193,7 @@
                                 } else {
                                     angular.forEach($scope.employees, function (val) {
                                         if (val.indexNo === data.employee) {
-                                            $scope.model.kaizen.employee = val.name;
+                                            $rootScope.employeeName = val.name;
                                         }
                                     });
 
@@ -217,10 +221,7 @@
                     );
                 };
 
-                $scope.ui.getPictures = function (path) {
-                    var url = systemConfig.apiUrl + "/api/document/download-image/" + path + "/";
-                    $scope.imageUrl = url;
-                };
+
 
 
                 //----------------ui funtion--------------
@@ -498,35 +499,84 @@
                     $uibModalStack.dismissAll();
                 };
 
-                $scope.ui.selectEmployee = function (employee) {
-                    $scope.ui.getPictures(employee.epfNo);
-                    $rootScope.employee = employee.indexNo;
-                    $scope.model.employee.epfNo = employee.epfNo;
-                    $scope.model.employee.name = employee.name;
-                    $scope.model.employee.department = employee.department.name;
-                    $scope.model.employee.type = "(" + employee.type + ")";
+                $scope.ui.getPictures = function (path, branch) {
+                    var url = systemConfig.apiUrl + "/api/document/download-image/" + path + "/" + branch;
+                    $rootScope.imageUrl = url;
                 };
 
-                $scope.ui.keyEvent = function (e) {
+                $scope.ui.selectEmployee = function (employee) {
+                    $rootScope.value = 1;
+                    $scope.ui.getPictures(employee.epfNo, employee.branch.id);
+                    $rootScope.employee = employee.indexNo;
+                    $rootScope.employeeName = employee.name;
+                    $rootScope.employeeEpfNo = employee.epfNo;
+                    $rootScope.employeeEpfNo1 = employee.epfNo;
+                    $rootScope.employeeName1 = employee.name;
+                    $rootScope.department = employee.department.name;
+                };
+
+                $scope.ui.typeHeadSelectEmployee = function (employee) {
+                    $scope.ui.getPictures(employee.epfNo, employee.branch.id);
+                    $rootScope.employee = employee.indexNo;
+                    $rootScope.employeeName = employee.name;
+                    $rootScope.employeeEpfNo = employee.epfNo;
+                    $rootScope.employeeEpfNo1 = employee.epfNo;
+                    $rootScope.employeeName1 = employee.name;
+                    $rootScope.department = employee.department.name;
+                };
+
+                $scope.ui.keyEvent = function (e, employeeEpfNo) {
                     var code = e ? e.keyCode || e.which : 13;
                     if (code === 13) {
-                        $scope.ui.EmployeeByEpfNo($scope.model.employee.epfNo);
+                        $scope.ui.EmployeeByEpfNo(employeeEpfNo);
                     }
                 };
 
+                //TODO
                 $scope.ui.EmployeeByEpfNo = function (epfNo) {
+                    $rootScope.employeeList = [];
                     angular.forEach($scope.model.employeeList, function (value) {
                         if (value.epfNo === epfNo) {
-                            $scope.ui.getPictures(value.epfNo);
-                            $scope.model.employee.epfNo = value.epfNo;
-                            $scope.model.employee.name = value.name;
-                            $scope.model.kaizen.employee = value.name;
-                            $scope.model.employee.department = value.department.name;
-                            $scope.model.employee.type = "(" + value.type + ")";
+                            $rootScope.employeeList.push(value);
                         }
                     });
+
+                    if ($rootScope.employeeList.length > 1) {
+                        $uibModal.open({
+                            animation: true,
+                            ariaLabelledBy: 'modal-title',
+                            ariaDescribedBy: 'modal-body',
+                            templateUrl: 'app/transaction/kaizen/dialog/employee.html',
+                            controller: 'KaizenController',
+                            size: 'lg',
+                            windowClass: 'zindex',
+                            scope: $rootScope
+                        });
+                    }
+
+                    if ($rootScope.employeeList.length === 1) {
+                        angular.forEach($rootScope.employeeList, function (value) {
+                            $scope.ui.getPictures(value.epfNo, value.branch.id);
+                            $rootScope.employee = value.indexNo;
+                            $rootScope.employeeName = value.name;
+                            $rootScope.employeeEpfNo = value.epfNo;
+                            $rootScope.employeeEpfNo1 = value.epfNo;
+                            $rootScope.employeeName1 = value.name;
+                            $rootScope.department = value.department.name;
+                        });
+                    }
                 };
 
+                $rootScope.selectMoreEmployee = function (employee) {
+                    $scope.ui.getPictures(employee.epfNo, employee.branch.id);
+                    $scope.ui.selectedDataIndex = employee.indexNo;
+                    $rootScope.employee = employee.indexNo;
+                    $rootScope.employeeName = employee.name;
+                    $rootScope.employeeEpfNo = employee.epfNo;
+                    $rootScope.employeeEpfNo1 = employee.epfNo;
+                    $rootScope.employeeName1 = employee.name;
+                    $rootScope.department = employee.department.name;
+                };
 
 
                 $scope.ui.init = function () {
@@ -543,28 +593,27 @@
                                 if (val.department.indexNo === $rootScope.user.department) {
                                     d.push(val);
                                     if (val.epfNo === $rootScope.user.epfNo) {
-//                                        console.log(val)
-                                        $scope.model.kaizen.employee = val.name;
-                                        $scope.ui.selectEmployee(val);
+                                        if ($rootScope.value !== 1) {
+                                            $rootScope.employeeName = val.name;
+                                            $scope.ui.selectEmployee(val);
+                                        }
 
                                     }
                                 }
                             });
                             $scope.model.employeeList = d;
                         } else {
-//                            var d = [];
                             angular.forEach(data, function (val) {
                                 if (val.epfNo === $rootScope.user.epfNo) {
                                     document.getElementById("empName").disabled = true;
                                     document.getElementById("epfNo").disabled = true;
-                                    $scope.model.kaizen.employee = val.name;
+                                    $rootScope.employeeName = val.name;
                                     $scope.ui.selectEmployee(val);
-//                                    d.push(val);
                                 }
                             });
-//                            $scope.model.employeeList = d;
                         }
                     });
+
 
                     if (!$rootScope.totalScore) {
                         $rootScope.totalScore = 0;
@@ -587,9 +636,6 @@
                     if (!$rootScope.actualCost) {
                         $rootScope.actualCost = null;
                     }
-//                    if (!$rootScope.actualCost) {
-//                        $rootScope.actualCost = 0;
-//                    }
 
                     if (!$rootScope.type) {
                         $rootScope.type = "Implemented";

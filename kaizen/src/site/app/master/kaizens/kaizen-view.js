@@ -567,32 +567,32 @@
                 };
 
                 //create new top kaizen 
-                $scope.ui.keyEvent = function (e, epfNo) {
-                    var code = e ? e.keyCode || e.which : 13;
-                    if (code === 13) {
-                        var epfNo1 = epfNo.toString();
-                        var url = systemConfig.apiUrl + "/api/kaizen/employee-kaizen/" + epfNo1;
-
-                        $http.get(url)
-                                .success(function (data) {
-                                    if ($rootScope.selectStatus === 0) {
-                                        $scope.model.kaizenList = [];
-                                        angular.forEach(data, function (value) {
-                                            if (value.reviewStatus !== "MANAGER_VIEW") {
-                                                $scope.model.kaizenList.push(value);
-                                            }
-                                        });
-                                    } else {
-                                        $scope.model.kaizenList = [];
-                                        angular.forEach(data, function (value) {
-                                            if (value.reviewStatus === "MANAGER_VIEW") {
-                                                $scope.model.kaizenList.push(value);
-                                            }
-                                        });
-                                    }
-                                });
-                    }
-                };
+//                $scope.ui.keyEvent = function (e, epfNo) {
+//                    var code = e ? e.keyCode || e.which : 13;
+//                    if (code === 13) {
+//                        var epfNo1 = epfNo.toString();
+//                        var url = systemConfig.apiUrl + "/api/kaizen/employee-kaizen/" + epfNo1;
+//
+//                        $http.get(url)
+//                                .success(function (data) {
+//                                    if ($rootScope.selectStatus === 0) {
+//                                        $scope.model.kaizenList = [];
+//                                        angular.forEach(data, function (value) {
+//                                            if (value.reviewStatus !== "MANAGER_VIEW") {
+//                                                $scope.model.kaizenList.push(value);
+//                                            }
+//                                        });
+//                                    } else {
+//                                        $scope.model.kaizenList = [];
+//                                        angular.forEach(data, function (value) {
+//                                            if (value.reviewStatus === "MANAGER_VIEW") {
+//                                                $scope.model.kaizenList.push(value);
+//                                            }
+//                                        });
+//                                    }
+//                                });
+//                    }
+//                };
 
                 $scope.ui.save = function () {
                     if ($scope.validateInput()) {

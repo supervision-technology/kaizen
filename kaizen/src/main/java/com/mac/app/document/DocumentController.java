@@ -79,34 +79,79 @@ public class DocumentController {
         }
     }
 
-    @RequestMapping(value = "/download-image/{path}/", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
-    public void loadEmployeeImage(@PathVariable String path, HttpServletResponse response) {
-        File file = new File("./files/" + path + ".jpg");
-//        File file = new File("./files/" + path);
+//    @RequestMapping(value = "/download-image/{path}/", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
+//    public void loadEmployeeImage(@PathVariable String path, HttpServletResponse response) {
+//        File file = new File("./files/" + path + ".jpg");
+//
+//        System.out.println(file.getAbsolutePath());
+//        try {
+//            OutputStream outputStream = response.getOutputStream();
+//
+//            FileInputStream inputStream = new FileInputStream(file);
+//            byte[] read = new byte[8196];
+//            int c = 0;
+//            while ((c = inputStream.read(read, 0, read.length)) > 0) {
+//                outputStream.write(read, 0, c);
+//                outputStream.flush();
+//            }
+//            inputStream.close();
+//            outputStream.close();
+//
+//        } catch (IOException ex) {
+//            Logger.getLogger(DocumentController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+    @RequestMapping(value = "/download-image/{path}/{branch}", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
+    public void loadEmployeeImage(@PathVariable String path, @PathVariable int branch, HttpServletResponse response) {
 
-        System.out.println(file.getAbsolutePath());
-        try {
-            OutputStream outputStream = response.getOutputStream();
+        if (branch == 1) {
+            File file = new File("./files/" + path + ".jpg");
 
-            FileInputStream inputStream = new FileInputStream(file);
-            byte[] read = new byte[8196];
-            int c = 0;
-            while ((c = inputStream.read(read, 0, read.length)) > 0) {
-                outputStream.write(read, 0, c);
-                outputStream.flush();
+            System.out.println(file.getAbsolutePath());
+            try {
+                OutputStream outputStream = response.getOutputStream();
+
+                FileInputStream inputStream = new FileInputStream(file);
+                byte[] read = new byte[8196];
+                int c = 0;
+                while ((c = inputStream.read(read, 0, read.length)) > 0) {
+                    outputStream.write(read, 0, c);
+                    outputStream.flush();
+                }
+                inputStream.close();
+                outputStream.close();
+
+            } catch (IOException ex) {
+                Logger.getLogger(DocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            inputStream.close();
-            outputStream.close();
+        } else if (branch == 2) {
+            File file = new File("./files2/" + path + ".jpg");
 
-        } catch (IOException ex) {
-            Logger.getLogger(DocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(file.getAbsolutePath());
+            try {
+                OutputStream outputStream = response.getOutputStream();
+
+                FileInputStream inputStream = new FileInputStream(file);
+                byte[] read = new byte[8196];
+                int c = 0;
+                while ((c = inputStream.read(read, 0, read.length)) > 0) {
+                    outputStream.write(read, 0, c);
+                    outputStream.flush();
+                }
+                inputStream.close();
+                outputStream.close();
+
+            } catch (IOException ex) {
+                Logger.getLogger(DocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
     }
 
     @RequestMapping(value = "/kaizen-image/{path:.+}", method = RequestMethod.GET)
     public void loadImage(@PathVariable String path, HttpServletResponse response) {
         System.out.println(path);
-        
+
         File file = new File("./files/" + path);
 
         System.out.println(file.getAbsolutePath());

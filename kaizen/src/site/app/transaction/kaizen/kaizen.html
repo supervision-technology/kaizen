@@ -4,14 +4,14 @@
             <div class="profile-sidebar mt10" style="animation: fadeIn 1s">
                 <div class="profile-sidebar-item profile-avatar">
                     <div>
-                        <image id="userImg"  src="{{imageUrl}}"  height="100%" width="150px" />
+                        <img id="userImg" src="{{imageUrl}}"  height="100%" width="150px">
                     </div>
                 </div>
                 <br>
-                <h5 class="bold text-center">{{model.employee.name}}-{{model.employee.epfNo}}</h5>
+                <h5 class="bold text-center">{{employeeName1}}-{{employeeEpfNo1}}</h5>
                 <div class="profile-sidebar-item profile-info">
                     <div class="center-block mt10">
-                        <label class="label bg-bluegrey" style="font-size: 10px">{{model.employee.department}}</label>
+                        <label class="label bg-bluegrey" style="font-size: 10px">{{department}}</label>
                     </div>
                 </div>
             </div>
@@ -23,14 +23,14 @@
             </div>
         </div>
 
-        <div class="col-sm-5 mt10 br border-primary">
+        <div class="col-sm-5 pt10 br border-primary" style="height: calc(100vh - 57px)">
             <section class="profile-timeline composer" style="height: 230px">
                 <div class="row">
                     <div class="col-sm-5">
-                        <input type="text" id="epfNo" class="form-control mb5" placeholder="Emp No" ng-model="model.employee.epfNo"  ng-keypress="ui.keyEvent($event);">
+                        <input type="text" id="epfNo" class="form-control mb5" placeholder="Emp No" ng-model="employeeEpfNo"  ng-keypress="ui.keyEvent($event, employeeEpfNo);">
                     </div>
                     <div class="col-sm-7">
-                        <input type="text" id="empName" class="form-control mb5" placeholder="Employee" ng-model="model.kaizen.employee" uib-typeahead="employee as (employee.name) for employee in model.employeeList|filter:$viewValue|limitTo:10"  typeahead-on-select="ui.selectEmployee($model)">
+                        <input type="text" id="empName" class="form-control mb5" placeholder="Employee" ng-model="employeeName" uib-typeahead="employee as (employee.name) for employee in model.employeeList|filter:$viewValue|limitTo:10"  typeahead-on-select="ui.selectEmployee($model)">
                     </div>
                 </div>
                 <input class="form-control mb5" placeholder="Title" ng-model="model.kaizen.title">
@@ -92,16 +92,16 @@
                     <h4 class="text-center">VALUE YOUR KAIZEN</h4>
                 </div>
             </div>
-            
-<!--            <div class="row bg-default-light bb border-primary">
-                <div class="col-xs-12" style="margin: 10px 0 10px 0">
-                    <input class="form-control" ng-model="model.kaizen.actualCost" placeholder="Actual cost">
-                </div>
-            </div>-->
-            
+
+            <!--            <div class="row bg-default-light bb border-primary">
+                            <div class="col-xs-12" style="margin: 10px 0 10px 0">
+                                <input class="form-control" ng-model="model.kaizen.actualCost" placeholder="Actual cost">
+                            </div>
+                        </div>-->
+
             <!--<label class="label label-success pull-right" style="height: 20px">score {{model.kaizen.employeeCost}}</label>-->
             <div style="padding: 0px;height: calc(100vh - 350px)" class="mt20" ng-init="onLoadValueKaizer()">
-            <!--<div style="padding: 0px">-->
+                <!--<div style="padding: 0px">-->
                 <h6>Cost  <button ng-click="ui.modalOpenCost()" class="btn btn-xs btn-primary btn-flat pull-right">Criteria</button> <button class="btn btn-xs btn-outline btn-flat pull-right" style="margin-right: 7px">Score {{scoreCost}}</button></h6>
                 <input type="range" ng-model="scoreCost" step="1" min="0" max="5" ng-disabled="true" style="padding: 6px; margin-top: 0px;" >                
 

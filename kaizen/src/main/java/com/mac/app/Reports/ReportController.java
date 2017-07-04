@@ -50,5 +50,10 @@ public class ReportController {
     public List<Object[]> top10Kaizen(@PathVariable("year")String year,@PathVariable("month")String month){
         return reportService.top10Kaizen(year,month);
     }
+    
+    @RequestMapping(value = "/cost-saving/{year}/{month}",method = RequestMethod.GET)
+    public List<Object[]> costSaving(@PathVariable("year")String year,@PathVariable("month")String month){
+        return reportService.costSaving(year,month);
+    }
 
 }

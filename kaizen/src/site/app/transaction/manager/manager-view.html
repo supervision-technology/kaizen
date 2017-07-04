@@ -19,7 +19,7 @@
                                     <label for="employee" style="margin-top: 9px" >Employee:</label>
                                 </div>
                                 <div class="col-sm-8">
-                                    <input type="text" id="employee" class="form-control" ng-model="model.employee"  uib-typeahead="employee as (employee.name) for employee in model.employeeList|filter:$viewValue|limitTo:5">
+                                    <input type="text" id="employee" class="form-control" ng-model="model.employee"  uib-typeahead="employee as (employee.name +'-'+ employee.epfNo) for employee in model.employeeList|filter:$viewValue|limitTo:5">
                                 </div>
                             </td>
 
@@ -56,6 +56,7 @@
                                 <label class="pull-right">{{kaizen.introduceDate| date:mediumDate}}</label>
                                 <a href="javascript:;"><strong>{{ui.getEmployee(kaizen.employee).name}}</strong></a> 
                                 <a href="javascript:;"><strong> &nbsp; (EPF NO : {{ui.getEmployee(kaizen.employee).epfNo}} )</strong></a> 
+                                <a href="javascript:;"><strong style="background-color: #cccccc">{{ui.getEmployee(kaizen.employee).branch.name}}</strong></a> 
                             </div>
                             <h6>{{kaizen.title}}</h6> 
                         </div> 
