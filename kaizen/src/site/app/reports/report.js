@@ -386,7 +386,6 @@
                 };
 
                 $scope.totalCost = function (list) {
-//                    var sum = 0;
                     $rootScope.value = 0;
                     if (list) {
                         angular.forEach(list, function (value) {
@@ -411,7 +410,6 @@
 
                 $scope.$watch('department', function (val) {
                     if (val === "") {
-                        console.log("1")
                         $scope.getCostSaving($rootScope.costSavingYear, $rootScope.costSavingMonth);
 
                         $scope.getCostSaving = function (year, month) {

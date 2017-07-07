@@ -103,6 +103,28 @@ public class EmployeeService {
                         messageHelper.setFrom("kaizencommittee1@gmail.com");
                         messageHelper.setTo(committeee.getEmail());
 //                        messageHelper.setTo("niduraprageeth@gmail.com");
+                        messageHelper.setSubject("Kaizen Committee reminding mail");
+                        messageHelper.setText("Hi All,\n\n Please note that last month kaizens are now ready for the kaizen committee review,Appreciate\n your assistance in evaluating kaizens at Linea Aqua.\n\n Thanks,\n\n Kaizen admin");
+                    };
+                    mailSender.send(messagePreparator);
+                } catch (MailException e) {
+                    System.out.println(e);
+                }
+            }
+        }
+    }
+
+     public void sendMailCommittee(Mail mail) {
+        //send email to all committee
+        List<Employee> committeees = employeeRepository.findByType(EMPLOYEE_TYPE2);
+        for (Employee committeee : committeees) {
+            if (committeee.getEmail() != null) {
+                try {
+                    MimeMessagePreparator messagePreparator = mimeMessage -> {
+                        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+                        messageHelper.setFrom("kaizencommittee1@gmail.com");
+                        messageHelper.setTo(committeee.getEmail());
+//                        messageHelper.setTo("niduraprageeth@gmail.com");
                         messageHelper.setSubject(mail.getSubject());
                         messageHelper.setText(mail.getMessage());
                     };
@@ -113,5 +135,4 @@ public class EmployeeService {
             }
         }
     }
-
 }

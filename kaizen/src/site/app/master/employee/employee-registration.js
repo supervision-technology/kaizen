@@ -255,7 +255,6 @@
                     });
                     //load branch
                     employeeFactory.loadBranch(function (data) {
-                        console.log(data)
                         $scope.branchList = data;
                     });
 

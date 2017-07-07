@@ -132,10 +132,8 @@
                     $rootScope.employeeName1 = null;
                     $rootScope.department = null;
                     $rootScope.employee = null;
-                    console.log($rootScope.employeeEpfNo)
-                    console.log($rootScope.employeeName)
                 };
-      
+
 
                 $scope.$watch('employeeEpfNo', function (val) {
                     if (val === "") {
@@ -182,9 +180,9 @@
                             detailJSON,
                             function (data) {
                                 if ($rootScope.UserMode === "group_user") {
-                                    $rootScope.employeeEpfNo = null;
                                     $rootScope.fileList = [[]];
                                     Notification.success(data.indexNo + " - " + "Kaizen Saved Successfully.");
+                                    $scope.employeeEpfNo = null;
                                     $scope.model.resetEmployee();
                                     $scope.model.reset();
                                     $scope.beforeImageModel = [];

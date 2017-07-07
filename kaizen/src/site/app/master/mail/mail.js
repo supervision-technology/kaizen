@@ -28,7 +28,7 @@
 
                 $scope.sendMail = function () {
                     if ($rootScope.radioType === null) {
-                        Notification.error("Please insert manager or committee");
+                        Notification.error("Please select manager or committee");
                     } else {
                         if ($rootScope.radioType === 'manager') {
                             $scope.mode = "sending";
@@ -54,7 +54,7 @@
 //                            var date = $filter('date')($scope.selectDate, 'yyyy-MM-dd');
                             $scope.emailModel.message = "Hi All,\n\n Please note that last month kaizens are now ready for the kaizen committee review,Appreciate\n your assistance in evaluating kaizens at Linea Aqua.\n\n Thanks,\n\n Kaizen admin";
                             $scope.emailModel.subject = "Kaizen Committee reminding mail";
-                            var url = systemConfig.apiUrl + "/api/employee/send-mail";
+                            var url = systemConfig.apiUrl + "/api/employee/send-mail-committee";
                             var JsonDetail = JSON.stringify($scope.emailModel);
                             $http.post(url, JsonDetail)
                                     .success(function (data, status, headers) {

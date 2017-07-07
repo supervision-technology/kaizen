@@ -108,7 +108,10 @@ public class EmployeeController {
     
     @RequestMapping(value = "/send-mail", method = RequestMethod.POST)
     public void sendMail(@RequestBody Mail mail) {  
-//        System.out.println(mail.toString());
         employeeService.sendMail(mail);
+    }
+    @RequestMapping(value = "/send-mail-committee", method = RequestMethod.POST)
+    public void sendMailCommittee(@RequestBody Mail mail) {  
+        employeeService.sendMailCommittee(mail);
     }
 }
