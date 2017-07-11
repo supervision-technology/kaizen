@@ -5,6 +5,7 @@
 // */
 package com.mac.app.security.zconfig;
 
+import com.mac.app.employee.model.Employee;
 import com.mac.app.security.user.UserRepository;
 import com.mac.app.security.user.model.User;
 import java.util.HashSet;
@@ -69,11 +70,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 String userName = name.split("--")[0];
                 String password = name.split("--")[1];
 
-                User user = userRepository.findByNameAndPassword(userName, password);
+                Employee employee = userRepository.findByNameAndEpfNo(userName, password);
                 Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-                grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));
+                grantedAuthorities.add(new SimpleGrantedAuthority(employee.getType()));
 
-                return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), grantedAuthorities);
+                return new org.springframework.security.core.userdetails.User(employee.getName(), employee.getEpfNo(), grantedAuthorities);
 
             }
         };

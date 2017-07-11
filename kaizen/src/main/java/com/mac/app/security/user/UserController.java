@@ -40,35 +40,41 @@ public class UserController {
     private EmployeeRepository employeeRepository;
 
 
+//    @RequestMapping(path = "/user/login", method = RequestMethod.POST)
+//    public User getUser(@RequestBody User user) {
+//        return userRepository.findByNameAndPassword(user.getName(), user.getPassword());
+//    }
     @RequestMapping(path = "/user/login", method = RequestMethod.POST)
-    public User getUser(@RequestBody User user) {
-        return userRepository.findByNameAndPassword(user.getName(), user.getPassword());
+    public Employee getUser(@RequestBody Employee user) {
+        System.out.println(user.getName());
+        System.out.println(user.getEpfNo());
+        return userRepository.findByNameAndEpfNo(user.getName(), user.getEpfNo());
     }
 
-    @RequestMapping(path = "/save-user", method = RequestMethod.POST)
-    public User saveUser(@RequestBody User user) {
-        if (user.getIndexNo() != null) {
-            User findOne = userRepository.findOne(user.getIndexNo());
-            return userRepository.save(user);
-        } else {
-            User user1 = userRepository.findByNameAndPassword(user.getName(), user.getPassword());
-            if (user1 != null) {
-                return null;
-            } else {
-                return userRepository.save(user);
-            }
-        }
-    }
-
-    @RequestMapping(path = "/all-user", method = RequestMethod.GET)
-    public List<User> users() {
-        return userRepository.findAll();
-    }
-
-    @RequestMapping(path = "/delete-user/{indexNo}", method = RequestMethod.DELETE)
-    public int deleteUser(@PathVariable Integer indexNo) {
-        userRepository.delete(indexNo);
-        return indexNo;
-    }
+//    @RequestMapping(path = "/save-user", method = RequestMethod.POST)
+//    public User saveUser(@RequestBody User user) {
+//        if (user.getIndexNo() != null) {
+//            User findOne = userRepository.findOne(user.getIndexNo());
+//            return userRepository.save(user);
+//        } else {
+//            User user1 = userRepository.findByNameAndPassword(user.getName(), user.getPassword());
+//            if (user1 != null) {
+//                return null;
+//            } else {
+//                return userRepository.save(user);
+//            }
+//        }
+//    }
+//
+//    @RequestMapping(path = "/all-user", method = RequestMethod.GET)
+//    public List<User> users() {
+//        return userRepository.findAll();
+//    }
+//
+//    @RequestMapping(path = "/delete-user/{indexNo}", method = RequestMethod.DELETE)
+//    public int deleteUser(@PathVariable Integer indexNo) {
+//        userRepository.delete(indexNo);
+//        return indexNo;
+//    }
 
 }

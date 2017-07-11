@@ -12,7 +12,7 @@ angular.module('AppModule')
 
             $rootScope.model = {
                 name: null,
-                password: null
+                epfNo: null
             };
 
 
@@ -32,7 +32,7 @@ angular.module('AppModule')
                 /* Use this for real authentication
                  ----------------------------------------------*/
                 $rootScope.model.name = username;
-                $rootScope.model.password = password;
+                $rootScope.model.epfNo = password;
 
                 var auth = username + '--' + password + ":" + password;
                 auth = "Basic " + btoa(auth);
@@ -45,6 +45,7 @@ angular.module('AppModule')
                 var url = systemConfig.apiUrl + "/user/login";
 
                 var DetailJSON = JSON.stringify($rootScope.model);
+                console.log(DetailJSON)
 
                 $timeout(function () {
                     $http.post(url, DetailJSON, {

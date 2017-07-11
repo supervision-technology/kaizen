@@ -17,10 +17,11 @@
                         if (response) {
                             $rootScope.loading = null;
                             AuthenticationService.SetCredentials($scope.username, $scope.password);
-                            $rootScope.UserMode = response.role;
+                            $rootScope.UserMode = response.type;
 //                            $rootScope.userName = response.name;
                             $rootScope.user = response;
-                            if (response.role === 'admin') {
+                            console.log($rootScope.user)
+                            if (response.type === 'admin') {
                                 $location.path('/admin');
                             } else {
                                 $location.path('/transaction/kaizen');

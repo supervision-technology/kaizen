@@ -126,12 +126,12 @@
                 };
 
                 $scope.model.resetEmployee = function () {
-                    $rootScope.employeeEpfNo = null;
+                    $scope.employeeName = null;
+                    $scope.employeeEpfNo = null;
+                    $rootScope.employee = null;
                     $rootScope.employeeEpfNo1 = null;
-                    $rootScope.employeeName = null;
                     $rootScope.employeeName1 = null;
                     $rootScope.department = null;
-                    $rootScope.employee = null;
                 };
 
 
@@ -141,10 +141,10 @@
                         $rootScope.imageUrl = null;
                     }
                 }, true);
-//
+
                 $scope.$watch('employeeName', function (val) {
                     if (val === "") {
-                        $scope.model.resetEmployee2();
+                        $scope.model.resetEmployee();
                         $rootScope.imageUrl = null;
                     }
                 }, true);
@@ -182,7 +182,6 @@
                                 if ($rootScope.UserMode === "group_user") {
                                     $rootScope.fileList = [[]];
                                     Notification.success(data.indexNo + " - " + "Kaizen Saved Successfully.");
-                                    $scope.employeeEpfNo = null;
                                     $scope.model.resetEmployee();
                                     $scope.model.reset();
                                     $scope.beforeImageModel = [];
@@ -191,7 +190,7 @@
                                 } else {
                                     angular.forEach($scope.employees, function (val) {
                                         if (val.indexNo === data.employee) {
-                                            $rootScope.employeeName = val.name;
+                                            $scope.employeeName = val.name;
                                         }
                                     });
 
@@ -506,8 +505,8 @@
                     $rootScope.value = 1;
                     $scope.ui.getPictures(employee.epfNo, employee.branch.id);
                     $rootScope.employee = employee.indexNo;
-                    $rootScope.employeeName = employee.name;
-                    $rootScope.employeeEpfNo = employee.epfNo;
+                    $scope.employeeName = employee.name;
+                    $scope.employeeEpfNo = employee.epfNo;
                     $rootScope.employeeEpfNo1 = employee.epfNo;
                     $rootScope.employeeName1 = employee.name;
                     $rootScope.department = employee.department.name;
@@ -516,8 +515,8 @@
                 $scope.ui.typeHeadSelectEmployee = function (employee) {
                     $scope.ui.getPictures(employee.epfNo, employee.branch.id);
                     $rootScope.employee = employee.indexNo;
-                    $rootScope.employeeName = employee.name;
-                    $rootScope.employeeEpfNo = employee.epfNo;
+                    $scope.employeeName = employee.name;
+                    $scope.employeeEpfNo = employee.epfNo;
                     $rootScope.employeeEpfNo1 = employee.epfNo;
                     $rootScope.employeeName1 = employee.name;
                     $rootScope.department = employee.department.name;
@@ -546,9 +545,9 @@
                             ariaDescribedBy: 'modal-body',
                             templateUrl: 'app/transaction/kaizen/dialog/employee.html',
                             controller: 'KaizenController',
+                            scope: $scope,
                             size: 'lg',
-                            windowClass: 'zindex',
-                            scope: $rootScope
+                            windowClass: 'zindex'
                         });
                     }
 
@@ -556,8 +555,8 @@
                         angular.forEach($rootScope.employeeList, function (value) {
                             $scope.ui.getPictures(value.epfNo, value.branch.id);
                             $rootScope.employee = value.indexNo;
-                            $rootScope.employeeName = value.name;
-                            $rootScope.employeeEpfNo = value.epfNo;
+                            $scope.employeeName = value.name;
+                            $scope.employeeEpfNo = value.epfNo;
                             $rootScope.employeeEpfNo1 = value.epfNo;
                             $rootScope.employeeName1 = value.name;
                             $rootScope.department = value.department.name;
@@ -565,12 +564,12 @@
                     }
                 };
 
-                $rootScope.selectMoreEmployee = function (employee) {
+                $scope.selectMoreEmployee = function (employee) {
                     $scope.ui.getPictures(employee.epfNo, employee.branch.id);
                     $scope.ui.selectedDataIndex = employee.indexNo;
                     $rootScope.employee = employee.indexNo;
-                    $rootScope.employeeName = employee.name;
-                    $rootScope.employeeEpfNo = employee.epfNo;
+                    $scope.employeeName = employee.name;
+                    $scope.employeeEpfNo = employee.epfNo;
                     $rootScope.employeeEpfNo1 = employee.epfNo;
                     $rootScope.employeeName1 = employee.name;
                     $rootScope.department = employee.department.name;
@@ -586,26 +585,26 @@
                     //load employee
                     kaizenFactory.loadEmployee(function (data) {
                         if ($rootScope.UserMode === 'group_user') {
-                            var d = [];
+                            $scope.tempEmpList = [];
                             angular.forEach(data, function (val) {
-                                if (val.department.indexNo === $rootScope.user.department) {
-                                    d.push(val);
+                                if (val.department.indexNo === $rootScope.user.department.indexNo && val.type!=='admin') {
+                                    $scope.tempEmpList.push(val);
                                     if (val.epfNo === $rootScope.user.epfNo) {
                                         if ($rootScope.value !== 1) {
-                                            $rootScope.employeeName = val.name;
+//                                            $rootScope.employeeName = val.name;
                                             $scope.ui.selectEmployee(val);
                                         }
 
                                     }
                                 }
+                                $scope.model.employeeList = $scope.tempEmpList;
                             });
-                            $scope.model.employeeList = d;
                         } else {
                             angular.forEach(data, function (val) {
-                                if (val.epfNo === $rootScope.user.epfNo) {
+                                if (val.epfNo === $rootScope.user.epfNo && val.name === $rootScope.user.name) {
                                     document.getElementById("empName").disabled = true;
                                     document.getElementById("epfNo").disabled = true;
-                                    $rootScope.employeeName = val.name;
+//                                    $rootScope.employeeName = val.name;
                                     $scope.ui.selectEmployee(val);
                                 }
                             });

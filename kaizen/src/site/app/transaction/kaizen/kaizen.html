@@ -30,7 +30,7 @@
                         <input type="text" id="epfNo" class="form-control mb5" placeholder="Emp No" ng-model="employeeEpfNo"  ng-keypress="ui.keyEvent($event, employeeEpfNo);">
                     </div>
                     <div class="col-sm-7">
-                        <input type="text" id="empName" class="form-control mb5" placeholder="Employee" ng-model="employeeName" uib-typeahead="employee as (employee.name) for employee in model.employeeList|filter:$viewValue|limitTo:10"  typeahead-on-select="ui.selectEmployee($model)">
+                        <input type="text" id="empName" class="form-control mb5" placeholder="Employee" ng-model="employeeName" uib-typeahead="employee as (employee.name) for employee in model.employeeList|filter:$viewValue|limitTo:10"  typeahead-on-select="ui.typeHeadSelectEmployee($model)">
                     </div>
                 </div>
                 <input class="form-control mb5" placeholder="Title" ng-model="model.kaizen.title">
