@@ -20,7 +20,6 @@
                             $rootScope.UserMode = response.type;
 //                            $rootScope.userName = response.name;
                             $rootScope.user = response;
-                            console.log($rootScope.user)
                             if (response.type === 'admin') {
                                 $location.path('/admin');
                             } else {

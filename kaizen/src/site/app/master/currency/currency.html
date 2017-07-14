@@ -1,0 +1,14 @@
+<div class="bt border-primary pt15">
+    <div class="col-sm-12">
+        <label style="font-size: 30px" ng-repeat="list in currencyList">Old Dollar Value : {{list.value}}</label>
+    </div>
+
+    <div class="col-sm-3">
+        <input class="form-control" type="number" ng-model="model.value" placeholder="new dollar value">
+    </div>
+    <div class="col-sm-1">
+        <button class="pull-right btn btn-info" ng-click="http.saveCurrency()">
+            <span class="glyphicon glyphicon-ok"></span> Update
+        </button>
+    </div>
+</div>

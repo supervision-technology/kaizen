@@ -41,7 +41,8 @@
                     <tr ng-repeat="summary in summaryList">
                         <td>{{summary[1]}}</td>
                         <td>{{summary[2]}}</td>
-                        <td >{{summary[3]}}</td>
+                        <td ng-show="summary[3] === null">0</td>
+                        <td ng-show="summary[3] !== null">{{summary[3]}}</td>
                         <td><label class="label label-success" ng-if="summary[2] === summary[3]" ng-show="summary[2] === summary[3]">Achieved</label>
                             <label class="label label-danger" ng-if="summary[2] > summary[3]" ng-show="summary[2] > summary[3]">Not Achieved</label>
                         </td>
@@ -54,9 +55,9 @@
         <h1 class="text-center mt200" style="">REPORT DETAILS ARE EMPTY</h1>
     </div>
     <div class="col-sm-12" style="margin-top: 8px;margin-bottom: 8px;">
-        <button type="button" class="pull-right btn btn-info" ng-click="print('printDiv')" ng-hide="printMode === 'true'">
+<!--        <button type="button" class="pull-right btn btn-info" ng-click="print('printDiv')" ng-hide="printMode === 'true'">
             <span class="glyphicon glyphicon-print"></span> Print
-        </button>
+        </button>-->
         <button style="margin-right: 10px;" type="button" class="pull-right btn btn-info" ng-click="exportData()" ng-hide="printMode === 'true'">
             <span class="glyphicon glyphicon-download"></span> Export Excel
         </button>

@@ -23,7 +23,7 @@
                         .when("/admin", {
                             templateUrl: "app/system/home/home.html"
                         })
-                   
+
                         //  Transaction
                         .when("/transaction/job", {
                             templateUrl: "app/transaction/job/job.html",
@@ -79,6 +79,10 @@
                             templateUrl: "app/master/branch/branch.html",
                             controller: "branchController"
                         })
+                        .when("/master/currency", {
+                            templateUrl: "app/master/currency/currency.html",
+                            controller: "currencyController"
+                        })
 
 
                         //reports
@@ -114,7 +118,7 @@
                             templateUrl: "app/reports/cost-saving.html",
                             controller: "SummaryController"
                         })
-                        
+
 
                         .otherwise({
                             redirectTo: "/"
@@ -147,7 +151,7 @@
                     }
                 });
 
-              //log out 
+                //log out 
                 $scope.logout = function () {
                     $rootScope.value = null;
                     $location.path("/");

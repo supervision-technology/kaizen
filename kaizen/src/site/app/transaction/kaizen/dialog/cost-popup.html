@@ -3,16 +3,20 @@
     <h3 class="modal-title">Cost Criteria</h3>
 </div>
 <div class="modal-body" style="height: 500px">
+    <div class="col-lg-4 pull-right mb5">
+        <div class="col-lg-6">
+            <label class="pull-right"><input type="radio" name="radio" ng-click="selectCurrency(1)" >$ (dollar)</label>
+        </div>
+        <div class="col-lg-6">
+            <label><input type="radio" name="radio" ng-click="selectCurrency(2)" >Rs (rupees)</label>
+        </div>
+    </div>
     <div class="col-lg-12">
         <div style="margin-bottom: 40px">
-            <div class="col-sm-3 pull-right">
-                <div class="col-sm-2" style="margin-right: -15px">
-                    <h4>$</h4>
+            <div class="col-lg-3 pull-right">
+                <div class="col-lg-10">
+                    <input ng-disabled="mode === 'disable'" id="actualCost" type="number" class="form-control" style="border: 1px solid;" ng-model="actualCost" ng-change="ui.changeActualCost(actualCost)" placeholder="Actual cost">
                 </div>
-                <div class="col-sm-10">
-                    <input  type="number" class="form-control" style="border: 1px solid;" ng-model="actualCost" ng-change="ui.changeActualCost(actualCost)" placeholder="Actual cost">
-                </div>
-               
             </div>
             <label class="pull-right label label-primary" style="font-size: 25px">Score {{scoreCost}}</label>
             <!--<label class="pull-right label label-default" style="font-size: 25px">Value {{rangeValueCost}}%</label>-->
@@ -32,33 +36,39 @@
             </div>
         </div>
 
-        <div class="mb30">
-            <label>Description</label>
-            <textarea class="form-control" style="height: 120px"></textarea>
+        <div class="col-sm-12 mb10">
+            <div class="row">
+                <label>Description</label>
+                <textarea class="form-control" style="height: 120px"></textarea>
+            </div>
         </div>
 
-        <table class="table table-sm table-bordered">
-            <thead>
-            <th class="bg-bluegrey"  style="width: 111px">Score</th>
-            <!--<th>0</th>-->
-            <th style="width: 111px" class="text-center"><span class="badge bg-yellow">1</span></th>
-            <th style="width: 111px" class="text-center"><span class="badge bg-orange">2</span></th>
-            <th style="width: 111px" class="text-center"><span class="badge bg-lightblue">3</span></th>
-            <th style="width: 111px" class="text-center"><span class="badge bg-lightgreen">4</span></th>
-            <th style="width: 111px" class="text-center"><span class="badge bg-success">5</span></th>
+        <div class="col-sm-12">
+            <div class="row">
+                <table class="table table-sm table-bordered">
+                    <thead>
+                    <th class="bg-bluegrey"  style="width: 111px">Score</th>
+                    <!--<th>0</th>-->
+                    <th style="width: 111px" class="text-center"><span class="badge bg-yellow">1</span></th>
+                    <th style="width: 111px" class="text-center"><span class="badge bg-orange">2</span></th>
+                    <th style="width: 111px" class="text-center"><span class="badge bg-lightblue">3</span></th>
+                    <th style="width: 111px" class="text-center"><span class="badge bg-lightgreen">4</span></th>
+                    <th style="width: 111px" class="text-center"><span class="badge bg-success">5</span></th>
 
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="bg-default-light">Cost Reduction/ Saving</td>
-                    <!--<td>None</td>-->
-                    <td class="text-center">0 – $5000</td>
-                    <td class="text-center">$ 5000  - $10,000</td>
-                    <td class="text-center">$10,000 - $15,000</td>
-                    <td class="text-center">$15,000 - $20,000</td>
-                    <td class="text-center">More than $20,000</td>
-                </tr>
-            </tbody>
-        </table>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="bg-default-light">Cost Reduction/ Saving</td>
+                            <!--<td>None</td>-->
+                            <td class="text-center">0 – $5000</td>
+                            <td class="text-center">$ 5000  - $10,000</td>
+                            <td class="text-center">$10,000 - $15,000</td>
+                            <td class="text-center">$15,000 - $20,000</td>
+                            <td class="text-center">More than $20,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

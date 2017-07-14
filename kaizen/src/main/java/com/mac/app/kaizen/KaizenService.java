@@ -148,6 +148,37 @@ public class KaizenService {
         kaizen.setManagerSafety(mail.getManagerSafety());
         kaizen.setManagerUtilization(mail.getManagerUtilization());
         kaizen.setReviewStatus(null);
+        kaizen.setSuggestion("suggestion");
+        kaizen.setManagerComplete(MANAGER_COMPLETE);
+        TKaizen save = kaizenRepository.save(kaizen);
+        if (save != null) {
+            try {
+                MimeMessagePreparator messagePreparator = mimeMessage -> {
+                    MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+                    messageHelper.setFrom("kaizencommittee1@gmail.com");
+                    messageHelper.setTo(mail.getEmail());
+//                    messageHelper.setTo("niduraprageeth@gmail.com");
+                    messageHelper.setSubject(mail.getSubject());
+                    messageHelper.setText(mail.getMessage());
+                };
+                mailSender.send(messagePreparator);
+            } catch (MailException e) {
+                System.out.println(e);
+            }
+            return save;
+        }
+        return null;
+    }
+    @Transactional
+    public TKaizen Appreciation(Mail mail, Integer indexNo) {
+        TKaizen kaizen = kaizenRepository.findOne(indexNo);
+        kaizen.setManagerCost(mail.getManagerCost());
+        kaizen.setManagerCreativity(mail.getManagerCreativity());
+        kaizen.setManagerQuality(mail.getManagerQuality());
+        kaizen.setManagerSafety(mail.getManagerSafety());
+        kaizen.setManagerUtilization(mail.getManagerUtilization());
+        kaizen.setReviewStatus(null);
+        kaizen.setAppreciation("appreciation");
         kaizen.setManagerComplete(MANAGER_COMPLETE);
         TKaizen save = kaizenRepository.save(kaizen);
         if (save != null) {

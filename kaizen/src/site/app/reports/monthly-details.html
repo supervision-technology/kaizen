@@ -84,7 +84,7 @@
 
 
 
-        <div class="col-sm-12" style="height: 30px;" ng-show="showMode === 'selectyear'">
+        <div style="height: 30px;" ng-show="showMode === 'selectyear'">
             <table class="table">
                 <col style="width: 15%">
                 <col style="width: 15%">
@@ -127,9 +127,9 @@
         <h1 class="text-center mt200" style="">REPORT DETAILS ARE EMPTY</h1>
     </div>
     <div class="col-sm-12" style="margin-top: 18px; margin-bottom: 4px;">
-        <button type="button" class="pull-right btn btn-info" ng-click="print('printDiv')" ng-hide="printMode === 'true'">
+<!--        <button type="button" class="pull-right btn btn-info" ng-click="print('printDiv')" ng-hide="printMode === 'true'">
             <span class="glyphicon glyphicon-print"></span> Print
-        </button>
+        </button>-->
         <button style="margin-right: 10px;" type="button" class="pull-right btn btn-info" ng-click="exportData()" ng-hide="printMode === 'true'">
             <span class="glyphicon glyphicon-download"></span> Export Excel
         </button>

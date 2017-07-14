@@ -107,11 +107,12 @@
                             });
                 };
 
+               
                 return factory;
             });
 
     angular.module("AppModule")
-            .controller("SummaryController", function (FileSaver, Notification, systemConfig, $timeout, $rootScope, $scope, $window, SummaryFactory, $filter) {
+            .controller("SummaryController", function ($http, FileSaver, Notification, systemConfig, $timeout, $rootScope, $scope, $window, SummaryFactory, $filter) {
 
                 $scope.model = {};
 
@@ -128,21 +129,6 @@
 
                 // ---------------- http funtion -------------------
 
-                $scope.http.saveTopkaizen = function () {
-                    var json = JSON.stringify($scope.model);
-                    console.log(json);
-                    $scope.topKaizenList.push($scope.model);
-//                    SummaryFactory.saveEmployee(
-//                            json,
-//                            function (data) {
-//                                Notification.success(data.indexNo + " Employee Save Successfully");
-//                                $scope.topKaizenList.push($scope.model);
-//                                $scope.imagemodel = null;
-//                                $scope.model = null;
-//                            });
-
-                };
-
                 $scope.exportData = function () {
                     var blob = new Blob([document.getElementById('printDiv').innerHTML], {
                         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
@@ -152,7 +138,6 @@
 
                 $scope.printFuntion = function () {
                     var divToPrint = document.getElementById("printDiv");
-                    console.log(divToPrint)
                     newWin = window.open("");
                     newWin.document.write(divToPrint.outerHTML);
                     newWin.print();
@@ -362,9 +347,9 @@
 
                 //cost saving 
                 $scope.costSavingYear = function (year) {
-                    if($scope.month){
-                        $scope.month ="";
-                        $scope.costSavingList= [];
+                    if ($scope.month) {
+                        $scope.month = "";
+                        $scope.costSavingList = [];
                     }
                     $rootScope.costSavingYear = year;
                 };
@@ -479,7 +464,9 @@
 
 
                 $scope.init = function () {
-
+                    $rootScope.costSavingYear = null;
+                    $rootScope.costSavingMonth = null;
+                    $rootScope.department = null;
 
                     for (var j = new Date().getFullYear(); j > 2005; j--)
                     {
@@ -493,6 +480,12 @@
                     SummaryFactory.loadDepartment(
                             function (data) {
                                 $scope.departmentList = data;
+                            });
+                    SummaryFactory.loadCurrency(
+                            function (data) {
+                                angular.forEach(data, function (val) {
+                                    $scope.currency = val.value;
+                                });
                             });
 
                 };

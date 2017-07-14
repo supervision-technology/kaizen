@@ -46,6 +46,19 @@
                             });
                 };
 
+                //load department
+                factory.loadCurrency = function (callback) {
+                    var url = systemConfig.apiUrl + "/all-currency";
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+
+                            });
+                };
+
+
                 return factory;
             });
 
@@ -225,6 +238,10 @@
 
                 //save function 
                 $scope.ui.save = function () {
+                    if ($rootScope.currency === '2') {
+                        var value = $rootScope.actualCost / $rootScope.currentDollar;
+                        $rootScope.actualCost = Math.round(value * 100) / 100;
+                    }
                     if ($scope.validateInput()) {
                         if ($rootScope.cost > 0 && $rootScope.actualCost === null) {
                             Notification.error("Actual cost empty.please enter actual cost");
@@ -416,6 +433,7 @@
                 };
 
                 $scope.ui.modalOpenCost = function () {
+                    $rootScope.mode = 'disable';
                     $uibModal.open({
                         animation: true,
                         ariaLabelledBy: 'modal-title',
@@ -575,6 +593,16 @@
                     $rootScope.department = employee.department.name;
                 };
 
+                //select currency
+                $scope.selectCurrency = function (number) {
+                    $rootScope.mode = 'enable';
+                    console.log(number)
+                    if (number === 1) {
+                        $rootScope.currency = '1';
+                    } else {
+                        $rootScope.currency = '2';
+                    }
+                };
 
                 $scope.ui.init = function () {
                     //load document
@@ -587,7 +615,7 @@
                         if ($rootScope.UserMode === 'group_user') {
                             $scope.tempEmpList = [];
                             angular.forEach(data, function (val) {
-                                if (val.department.indexNo === $rootScope.user.department.indexNo && val.type!=='admin') {
+                                if (val.department.indexNo === $rootScope.user.department.indexNo && val.type !== 'admin') {
                                     $scope.tempEmpList.push(val);
                                     if (val.epfNo === $rootScope.user.epfNo) {
                                         if ($rootScope.value !== 1) {
@@ -610,6 +638,15 @@
                             });
                         }
                     });
+
+                    kaizenFactory.loadCurrency(
+                            function (data) {
+                                angular.forEach(data, function (val) {
+                                    $rootScope.currentDollar = val.value;
+                                });
+                            });
+
+
 
 
                     if (!$rootScope.totalScore) {

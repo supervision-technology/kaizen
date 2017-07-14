@@ -554,7 +554,7 @@
                                 $scope.emailModel.managerUtilization = $rootScope.ManagerScoreUtilization;
 
 
-                                var url = systemConfig.apiUrl + "/api/kaizen/send-suggestion-mail/" + $scope.ui.selectedDataIndex;
+                                var url = systemConfig.apiUrl + "/api/kaizen/send-appreciation-mail/" + $scope.ui.selectedDataIndex;
 
 
                                 var JsonDetail = JSON.stringify($scope.emailModel);

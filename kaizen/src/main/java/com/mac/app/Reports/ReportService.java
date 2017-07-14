@@ -5,6 +5,7 @@
  */
 package com.mac.app.Reports;
 
+import com.mac.app.Reports.model.Currency;
 import com.mac.app.Reports.model.MonthWise;
 import java.lang.reflect.Array;
 import java.math.BigInteger;
@@ -26,6 +27,9 @@ public class ReportService {
     @Autowired
     private ReportRepository reportRepository;
 
+    @Autowired
+    private CurrencyRepository currencyRepository;
+
     public List<Object[]> summary(String year) {
         return reportRepository.AllSummary(year);
     }
@@ -41,6 +45,9 @@ public class ReportService {
         for (Object[] objects : monthWiseDetail) {
             if (objects[0] == null) {
                 objects[0] = "";
+            }
+            if (objects[3] == null) {
+                objects[3] = "0";
             }
             MonthWise monthWise = new MonthWise();
             monthWise.setDate(objects[0].toString());
@@ -66,9 +73,24 @@ public class ReportService {
     public List<Object[]> top10Kaizen(String year, String month) {
         return reportRepository.top10Kaizen(year, month);
     }
-    
+
     public List<Object[]> costSaving(String year, String month) {
         return reportRepository.costSaving(year, month);
+    }
+
+    // currency
+    public Currency saveCurrency(String value) {
+        List<Currency> findAll = currencyRepository.findAll();
+        Currency c = new Currency();
+        for (Currency currency : findAll) {
+            currency.setValue(value);
+            c = currencyRepository.save(currency);
+        }
+        return c;
+    }
+
+    public List<Currency> allCurrency() {
+        return currencyRepository.findAll();
     }
 
 }

@@ -111,6 +111,10 @@
                             <a href="#/master/send-mail">
                                 <span>Mail</span>
                             </a>
+                            <i class="sub-menu"></i>
+                            <a href="#/master/currency">
+                                <span>Update Currency</span>
+                            </a>
                             <!--</li>-->
                             <!--</ul>-->
                         </li>
@@ -132,7 +136,7 @@
                                 </li>
                                 <li>
                                     <a href="#/reports/top10-kaizen">
-                                        <span>Top 10 Kaizen</span>
+                                        <span>Top 10 Contributors</span>
                                     </a>
                                 </li>
                                 <li>
@@ -156,7 +160,7 @@
                                         <span>Monthly Details</span>
                                     </a>
                                 </li>
-                                <li>
+                                <li ng-hide="UserMode === 'user' || UserMode === 'group_user'">
                                     <a href="#/reports/cost-saving">
                                         <span>Cost Saving</span>
                                     </a>

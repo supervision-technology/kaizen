@@ -68,9 +68,15 @@ public class KaizenController {
         return kaisenMail;
     }
 
-    // send suggesent mail and appreciation mail
+    // send appreciation mail
     @RequestMapping(value = "/send-suggestion-mail/{indexNo}", method = RequestMethod.POST)
     public TKaizen sendSuggestionEmail(@RequestBody Mail mail, @PathVariable("indexNo") Integer indexNo) {
         return kaizenService.updateKaizenByIndex(mail, indexNo);
+    }
+    
+    // send appreciation mail
+    @RequestMapping(value = "/send-appreciation-mail/{indexNo}", method = RequestMethod.POST)
+    public TKaizen sendAppreciationEmail(@RequestBody Mail mail, @PathVariable("indexNo") Integer indexNo) {
+        return kaizenService.Appreciation(mail, indexNo);
     }
 }
