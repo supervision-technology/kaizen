@@ -481,12 +481,6 @@
                             function (data) {
                                 $scope.departmentList = data;
                             });
-                    SummaryFactory.loadCurrency(
-                            function (data) {
-                                angular.forEach(data, function (val) {
-                                    $scope.currency = val.value;
-                                });
-                            });
 
                 };
 
