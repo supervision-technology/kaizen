@@ -101,7 +101,7 @@ public class DocumentController {
 //            Logger.getLogger(DocumentController.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
-    @RequestMapping(value = "/download-image/{path}/{branch}", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
+    @RequestMapping(value = "/download-image/{path}/{branch}/", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
     public void loadEmployeeImage(@PathVariable String path, @PathVariable int branch, HttpServletResponse response) {
 
         if (branch == 1) {

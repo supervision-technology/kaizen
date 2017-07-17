@@ -557,7 +557,7 @@
                     angular.forEach($scope.model.employeeList, function (value) {
                         if (value.indexNo === indexNo) {
                             $scope.emailModel.email = value.email;
-                            var url = systemConfig.apiUrl + "/api/document/download-image/" + value.epfNo + "/";
+                            var url = systemConfig.apiUrl + "/api/document/download-image/" + value.epfNo + "/" + value.branch.id+ "/";
                             $scope.imageUrl = url;
                             employee = value;
                             return;

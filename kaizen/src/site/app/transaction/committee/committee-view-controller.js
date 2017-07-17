@@ -513,7 +513,7 @@
                     var employee = null;
                     angular.forEach($scope.model.employeeList, function (value) {
                         if (value.indexNo === indexNo) {
-                            var url = systemConfig.apiUrl + "/api/document/download-image/" + value.epfNo + "/";
+                            var url = systemConfig.apiUrl + "/api/document/download-image/" + value.epfNo + "/" + value.branch.id+ "/";
                             $scope.imageUrl = url;
                             employee = value;
                             return;
