@@ -8,6 +8,7 @@ package com.mac.app.employee;
 import com.mac.app.employee.model.Department;
 import com.mac.app.employee.model.Employee;
 import com.mac.app.kaizen.model.Mail;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -38,8 +39,15 @@ public class EmployeeService {
     private String EMPLOYEE_TYPE = "manager";
     private String EMPLOYEE_TYPE2 = "committee";
 
-    public List<Employee> allEmployee() {
-        return employeeRepository.findAll();
+    public List<Employee> findByCompany(int company) {
+        List<Employee> newList = new ArrayList<>();
+        List<Employee> employees = employeeRepository.findByCompany(company);
+        for (Employee employee : employees) {
+            if (!employee.getType().equals("admin")) {
+                newList.add(employee);
+            }
+        }
+        return newList;
     }
 
     public Employee saveEmployee(Employee employee) {
@@ -61,8 +69,8 @@ public class EmployeeService {
     }
 
     // department methods
-    public List<Department> allDepartment() {
-        return departmentRepository.findAll();
+    public List<Department> findDepartmentByCompany(int company) {
+        return departmentRepository.findByCompany(company);
     }
 
     public void deleteDepartment(Integer indexNo) {
@@ -73,9 +81,9 @@ public class EmployeeService {
         return departmentRepository.save(department);
     }
 
-    public void sendMail(Mail mail) {
+    public void sendMail(Mail mail,int company) {
         //send email to all managers
-        List<Employee> managers = employeeRepository.findByType(EMPLOYEE_TYPE);
+        List<Employee> managers = employeeRepository.findByTypeAndCompany(EMPLOYEE_TYPE,company);
         for (Employee manager : managers) {
             if (manager.getEmail() != null) {
                 try {
@@ -94,7 +102,7 @@ public class EmployeeService {
             }
         }
 
-        List<Employee> committeees = employeeRepository.findByType(EMPLOYEE_TYPE2);
+        List<Employee> committeees = employeeRepository.findByTypeAndCompany(EMPLOYEE_TYPE2,company);
         for (Employee committeee : committeees) {
             if (committeee.getEmail() != null) {
                 try {
@@ -114,9 +122,9 @@ public class EmployeeService {
         }
     }
 
-     public void sendMailCommittee(Mail mail) {
+    public void sendMailCommittee(Mail mail,int company) {
         //send email to all committee
-        List<Employee> committeees = employeeRepository.findByType(EMPLOYEE_TYPE2);
+        List<Employee> committeees = employeeRepository.findByTypeAndCompany(EMPLOYEE_TYPE2,company);
         for (Employee committeee : committeees) {
             if (committeee.getEmail() != null) {
                 try {
@@ -135,4 +143,5 @@ public class EmployeeService {
             }
         }
     }
+
 }

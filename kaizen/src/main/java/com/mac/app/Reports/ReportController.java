@@ -28,14 +28,14 @@ public class ReportController {
     @Autowired
     private ReportService reportService;
 
-    @RequestMapping(value = "/summary/{year}", method = RequestMethod.GET)
-    public List<Object[]> SummaryByYear(@PathVariable("year") String year) {
-        return reportService.summary(year);
+    @RequestMapping(value = "/summary/{year}/{company}", method = RequestMethod.GET)
+    public List<Object[]> SummaryByYear(@PathVariable("year") String year,@PathVariable("company") String company) {
+        return reportService.summary(year,company);
     }
 
-    @RequestMapping(value = "/view-count/{year}/{month}", method = RequestMethod.GET)
-    public List<Object[]> evaluatedAndManagerViewedDetails(@PathVariable("year") String year, @PathVariable("month") String month) {
-        return reportService.viewCountDetails(year, month);
+    @RequestMapping(value = "/view-count/{year}/{month}/{company}", method = RequestMethod.GET)
+    public List<Object[]> evaluatedAndManagerViewedDetails(@PathVariable("year") String year, @PathVariable("month") String month, @PathVariable("company") String company) {
+        return reportService.viewCountDetails(year, month,company);
     }
 
     @RequestMapping(value = "/month-wise-details/{year}", method = RequestMethod.GET)
@@ -43,22 +43,22 @@ public class ReportController {
         return reportService.monthWiseDetailsByYear(year);
     }
 
-    @RequestMapping(value = "/top-kaizen/{year}/{month}", method = RequestMethod.GET)
-    public List<Object[]> topKaizen(@PathVariable("year") String year, @PathVariable("month") String month) {
-        return reportService.topKaizen(year, month);
+    @RequestMapping(value = "/top-kaizen/{year}/{month}/{company}", method = RequestMethod.GET)
+    public List<Object[]> topKaizen(@PathVariable("year") String year, @PathVariable("month") String month,@PathVariable("company") String company) {
+        return reportService.topKaizen(year, month,company);
     }
 
-    @RequestMapping(value = "/top-10-kaizen/{year}/{month}", method = RequestMethod.GET)
-    public List<Object[]> top10Kaizen(@PathVariable("year") String year, @PathVariable("month") String month) {
-        return reportService.top10Kaizen(year, month);
+    @RequestMapping(value = "/top-10-kaizen/{year}/{month}/{company}", method = RequestMethod.GET)
+    public List<Object[]> top10Kaizen(@PathVariable("year") String year, @PathVariable("month") String month,@PathVariable("company") String company) {
+        return reportService.top10Kaizen(year, month,company);
     }
 
-    @RequestMapping(value = "/cost-saving/{year}/{month}", method = RequestMethod.GET)
-    public List<Object[]> costSaving(@PathVariable("year") String year, @PathVariable("month") String month) {
-        return reportService.costSaving(year, month);
+    @RequestMapping(value = "/cost-saving/{year}/{month}/{company}", method = RequestMethod.GET)
+    public List<Object[]> costSaving(@PathVariable("year") String year, @PathVariable("month") String month,@PathVariable("company") String company) {
+        return reportService.costSaving(year, month,company);
     }
 
-    // currency 
+    //// currency
     @RequestMapping(value = "/save-currency/{value}", method = RequestMethod.POST)
     public Currency saveCurrency(@PathVariable String  value) {
         System.out.println(value);

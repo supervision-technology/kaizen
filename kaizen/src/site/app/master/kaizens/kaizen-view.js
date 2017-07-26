@@ -8,8 +8,8 @@
 
 
                 //load kaizen
-                factory.loadKaizen = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/kaizen";
+                factory.loadKaizen = function (company,callback) {
+                    var url = systemConfig.apiUrl + "/api/kaizen/"+company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -20,8 +20,8 @@
                 };
 
                 //load employee
-                factory.loadEmployee = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/employee";
+                factory.loadEmployee = function (company, callback) {
+                    var url = systemConfig.apiUrl + "/api/employee/" + company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -31,10 +31,9 @@
                             });
                 };
 
-
                 //load department
-                factory.loadDepartment = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/employee/all-department";
+                factory.loadDepartment = function (company, callback) {
+                    var url = systemConfig.apiUrl + "/api/employee/all-department/" + company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -507,7 +506,7 @@
                     $rootScope.selectStatus = 1;
                     $scope.model.kaizenList = [];
                     $scope.model.reset();
-                    kaizenViewFactory.loadKaizen(function (data) {
+                    kaizenViewFactory.loadKaizen($rootScope.company,function (data) {
                         angular.forEach(data, function (value) {
                             if (value.reviewStatus === "MANAGER_VIEW") {
                                 $scope.model.kaizenList.push(value);
@@ -521,7 +520,7 @@
                     $rootScope.selectStatus = 0;
                     $scope.model.kaizenList = [];
                     $scope.model.reset();
-                    kaizenViewFactory.loadKaizen(function (data) {
+                    kaizenViewFactory.loadKaizen($rootScope.company,function (data) {
 //                        $scope.model.kaizenList = data;
                         angular.forEach(data, function (value) {
                             if (value.reviewStatus !== "MANAGER_VIEW") {
@@ -557,7 +556,7 @@
                     angular.forEach($scope.model.employeeList, function (value) {
                         if (value.indexNo === indexNo) {
                             $scope.emailModel.email = value.email;
-                            var url = systemConfig.apiUrl + "/api/document/download-image/" + value.epfNo + "/" + value.branch.id+ "/";
+                            var url = systemConfig.apiUrl + "/api/document/download-image/" + value.epfNo + "/" + value.branch.id + "/";
                             $scope.imageUrl = url;
                             employee = value;
                             return;
@@ -631,7 +630,7 @@
                     if (val === "") {
                         if ($rootScope.selectStatus === 0) {
                             $scope.model.kaizenList = [];
-                            kaizenViewFactory.loadKaizen(function (data) {
+                            kaizenViewFactory.loadKaizen($rootScope.company,function (data) {
                                 angular.forEach(data, function (value) {
                                     if (value.reviewStatus !== "MANAGER_VIEW") {
                                         $scope.model.kaizenList.push(value);
@@ -640,7 +639,7 @@
                             });
                         } else {
                             $scope.model.kaizenList = [];
-                            kaizenViewFactory.loadKaizen(function (data) {
+                            kaizenViewFactory.loadKaizen($rootScope.company,function (data) {
                                 angular.forEach(data, function (value) {
                                     if (value.reviewStatus === "MANAGER_VIEW") {
                                         $scope.model.kaizenList.push(value);
@@ -655,7 +654,7 @@
                     if (val === "") {
                         if ($rootScope.selectStatus === 0) {
                             $scope.model.kaizenList = [];
-                            kaizenViewFactory.loadKaizen(function (data) {
+                            kaizenViewFactory.loadKaizen($rootScope.company,function (data) {
                                 angular.forEach(data, function (value) {
                                     if (value.reviewStatus !== "MANAGER_VIEW") {
                                         $scope.model.kaizenList.push(value);
@@ -664,7 +663,7 @@
                             });
                         } else {
                             $scope.model.kaizenList = [];
-                            kaizenViewFactory.loadKaizen(function (data) {
+                            kaizenViewFactory.loadKaizen($rootScope.company,function (data) {
                                 angular.forEach(data, function (value) {
                                     if (value.reviewStatus === "MANAGER_VIEW") {
                                         $scope.model.kaizenList.push(value);
@@ -685,9 +684,9 @@
                     $scope.numLimit = 10;
                     //set date
                     $scope.model.date = new Date();
-                    $rootScope.selectStatus = 0
+                    $rootScope.selectStatus = 0;
                     //laod kaizen
-                    kaizenViewFactory.loadKaizen(function (data) {
+                    kaizenViewFactory.loadKaizen($rootScope.company,function (data) {
                         angular.forEach(data, function (value) {
                             if (value.reviewStatus !== "MANAGER_VIEW") {
                                 $scope.model.kaizenList.push(value);
@@ -696,12 +695,12 @@
                     });
 
                     //load employee
-                    kaizenViewFactory.loadEmployee(function (data) {
+                    kaizenViewFactory.loadEmployee($rootScope.company, function (data) {
                         $scope.model.employeeList = data;
                     });
 
                     //load department
-                    kaizenViewFactory.loadDepartment(function (data) {
+                    kaizenViewFactory.loadDepartment($rootScope.company, function (data) {
                         $scope.model.departmentList = data;
                     });
 

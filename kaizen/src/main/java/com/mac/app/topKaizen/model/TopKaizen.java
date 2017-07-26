@@ -38,8 +38,24 @@ public class TopKaizen implements Serializable {
     
     @Column(name = "department")
     private String department;
+    
+    @Column(name = "branch")
+    private int branch;
+  
+    @Column(name = "company")
+    private int company;
 
     public TopKaizen() {
+    }
+
+    public TopKaizen(int indexNo, Date date, String epfNo, String name, String department, int branch, int company) {
+        this.indexNo = indexNo;
+        this.date = date;
+        this.epfNo = epfNo;
+        this.name = name;
+        this.department = department;
+        this.branch = branch;
+        this.company = company;
     }
 
     public int getIndexNo() {
@@ -82,10 +98,30 @@ public class TopKaizen implements Serializable {
         this.department = department;
     }
 
+    public int getBranch() {
+        return branch;
+    }
+
+    public void setBranch(int branch) {
+        this.branch = branch;
+    }
+
+    public int getCompany() {
+        return company;
+    }
+
+    public void setCompany(int company) {
+        this.company = company;
+    }
+
     @Override
     public String toString() {
-        return "TopKaizen{" + "indexNo=" + indexNo + ", date=" + date + ", epfNo=" + epfNo + ", name=" + name + ", department=" + department + '}';
+        return "TopKaizen{" + "indexNo=" + indexNo + ", date=" + date + ", epfNo=" + epfNo + ", name=" + name + ", department=" + department + ", branch=" + branch + ", company=" + company + '}';
     }
+
+   
+
+    
     
     
 }

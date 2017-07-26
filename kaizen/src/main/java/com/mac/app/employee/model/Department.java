@@ -30,12 +30,16 @@ public class Department implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "company")
+    private int company;
+
     public Department() {
     }
 
-    public Department(Integer indexNo, String name) {
+    public Department(Integer indexNo, String name, int company) {
         this.indexNo = indexNo;
         this.name = name;
+        this.company = company;
     }
 
     public Integer getIndexNo() {
@@ -54,5 +58,19 @@ public class Department implements Serializable {
         this.name = name;
     }
 
+    public int getCompany() {
+        return company;
+    }
+
+    public void setCompany(int company) {
+        this.company = company;
+    }
+
+    @Override
+    public String toString() {
+        return "Department{" + "indexNo=" + indexNo + ", name=" + name + ", company=" + company + '}';
+    }
+
     
+
 }

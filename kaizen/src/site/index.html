@@ -15,8 +15,10 @@
 
     </head>
 
-    <body ng-app="AppModule" ng-controller="IndexController">
-        <div class="app layout-fixed-header">
+    <body onload="myFunction()" ng-app="AppModule" ng-controller="IndexController">
+        <div id="loader"></div>
+
+        <div class="app layout-fixed-header" id="myDiv">
             <!-- sidebar panel -->
             <div class="sidebar-panel offscreen-left">
 
@@ -87,10 +89,10 @@
                             <a href="#/master/employee-registration">
                                 <span>Employee Registration</span>
                             </a>
-<!--                            <i class="sub-menu"></i>
-                            <a href="#/master/user-registration">
-                                <span>User Registration</span>
-                            </a>-->
+                            <!--                            <i class="sub-menu"></i>
+                                                        <a href="#/master/user-registration">
+                                                            <span>User Registration</span>
+                                                        </a>-->
                             <i class="sub-menu"></i>
                             <a href="#/master/department">
                                 <span>Create Department</span>
@@ -238,65 +240,50 @@
                             <img src="images/loading3.gif">
                         </li>
 
-                        <!--                        <li>
-                                                    <a href="javascript:;" data-toggle="dropdown">
-                                                        <i class="fa fa-bell-o"></i>
-                                                        <div class="status bg-danger border-danger animated bounce"></div>
-                                                    </a>
-                                                    <ul class="dropdown-menu notifications">
-                                                        <li class="notifications-header">
-                                                            <p class="text-muted small">You have 3 new messages</p>
-                                                        </li>
-                                                        <li>
-                                                            <ul class="notifications-list">
-                                                                <li>
-                                                                    <a href="javascript:;">
-                                                                        <span class="pull-left mt2 mr15">
-                                                                            <img src="images/face1.jpg" class="avatar avatar-xs img-circle" alt="">
-                                                                        </span>
-                                                                        <div class="overflow-hidden">
-                                                                            <span>Sean launched a new application</span>
-                                                                            <span class="time">2 seconds ago</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="javascript:;">
-                                                                        <div class="pull-left mt2 mr15">
-                                                                            <div class="circle-icon bg-danger">
-                                                                                <i class="fa fa-chain-broken"></i>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="overflow-hidden">
-                                                                            <span>Removed chrome from app list</span>
-                                                                            <span class="time">4 Hours ago</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="javascript:;">
-                                                                        <span class="pull-left mt2 mr15">
-                                                                            <img src="images/face3.jpg" class="avatar avatar-xs img-circle" alt="">
-                                                                        </span>
-                                                                        <div class="overflow-hidden">
-                                                                            <span class="text-muted">Jack Hunt has registered</span>
-                                                                            <span class="time">9 hours ago</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </li>
-                                                        <li class="notifications-footer">
-                                                            <a href="javascript:;">See all messages</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>-->
+                        <li>
+                            <a href="javascript:;" data-toggle="dropdown">
+                                <i class="fa fa-bell-o"></i>
+                                <div class="status bg-danger border-danger animated bounce"></div>
+                            </a>
+                            <ul class="dropdown-menu notifications">
+                                <li>
+                                    <ul class="notifications-list">
+                                        <li>
+                                            <a href="javascript:;">
+                                                <div class="pull-left mt2 mr15">
+                                                    <div class="circle-icon bg-danger">
+                                                        <i class="fa fa-chain-broken"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="overflow-hidden">
+                                                    <span>News Feed 1</span>
+                                                    <span class="time">..</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;">
+                                                <div class="pull-left mt2 mr15">
+                                                    <div class="circle-icon bg-danger">
+                                                        <i class="fa fa-chain-broken"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="overflow-hidden">
+                                                    <span>News Feed 2</span>
+                                                    <span class="time">..</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
 
                         <li>
                             <a href="javascript:;" data-toggle="dropdown">
-                                <label class="glyphicon glyphicon-user" style="margin-left: 10px"></label>
+                                {{globals.currentUser.username}} &nbsp;<label class="glyphicon glyphicon-user"></label>
                                 <!--<img src="images/face3.jpg" class="header-avatar img-circle ml10" alt="user" title="user">-->
-                                <span class="pull-left">{{globals.currentUser.username}}</span>
+                                <!--<span class="pull-left"></span>-->
                             </a>
                             <ul class="dropdown-menu">
                                 <!--                                <li>
@@ -322,8 +309,23 @@
             <!-- /content panel -->          
         </div>
 
+
+
         <!--js-->
         <!-- inject:js -->
         <!-- endinject -->
+
+        <script>
+                    var myVar;
+
+                    function myFunction() {
+                        myVar = setTimeout(showPage, 2500);
+                    }
+
+                    function showPage() {
+                        document.getElementById("loader").style.display = "none";
+                        document.getElementById("myDiv").style.display = "block";
+                    }
+        </script>
     </body>
 </html>

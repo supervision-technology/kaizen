@@ -23,11 +23,12 @@ public class TargetService {
     @Autowired
     private TargetRepository targetRepository;
 
-    public List<Target> allKaizenTarget() {
-        return targetRepository.findAll();
+    public List<Target> findByCompany(int company) {
+      return targetRepository.findByCompany(company);
     }
 
     public Target saveKaizenTarget(Target target) {
         return targetRepository.save(target);
     }
+
 }

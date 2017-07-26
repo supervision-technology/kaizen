@@ -71,11 +71,11 @@
     </div>
 
     <div class="col-sm-6">
-        <div class="row bg-default-light bb border-primary">
+<!--        <div class="row bg-default-light bb border-primary">
             <div class="col-xs-12" style="margin: 10px 0 10px 0">
                 <label class="form-control"><b>Actual Cost:</b> {{model.kaizen.actualCost|number:2}}</label>
             </div>
-        </div>
+        </div>-->
 
         <div class="mt5">
             <button type="button" class="btn btn-bitbucket btn-xs pull-right" style="border-radius: 0px" ng-click="ui.modalPictures()" data-target=".picture-modal" data-toggle="modal">
@@ -84,7 +84,7 @@
             <label class="pull-left">Description</label>
         </div>
 
-        <div class="bordered border-default smart-scroll-y mb5" style="height: 80px; margin-top: 35px;">
+        <div class="bordered border-default smart-scroll-y mb5" style="height: 120px; margin-top: 35px;">
             <p style="padding: 5px">{{model.kaizen.description}}</p>
         </div>
 
@@ -103,35 +103,35 @@
                         <td class="text-center">{{model.kaizen.employeeCost}}</td>
                         <td class="text-center">{{model.managerkaizen.managerCost}}</td>
                         <td class="text-center">{{CommitteeScoreCost}}</td>
-                        <td class="text-center"><button ng-click="ui.modalOpenCost()" class="btn btn-xs bg-bluegrey" style="border-radius: 0px">Criteria</button></td>
+                        <td class="text-center"><button ng-click="ui.modalOpenCost()" class="btn btn-xs btn-primary" style="border-radius: 0px">Criteria</button></td>
                     </tr>
                     <tr>
                         <td class="">Utilization</td>
                         <td class="text-center">{{model.kaizen.employeeUtilization}}</td>
                         <td class="text-center">{{model.managerkaizen.managerUtilization}}</td>
                         <td class="text-center">{{CommitteeScoreUtilization}}</td>
-                        <td class="text-center"><button ng-click="ui.modalOpenUtilization()" class="btn btn-xs bg-bluegrey" style="border-radius: 0px">Criteria</button></td>
+                        <td class="text-center"><button ng-click="ui.modalOpenUtilization()" class="btn btn-xs btn-primary" style="border-radius: 0px">Criteria</button></td>
                     </tr>
                     <tr>
                         <td class="">Creativity</td>
                         <td class="text-center">{{model.kaizen.employeeCreativity}}</td>
                         <td class="text-center">{{model.managerkaizen.managerCreativity}}</td>
                         <td class="text-center"> {{CommitteeScoreCreativity}}</td>
-                        <td class="text-center"><button ng-click="ui.modalOpenCreativity()" class="btn btn-xs bg-bluegrey" style="border-radius: 0px">Criteria</button></td>
+                        <td class="text-center"><button ng-click="ui.modalOpenCreativity()" class="btn btn-xs btn-primary" style="border-radius: 0px">Criteria</button></td>
                     </tr>
                     <tr>
                         <td class="">Safety</td>
                         <td class="text-center">{{model.kaizen.employeeSafety}}</td>
                         <td class="text-center">{{model.managerkaizen.managerSafety}}</td>
                         <td class="text-center">{{CommitteeScoreSafety}}</td>
-                        <td class="text-center"><button ng-click="ui.modalOpenSafety()" class="btn btn-xs bg-bluegrey" style="border-radius: 0px">Criteria</button></td>
+                        <td class="text-center"><button ng-click="ui.modalOpenSafety()" class="btn btn-xs btn-primary" style="border-radius: 0px">Criteria</button></td>
                     </tr>
                     <tr>
                         <td class="">Quality</td>
                         <td class="text-center">{{model.kaizen.employeeQuality}}</td>
                         <td class="text-center">{{model.managerkaizen.managerQuality}}</td>
                         <td class="text-center">{{CommitteeScoreQuality}}</td>
-                        <td class="text-center"><button ng-click="ui.modalOpenQuality()" class="btn btn-xs bg-bluegrey" style="border-radius: 0px">Criteria</button></td>
+                        <td class="text-center"><button ng-click="ui.modalOpenQuality()" class="btn btn-xs btn-primary" style="border-radius: 0px">Criteria</button></td>
                     </tr>
                 </tbody>
             </table>

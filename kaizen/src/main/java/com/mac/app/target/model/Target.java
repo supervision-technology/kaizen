@@ -34,14 +34,25 @@ public class Target implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department")
     private Department department;
-    
+
     @Column(name = "target_year")
     private String targetYear;
-    
+
     @Column(name = "target")
     private Integer target;
 
+    @Column(name = "company")
+    private int company;
+
     public Target() {
+    }
+
+    public Target(Integer indexNo, Department department, String targetYear, Integer target, int company) {
+        this.indexNo = indexNo;
+        this.department = department;
+        this.targetYear = targetYear;
+        this.target = target;
+        this.company = company;
     }
 
     public Integer getIndexNo() {
@@ -52,6 +63,13 @@ public class Target implements Serializable {
         this.indexNo = indexNo;
     }
 
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
 
     public String getTargetYear() {
         return targetYear;
@@ -69,14 +87,13 @@ public class Target implements Serializable {
         this.target = target;
     }
 
-    public Department getDepartment() {
-        return department;
+    public int getCompany() {
+        return company;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setCompany(int company) {
+        this.company = company;
     }
-    
-    
+
     
 }

@@ -17,5 +17,7 @@ public interface KaizenRepository extends JpaRepository<TKaizen, Integer>{
 
     public List<TKaizen> findByEmployee(Integer indexNo);
 
+    public List<TKaizen> findByCompany(int company);
+
     
 }

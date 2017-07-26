@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.app.branch.model;
+package com.mac.app.company.model;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -18,9 +18,9 @@ import javax.persistence.Table;
  * @author my
  */
 @Entity
-@Table(name = "branch")
-public class Branch implements Serializable {
-
+@Table(name = "company")
+public class Company implements Serializable{
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int IndexNo;
@@ -28,20 +28,12 @@ public class Branch implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "id")
-    private int id;
-
-    @Column(name = "company")
-    private int company;
-
-    public Branch() {
+    public Company() {
     }
 
-    public Branch(int IndexNo, String name, int id, int company) {
+    public Company(int IndexNo, String name) {
         this.IndexNo = IndexNo;
         this.name = name;
-        this.id = id;
-        this.company = company;
     }
 
     public int getIndexNo() {
@@ -59,22 +51,7 @@ public class Branch implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getCompany() {
-        return company;
-    }
-
-    public void setCompany(int company) {
-        this.company = company;
-    }
-
-   
+    
+    
+    
 }

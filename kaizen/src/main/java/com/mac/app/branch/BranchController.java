@@ -27,9 +27,9 @@ public class BranchController {
     @Autowired
     private BranchService branchService; 
     
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Branch> allBranch() {
-        return branchService.allBranch();
+    @RequestMapping(value = "/{company}",method = RequestMethod.GET)
+    public List<Branch> allBranch(@PathVariable int company) {
+        return branchService.findByCompany(company);
     }
 
     @RequestMapping(value = "/save-branch", method = RequestMethod.POST)

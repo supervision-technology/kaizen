@@ -51,8 +51,8 @@ public class KaizenService {
     private static final String EMPLOYEE_COMPLETE = "EMPLOYEE_COMPLETE";
     private static final String MANAGER_COMPLETE = "MANAGER_COMPLETE";
 
-    public List<TKaizen> allKaisen() {
-        return kaizenRepository.findAll();
+    public List<TKaizen> findByCompany(int company) {
+        return kaizenRepository.findByCompany(company);
     }
 
     public List<TKaizen> getKaizenByDepartment(Integer index) {
@@ -105,6 +105,7 @@ public class KaizenService {
         kaizen1.setManagerUtilization(mail.getManagerUtilization());
         kaizen1.setReviewStatus(MANAGER_VIEW);
         kaizen1.setManagerComplete(MANAGER_COMPLETE);
+        kaizen1.setManagerActualCost(mail.getManagerActualCost());
         TKaizen save = kaizenRepository.save(kaizen1);
         if (save != null) {
             try {
@@ -134,8 +135,8 @@ public class KaizenService {
         kaizen1.setCommitteeQuality(kaizen.getCommitteeQuality());
         kaizen1.setCommitteeSafety(kaizen.getCommitteeSafety());
         kaizen1.setCommitteeUtilization(kaizen.getCommitteeUtilization());
-//        kaizen1.setReviewStatus(COMMITTEE_COMPLETE);
         kaizen1.setCommitteeComplete(COMMITTEE_COMPLETE);
+        kaizen1.setCommitteeActualCost(kaizen.getCommitteeActualCost());
         return kaizenRepository.save(kaizen1);
     }
 
@@ -169,6 +170,7 @@ public class KaizenService {
         }
         return null;
     }
+
     @Transactional
     public TKaizen Appreciation(Mail mail, Integer indexNo) {
         TKaizen kaizen = kaizenRepository.findOne(indexNo);
@@ -180,6 +182,7 @@ public class KaizenService {
         kaizen.setReviewStatus(null);
         kaizen.setAppreciation("appreciation");
         kaizen.setManagerComplete(MANAGER_COMPLETE);
+        kaizen.setManagerActualCost(mail.getManagerActualCost());
         TKaizen save = kaizenRepository.save(kaizen);
         if (save != null) {
             try {

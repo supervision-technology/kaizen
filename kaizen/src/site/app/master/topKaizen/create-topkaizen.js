@@ -15,8 +15,8 @@
                             });
                 };
 
-                factory.allTopKaizen = function (callback) {
-                    var url = systemConfig.apiUrl + "/all-top-kaizen";
+                factory.allTopKaizen = function (company, callback) {
+                    var url = systemConfig.apiUrl + "/all-top-kaizen/" + company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -26,8 +26,8 @@
                             });
                 };
 
-                factory.loadEmployee = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/employee";
+                factory.loadEmployee = function (company, callback) {
+                    var url = systemConfig.apiUrl + "/api/employee/" + company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -53,9 +53,11 @@
             });
 
     angular.module("AppModule")
-            .controller("TopkaizenController", function ($filter, Notification, systemConfig, $rootScope, $scope, TopkaizenFactory) {
+            .controller("TopkaizenController", function ($filter, $uibModalStack, $uibModal, Notification, systemConfig, $rootScope, $scope, TopkaizenFactory) {
 
                 $scope.model = {};
+
+                $scope.ui = {};
 
                 $scope.http = {};
 
@@ -65,20 +67,31 @@
                 // ---------------- http funtion -------------------
 
                 $scope.http.saveTopkaizen = function () {
-                    var json = JSON.stringify($scope.model);
-                    console.log(json);
-                    TopkaizenFactory.saveTopKaizen(
-                            json,
-                            function (data) {
-                                if (data) {
-                                    Notification.success(data.indexNo + " Employee Save Successfully");
-                                    $scope.imageUrl = null;
-                                    $scope.topKaizenList.push(data);
-                                    $scope.model = null;
-                                } else {
-                                    Notification.error("Top kaizen has been already selected for this month");
-                                }
-                            });
+                    if ($scope.model.date && $scope.model.epfNo) {
+                        $scope.model.company = $rootScope.company;
+                        $scope.model.name = $rootScope.name;
+                        $scope.model.branch = $rootScope.branch;
+                        $scope.model.department = $rootScope.department;
+                        var json = JSON.stringify($scope.model);
+                        console.log(json);
+                        TopkaizenFactory.saveTopKaizen(
+                                json,
+                                function (data) {
+                                    if (data) {
+                                        Notification.success(data.indexNo + " Employee Save Successfully");
+                                        $scope.imageUrl = null;
+                                        $scope.topKaizenList.unshift(data);
+                                        $scope.model = null;
+                                        $rootScope.branch = null;
+                                        $rootScope.department = null;
+                                        $rootScope.name = null;
+                                    } else {
+                                        Notification.error("Top kaizen has been already selected for this month");
+                                    }
+                                });
+                    } else {
+                        Notification.error("Please input value");
+                    }
 
                 };
 
@@ -102,9 +115,9 @@
 
                 //------------------ ui funtion-----------------
 
-                $scope.getEmployeeImage = function (epfNo) {
+                $scope.getEmployeeImage = function (epfNo, branch) {
                     var imageUrl;
-                    var url = systemConfig.apiUrl + "/api/document/download-image/" + epfNo + "/";
+                    var url = systemConfig.apiUrl + "/api/document/download-image/" + epfNo + "/" + branch;
                     $scope.imageUrl = url;
                     $scope.imagemodel = url;
                     return  imageUrl = url;
@@ -115,19 +128,10 @@
                 $scope.keyEvent = function (e) {
                     var code = e ? e.keyCode || e.which : 13;
                     if (code === 13) {
-                        $scope.EmployeeByEpfNo($scope.model.epfNo);
+                        $scope.ui.EmployeeByEpfNo($scope.model.epfNo);
                     }
                 };
 
-                $scope.EmployeeByEpfNo = function (epfNo) {
-                    angular.forEach($scope.employeeList, function (value) {
-                        if (value.epfNo === epfNo) {
-                            $scope.getEmployeeImage(epfNo);
-                            $scope.model.name = value.name;
-                            $scope.model.department = value.department.name;
-                        }
-                    });
-                };
 
                 $scope.saveTopKaizen = function () {
                     $scope.http.saveTopkaizen();
@@ -142,7 +146,6 @@
                     $scope.model = employee;
                     $scope.imageUrl = imageModel;
                     $scope.model.date = new Date(employee.date);
-                    console.log($scope.model.date);
                     var id = -1;
                     for (var i = 0; i < $scope.topKaizenList.length; i++) {
                         if ($scope.topKaizenList[i].indexNo === employee.indexNo) {
@@ -152,22 +155,72 @@
                     $scope.topKaizenList.splice(id, 1);
                 };
 
+                //select employee
+                $scope.ui.EmployeeByEpfNo = function (epfNo) {
+                    $rootScope.empList = [];
+                    angular.forEach($scope.employeeList, function (value) {
+                        if (value.epfNo === epfNo) {
+                            $rootScope.empList.push(value);
+                        }
+                    });
+
+                    if ($rootScope.empList.length > 1) {
+                        $uibModal.open({
+                            animation: true,
+                            ariaLabelledBy: 'modal-title',
+                            ariaDescribedBy: 'modal-body',
+                            templateUrl: 'app/master/topKaizen/employee.html',
+                            controller: 'TopkaizenController',
+                            scope: $scope,
+                            size: 'lg',
+                            windowClass: 'zindex'
+                        });
+                    }
+                    if ($rootScope.empList.length === 1) {
+                        angular.forEach($scope.employeeList, function (value) {
+                            if (value.epfNo === epfNo) {
+                                $scope.getEmployeeImage(epfNo, value.branch.id);
+                                $rootScope.name = value.name;
+                                $rootScope.branch = value.branch.indexNo;
+                                $rootScope.department = value.department.name;
+                            }
+                        });
+                    }
+
+                };
+
+
+                $scope.ui.close = function () {
+                    $uibModalStack.dismissAll();
+                };
+
+
+                $scope.selectMoreEmployee = function (employee) {
+                    $scope.getEmployeeImage(employee.epfNo, employee.branch.id);
+                    $scope.ui.selectedDataIndex = employee.indexNo;
+                    $rootScope.name = employee.name;
+                    $rootScope.branch = employee.branch.indexNo;
+                    $rootScope.department = employee.department.name;
+                };
+
 
                 $scope.init = function () {
 //                    for (var j = new Date().getFullYear(); j > 2005; j--)
 //                    {
 //                        $scope.yearList.push(j);
 //                    }
+                    $rootScope.name = null;
+                    $rootScope.department = null;
+                    $rootScope.branch = null;
 
-                    TopkaizenFactory.loadEmployee(
+                    TopkaizenFactory.loadEmployee($rootScope.company,
                             function (data) {
                                 $scope.employeeList = data;
                             });
 
-                    TopkaizenFactory.allTopKaizen(
+                    TopkaizenFactory.allTopKaizen($rootScope.company,
                             function (data) {
-//                                console.log(data)
-//                                $scope.topKaizenList = data;
+                                $scope.topKaizenList = data;
                             });
 
                 };

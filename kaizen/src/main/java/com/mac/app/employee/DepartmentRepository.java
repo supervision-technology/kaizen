@@ -6,6 +6,7 @@
 package com.mac.app.employee;
 
 import com.mac.app.employee.model.Department;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -13,5 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Nidura Prageeth
  */
 public interface DepartmentRepository extends JpaRepository<Department, Integer>{
+
+    public List<Department> findByCompany(int company);
     
 }

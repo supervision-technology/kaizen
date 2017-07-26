@@ -4,8 +4,8 @@
                 var factory = {};
 
                 //load department
-                factory.loadDepartment = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/employee/all-department";
+                factory.loadDepartment = function (company, callback) {
+                    var url = systemConfig.apiUrl + "/api/employee/all-department/" + company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -45,10 +45,14 @@
 
 
     angular.module("AppModule")
-            .controller("departmentController", function (ConfirmPane, $scope, departmentFactory, Notification) {
+            .controller("departmentController", function (ConfirmPane, $rootScope, $scope, departmentFactory, Notification) {
 
                 //data models 
-                $scope.model = {};
+                $scope.model = {
+                    indexNo: null,
+                    name: null,
+                    company: null
+                };
 
                 //ui models
                 $scope.ui = {};
@@ -70,6 +74,7 @@
 
                 //save department 
                 $scope.http.saveDepartment = function () {
+                    $scope.model.company = $rootScope.company;
                     var json = JSON.stringify($scope.model);
                     departmentFactory.saveDepartment(
                             json,
@@ -135,7 +140,7 @@
 
                 $scope.init = function () {
                     //load department
-                    departmentFactory.loadDepartment(function (data) {
+                    departmentFactory.loadDepartment($rootScope.company, function (data) {
                         $scope.departmentList = data;
                     });
 

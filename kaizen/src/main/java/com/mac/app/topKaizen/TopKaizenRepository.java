@@ -18,9 +18,11 @@ import org.springframework.data.repository.query.Param;
  */
 public interface TopKaizenRepository extends JpaRepository<TopKaizen, Integer> {
 
-    @Query(value = "select * from topkaizen where YEAR(topkaizen.month)=:year", nativeQuery = true)
-    public List<TopKaizen> findByYear(@Param("year") String year);
+    @Query(value = "select * from topkaizen where YEAR(topkaizen.month)=:year and topkaizen.company=:company", nativeQuery = true)
+    public List<TopKaizen> findByYear(@Param("year") String year,@Param("company") String company);
 
-    public TopKaizen findByDate(Date date);
+    public List<TopKaizen> findByCompany(int company);
+
+    public TopKaizen findByCompanyAndDate(int company, Date date);
 
 }

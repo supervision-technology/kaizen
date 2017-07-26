@@ -3,9 +3,9 @@
             .factory("employeeFactory", function ($http, systemConfig) {
                 var factory = {};
 
-                //load kaizen
-                factory.loadEmployee = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/employee";
+                //load employee
+                factory.loadEmployee = function (company,callback) {
+                    var url = systemConfig.apiUrl + "/api/employee/"+company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -15,8 +15,8 @@
                             });
                 };
                 //load branch
-                factory.loadBranch = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/branch";
+                factory.loadBranch = function (company,callback) {
+                    var url = systemConfig.apiUrl + "/api/branch/"+company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -27,8 +27,8 @@
                 };
 
                 //load department
-                factory.loadDepartment = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/employee/all-department";
+                factory.loadDepartment = function (company,callback) {
+                    var url = systemConfig.apiUrl + "/api/employee/all-department/"+company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -68,7 +68,7 @@
 
 
     angular.module("AppModule")
-            .controller("employeeController", function (ConfirmPane, systemConfig, $scope, employeeFactory, Notification) {
+            .controller("employeeController", function (ConfirmPane, systemConfig, $rootScope,$scope, employeeFactory, Notification) {
 
                 //data models 
                 $scope.model = {};
@@ -244,17 +244,18 @@
 
                 $scope.init = function () {
                     $scope.numLimit = 15;
+                    
                     //load employee
-                    employeeFactory.loadEmployee(function (data) {
+                    employeeFactory.loadEmployee($rootScope.company,function (data) {
                         $scope.employeeList = data;
                     });
 
                     //load department
-                    employeeFactory.loadDepartment(function (data) {
+                    employeeFactory.loadDepartment($rootScope.company,function (data) {
                         $scope.departmentList = data;
                     });
                     //load branch
-                    employeeFactory.loadBranch(function (data) {
+                    employeeFactory.loadBranch($rootScope.company,function (data) {
                         $scope.branchList = data;
                     });
 

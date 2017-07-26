@@ -46,8 +46,6 @@ public class UserController {
 //    }
     @RequestMapping(path = "/user/login", method = RequestMethod.POST)
     public Employee getUser(@RequestBody Employee user) {
-        System.out.println(user.getName());
-        System.out.println(user.getEpfNo());
         return userRepository.findByNameAndEpfNo(user.getName(), user.getEpfNo());
     }
 

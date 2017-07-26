@@ -144,6 +144,26 @@ public class DocumentController {
             } catch (IOException ex) {
                 Logger.getLogger(DocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }else if (branch == 3) {
+            File file = new File("./files3/" + path + ".jpg");
+
+            System.out.println(file.getAbsolutePath());
+            try {
+                OutputStream outputStream = response.getOutputStream();
+
+                FileInputStream inputStream = new FileInputStream(file);
+                byte[] read = new byte[8196];
+                int c = 0;
+                while ((c = inputStream.read(read, 0, read.length)) > 0) {
+                    outputStream.write(read, 0, c);
+                    outputStream.flush();
+                }
+                inputStream.close();
+                outputStream.close();
+
+            } catch (IOException ex) {
+                Logger.getLogger(DocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }

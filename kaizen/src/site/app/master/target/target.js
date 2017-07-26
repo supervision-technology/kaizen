@@ -7,8 +7,8 @@
 
 
                 //load department
-                factory.loadDepartment = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/employee/all-department";
+                factory.loadDepartment = function (company, callback) {
+                    var url = systemConfig.apiUrl + "/api/employee/all-department/" + company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -18,8 +18,8 @@
                             });
                 };
 
-                factory.loadTargetKaizen = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/kaizen/kaizen-target";
+                factory.loadTargetKaizen = function (company,callback) {
+                    var url = systemConfig.apiUrl + "/api/kaizen/kaizen-target/"+company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -85,6 +85,7 @@
                 //-------------------http funtion-------------
                 $scope.http.save = function () {
                     $scope.model.targetYear = ($filter('date')(new Date().setYear($scope.year), 'yyyy-MM-dd'));
+                    $scope.model.company= $rootScope.company;
                     var details = $scope.model;
 
                     var detailJSON = JSON.stringify(details);
@@ -129,12 +130,12 @@
                 $scope.ui.changeTargetYear = function (year) {
                     $scope.departments = [];
                     $scope.targetKaizenList = [];
-                    
-                    targetFactory.loadTargetKaizen(function (data) {
+
+                    targetFactory.loadTargetKaizen($rootScope.company,function (data) {
                         $scope.targetKaizen = data;
                     });
 
-                    targetFactory.loadDepartment(function (data) {
+                    targetFactory.loadDepartment($rootScope.company,function (data) {
                         $scope.departmentList = data;
                     });
 
@@ -167,10 +168,12 @@
                         $scope.yearList.push(i);
                     }
 
-                    targetFactory.loadDepartment(function (data) {
+                    //load department
+                    targetFactory.loadDepartment($rootScope.company, function (data) {
                         $scope.departmentList = data;
                     });
-                    targetFactory.loadTargetKaizen(function (data) {
+
+                    targetFactory.loadTargetKaizen($rootScope.company,function (data) {
                         $scope.targetKaizen = data;
                     });
                 };

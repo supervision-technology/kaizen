@@ -26,14 +26,14 @@ public class TopKaizenController {
     @Autowired
     private TopKaizenService topKaizenService;
     
-    @RequestMapping(value = "/all-top-kaizen",method = RequestMethod.GET)
-    public List<TopKaizen> allTopKaizen(){
-        return topKaizenService.allTopKaizen();
+    @RequestMapping(value = "/all-top-kaizen/{company}",method = RequestMethod.GET)
+    public List<TopKaizen> allTopKaizen(@PathVariable int company){
+        return topKaizenService.allTopKaizen(company);
     }
     
-    @RequestMapping(value = "/best-kaizen/{year}",method = RequestMethod.GET)
-    public List<TopKaizen> getTopKaizenByYear(@PathVariable String year){
-        return topKaizenService.getTopKaizenByYear(year);
+    @RequestMapping(value = "/best-kaizen/{year}/{company}",method = RequestMethod.GET)
+    public List<TopKaizen> getTopKaizenByYear(@PathVariable String year,@PathVariable String company){
+        return topKaizenService.getTopKaizenByYear(year,company);
     }
     
     @RequestMapping(value = "/save-top-kaizen",method = RequestMethod.POST)

@@ -4,8 +4,8 @@
                 var factory = {};
 
                 //load summary
-                factory.loadSummary = function (year, callback) {
-                    var url = systemConfig.apiUrl + "/summary/" + year;
+                factory.loadSummary = function (year, company, callback) {
+                    var url = systemConfig.apiUrl + "/summary/" + year + "/" + company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -27,8 +27,8 @@
                 };
 
                 //load manager view and eveluated kaizen details
-                factory.loadEveluatedDetails = function (year, month, callback) {
-                    var url = systemConfig.apiUrl + "/view-count/" + year + "/" + month;
+                factory.loadEveluatedDetails = function (year, month, company, callback) {
+                    var url = systemConfig.apiUrl + "/view-count/" + year + "/" + month + "/" + company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -38,8 +38,8 @@
                             });
                 };
                 //load top 5 kaizen 
-                factory.loadTop5Kaizen = function (year, month, callback) {
-                    var url = systemConfig.apiUrl + "/top-kaizen/" + year + "/" + month;
+                factory.loadTop5Kaizen = function (year, month, company, callback) {
+                    var url = systemConfig.apiUrl + "/top-kaizen/" + year + "/" + month + "/" + company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -49,8 +49,8 @@
                             });
                 };
                 //load top 10 kaizen 
-                factory.loadTop10Kaizen = function (year, month, callback) {
-                    var url = systemConfig.apiUrl + "/top-10-kaizen/" + year + "/" + month;
+                factory.loadTop10Kaizen = function (year, month, company, callback) {
+                    var url = systemConfig.apiUrl + "/top-10-kaizen/" + year + "/" + month + "/" + company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -60,8 +60,8 @@
                             });
                 };
                 //load best kaizens
-                factory.BestKaizens = function (year, callback) {
-                    var url = systemConfig.apiUrl + "/best-kaizen/" + year;
+                factory.BestKaizens = function (year, company, callback) {
+                    var url = systemConfig.apiUrl + "/best-kaizen/" + year + "/" + company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -72,8 +72,8 @@
                 };
 
                 //cost saving
-                factory.costSaving = function (year, month, callback) {
-                    var url = systemConfig.apiUrl + "/cost-saving/" + year + "/" + month;
+                factory.costSaving = function (year, month, company, callback) {
+                    var url = systemConfig.apiUrl + "/cost-saving/" + year + "/" + month + "/" + company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -84,8 +84,8 @@
                 };
 
                 //load employee
-                factory.loadEmployee = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/employee";
+                factory.loadEmployee = function (company, callback) {
+                    var url = systemConfig.apiUrl + "/api/employee/" + company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -96,8 +96,8 @@
                 };
 
                 //load department
-                factory.loadDepartment = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/employee/all-department";
+                factory.loadDepartment = function (company, callback) {
+                    var url = systemConfig.apiUrl + "/api/employee/all-department/" + company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -107,7 +107,7 @@
                             });
                 };
 
-               
+
                 return factory;
             });
 
@@ -168,7 +168,7 @@
                 };
 
                 $scope.changeYear = function (year) {
-                    SummaryFactory.loadSummary(year
+                    SummaryFactory.loadSummary(year, $rootScope.company
                             , function (data) {
                                 $scope.summaryList = [];
                                 angular.forEach(data, function (value) {
@@ -216,6 +216,10 @@
 
 
                 $scope.selectEvaluateYear = function (year) {
+                    if ($scope.month) {
+                        $scope.month = "";
+                        $scope.countList = [];
+                    }
                     $rootScope.evaluateYear = year;
                 };
 
@@ -224,7 +228,7 @@
                 };
 
                 $scope.getEvaluateDetails = function (year, month) {
-                    SummaryFactory.loadEveluatedDetails(year, month
+                    SummaryFactory.loadEveluatedDetails(year, month, $rootScope.company
                             , function (data) {
                                 $scope.countList = data;
                             }
@@ -310,6 +314,10 @@
                 //------------top kaizen report funtion----------------
 
                 $scope.selectTop5Year = function (year) {
+                    if ($scope.month) {
+                        $scope.month = "";
+                        $scope.top5KaizenList = [];
+                    }
                     $rootScope.top5year = year;
                 };
 
@@ -318,7 +326,7 @@
                 };
 
                 $scope.getTop5Kaizen = function (year, month) {
-                    SummaryFactory.loadTop5Kaizen(year, month
+                    SummaryFactory.loadTop5Kaizen(year, month, $rootScope.company
                             , function (data) {
                                 $scope.top5KaizenList = data;
                             }
@@ -328,6 +336,10 @@
                 };
 
                 $scope.selectTop10Year = function (year) {
+                    if ($scope.month) {
+                        $scope.month = "";
+                        $scope.top10KaizenList = [];
+                    }
                     $rootScope.top10year = year;
                 };
 
@@ -336,7 +348,7 @@
                 };
 
                 $scope.getTop10Kaizen = function (year, month) {
-                    SummaryFactory.loadTop10Kaizen(year, month
+                    SummaryFactory.loadTop10Kaizen(year, month, $rootScope.company
                             , function (data) {
                                 $scope.top10KaizenList = data;
                             }
@@ -360,7 +372,7 @@
                 };
 
                 $scope.getCostSaving = function (year, month) {
-                    SummaryFactory.costSaving(year, month
+                    SummaryFactory.costSaving(year, month, $rootScope.company
                             , function (data) {
                                 $scope.costSavingList = data;
                                 $scope.totalCost();
@@ -398,7 +410,7 @@
                         $scope.getCostSaving($rootScope.costSavingYear, $rootScope.costSavingMonth);
 
                         $scope.getCostSaving = function (year, month) {
-                            SummaryFactory.costSaving(year, month
+                            SummaryFactory.costSaving(year, month, $rootScope.company
                                     , function (data) {
                                         $scope.costSavingList = data;
                                         $scope.totalCost();
@@ -422,7 +434,7 @@
 //                };
 
                 $scope.getBestKaizenByYear = function (year) {
-                    SummaryFactory.BestKaizens(year
+                    SummaryFactory.BestKaizens(year, $rootScope.company
                             , function (data) {
                                 $scope.BestKaizenList = data;
                             }
@@ -473,11 +485,11 @@
                         $scope.yearList.push(j);
                     }
 
-                    SummaryFactory.loadEmployee(
+                    SummaryFactory.loadEmployee($rootScope.company,
                             function (data) {
                                 $scope.employeeList = data;
                             });
-                    SummaryFactory.loadDepartment(
+                    SummaryFactory.loadDepartment($rootScope.company,
                             function (data) {
                                 $scope.departmentList = data;
                             });

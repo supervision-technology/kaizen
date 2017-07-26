@@ -23,12 +23,12 @@ public class TopKaizenService {
     @Autowired
     private TopKaizenRepository topKaizenRepository;
 
-    public List<TopKaizen> allTopKaizen() {
-        return topKaizenRepository.findAll();
+    public List<TopKaizen> allTopKaizen(int company) {
+        return topKaizenRepository.findByCompany(company);
     }
 
     public TopKaizen saveTopKaizen(TopKaizen topKaizen) {
-        TopKaizen kaizen = topKaizenRepository.findByDate(topKaizen.getDate());
+        TopKaizen kaizen = topKaizenRepository.findByCompanyAndDate(topKaizen.getCompany(),topKaizen.getDate());
         if (kaizen == null) {
             return topKaizenRepository.save(topKaizen);
         }
@@ -39,7 +39,7 @@ public class TopKaizenService {
         topKaizenRepository.delete(indexNo);
     }
 
-    public List<TopKaizen> getTopKaizenByYear(String year) {
-        return topKaizenRepository.findByYear(year);
+    public List<TopKaizen> getTopKaizenByYear(String year, String company) {
+        return topKaizenRepository.findByYear(year, company);
     }
 }

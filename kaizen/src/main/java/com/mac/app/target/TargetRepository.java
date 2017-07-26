@@ -7,6 +7,7 @@ package com.mac.app.target;
 
 import com.mac.app.target.model.Target;
 import java.io.Serializable;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -14,5 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Nidura Prageeth
  */
 public interface TargetRepository extends JpaRepository<Target, Integer>{
+
+    public List<Target> findByCompany(int company);
     
 }

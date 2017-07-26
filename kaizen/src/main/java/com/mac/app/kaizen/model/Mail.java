@@ -22,11 +22,13 @@ public class Mail implements Serializable{
     private String managerQuality;
     private String managerSafety;
     private String managerUtilization;
+    private Double managerActualCost;
+    private Double committeeActualCost;
 
     public Mail() {
     }
 
-    public Mail(String email, String message, String subject, int indexNo, String managerCost, String managerCreativity, String managerQuality, String managerSafety, String managerUtilization) {
+    public Mail(String email, String message, String subject, int indexNo, String managerCost, String managerCreativity, String managerQuality, String managerSafety, String managerUtilization, Double managerActualCost, Double committeeActualCost) {
         this.email = email;
         this.message = message;
         this.subject = subject;
@@ -36,8 +38,11 @@ public class Mail implements Serializable{
         this.managerQuality = managerQuality;
         this.managerSafety = managerSafety;
         this.managerUtilization = managerUtilization;
+        this.managerActualCost = managerActualCost;
+        this.committeeActualCost = committeeActualCost;
     }
 
+   
     public String getEmail() {
         return email;
     }
@@ -109,10 +114,21 @@ public class Mail implements Serializable{
     public void setManagerUtilization(String managerUtilization) {
         this.managerUtilization = managerUtilization;
     }
+ 
+    public Double getManagerActualCost() {
+        return managerActualCost;
+    }
 
-    @Override
-    public String toString() {
-        return "Mail{" + "email=" + email + ", message=" + message + ", subject=" + subject + ", indexNo=" + indexNo + ", managerCost=" + managerCost + ", managerCreativity=" + managerCreativity + ", managerQuality=" + managerQuality + ", managerSafety=" + managerSafety + ", managerUtilization=" + managerUtilization + '}';
+    public void setManagerActualCost(Double managerActualCost) {
+        this.managerActualCost = managerActualCost;
+    }
+
+    public Double getCommitteeActualCost() {
+        return committeeActualCost;
+    }
+
+    public void setCommitteeActualCost(Double committeeActualCost) {
+        this.committeeActualCost = committeeActualCost;
     }
 
    

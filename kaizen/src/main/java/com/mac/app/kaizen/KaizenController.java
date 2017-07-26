@@ -31,9 +31,9 @@ public class KaizenController {
     private KaizenService kaizenService;
 
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List<TKaizen> allKaizen() {
-        return kaizenService.allKaisen();
+    @RequestMapping(value = "/{company}",method = RequestMethod.GET)
+    public List<TKaizen> allKaizen(@PathVariable int company) {
+        return kaizenService.findByCompany(company);
     }
 
     @RequestMapping(value = "/department-kaizen/{indexNo}", method = RequestMethod.GET)

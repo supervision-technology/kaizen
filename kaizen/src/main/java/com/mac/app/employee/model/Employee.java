@@ -54,11 +54,14 @@ public class Employee implements Serializable {
     @JoinColumn(name = "branch")
     private Branch branch;
 
+    @Column(name = "company")
+    private int company;
+
     public Employee() {
 
     }
 
-    public Employee(Integer indexNo, String name, String epfNo, String type, String email, Department department, Branch branch) {
+    public Employee(Integer indexNo, String name, String epfNo, String type, String email, Department department, Branch branch, int company) {
         this.indexNo = indexNo;
         this.name = name;
         this.epfNo = epfNo;
@@ -66,6 +69,7 @@ public class Employee implements Serializable {
         this.email = email;
         this.department = department;
         this.branch = branch;
+        this.company = company;
     }
 
     public Integer getIndexNo() {
@@ -124,6 +128,12 @@ public class Employee implements Serializable {
         this.branch = branch;
     }
 
-    
+    public int getCompany() {
+        return company;
+    }
+
+    public void setCompany(int company) {
+        this.company = company;
+    }
 
 }

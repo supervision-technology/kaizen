@@ -3,18 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.app.branch;
+package com.mac.app.company;
 
-import com.mac.app.branch.model.Branch;
-import java.util.List;
+import com.mac.app.company.model.Company;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author my
  */
-public interface BranchRepository extends JpaRepository<Branch, Integer>{
-
-    public List<Branch> findByCompany(int company);
+public interface CompanyRepository extends JpaRepository<Company,Integer>{
     
 }

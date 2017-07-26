@@ -9,6 +9,7 @@ import com.mac.app.target.model.Target;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,9 +27,9 @@ public class TargetController {
     @Autowired
     private TargetService targetService;
 
-    @RequestMapping(value = "/kaizen-target", method = RequestMethod.GET)
-    public List<Target> allKaizenTarget() {
-        return targetService.allKaizenTarget();
+    @RequestMapping(value = "/kaizen-target/{company}", method = RequestMethod.GET)
+    public List<Target> allKaizenTarget(@PathVariable int company) {
+        return targetService.findByCompany(company);
     }
     
     @RequestMapping(value = "/save-kaizen-target",method = RequestMethod.POST)

@@ -112,11 +112,58 @@ public class TKaizen implements Serializable {
 
     @Column(name = "actual_cost")
     private Double actualCost;
+  
+    @Column(name = "company")
+    private int company;
+    
+    @Column(name = "manager_actual_cost")
+    private Double managerActualCost;
+  
+    @Column(name = "committee_actual_cost")
+    private Double committeeActualCost;
+    
+    
     
 
     public TKaizen() {
     }
-   
+
+    public TKaizen(Integer indexNo, String title, String description, Date introduceDate, String type, String reviewStatus, String employeeComplete, String managerComplete, String committeeComplete, String appreciation, String suggestion, int employee, String employeeCost, String employeeUtilization, String employeeCreativity, String employeeSafety, String employeeQuality, String managerCost, String managerUtilization, String managerCreativity, String managerSafety, String managerQuality, String committeeCost, String committeeUtilization, String committeeCreativity, String committeeSafety, String committeeQuality, Double actualCost, int company, Double managerActualCost, Double committeeActualCost) {
+        this.indexNo = indexNo;
+        this.title = title;
+        this.description = description;
+        this.introduceDate = introduceDate;
+        this.type = type;
+        this.reviewStatus = reviewStatus;
+        this.employeeComplete = employeeComplete;
+        this.managerComplete = managerComplete;
+        this.committeeComplete = committeeComplete;
+        this.appreciation = appreciation;
+        this.suggestion = suggestion;
+        this.employee = employee;
+        this.employeeCost = employeeCost;
+        this.employeeUtilization = employeeUtilization;
+        this.employeeCreativity = employeeCreativity;
+        this.employeeSafety = employeeSafety;
+        this.employeeQuality = employeeQuality;
+        this.managerCost = managerCost;
+        this.managerUtilization = managerUtilization;
+        this.managerCreativity = managerCreativity;
+        this.managerSafety = managerSafety;
+        this.managerQuality = managerQuality;
+        this.committeeCost = committeeCost;
+        this.committeeUtilization = committeeUtilization;
+        this.committeeCreativity = committeeCreativity;
+        this.committeeSafety = committeeSafety;
+        this.committeeQuality = committeeQuality;
+        this.actualCost = actualCost;
+        this.company = company;
+        this.managerActualCost = managerActualCost;
+        this.committeeActualCost = committeeActualCost;
+    }
+
+    
+
     public Integer getIndexNo() {
         return indexNo;
     }
@@ -179,6 +226,14 @@ public class TKaizen implements Serializable {
 
     public void setManagerComplete(String managerComplete) {
         this.managerComplete = managerComplete;
+    }
+
+    public String getCommitteeComplete() {
+        return committeeComplete;
+    }
+
+    public void setCommitteeComplete(String committeeComplete) {
+        this.committeeComplete = committeeComplete;
     }
 
     public String getAppreciation() {
@@ -333,13 +388,32 @@ public class TKaizen implements Serializable {
         this.actualCost = actualCost;
     }
 
-    public String getCommitteeComplete() {
-        return committeeComplete;
+    public int getCompany() {
+        return company;
     }
 
-    public void setCommitteeComplete(String committeeComplete) {
-        this.committeeComplete = committeeComplete;
+    public void setCompany(int company) {
+        this.company = company;
     }
+
+    public Double getManagerActualCost() {
+        return managerActualCost;
+    }
+
+    public void setManagerActualCost(Double managerActualCost) {
+        this.managerActualCost = managerActualCost;
+    }
+
+    public Double getCommitteeActualCost() {
+        return committeeActualCost;
+    }
+
+    public void setCommitteeActualCost(Double committeeActualCost) {
+        this.committeeActualCost = committeeActualCost;
+    }
+   
+    
+    
 
     
 }

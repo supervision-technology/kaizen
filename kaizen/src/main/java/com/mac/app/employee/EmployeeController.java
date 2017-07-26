@@ -40,9 +40,9 @@ public class EmployeeController {
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-S");
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Employee> allEmployee() {
-        return employeeService.allEmployee();
+    @RequestMapping(value = "/{company}",method = RequestMethod.GET)
+    public List<Employee> findByCompany(@PathVariable int company) {
+        return employeeService.findByCompany(company);
     }
 
     @RequestMapping(value = "/upload-employee", method = RequestMethod.POST)
@@ -91,9 +91,10 @@ public class EmployeeController {
     }
 
     //department controllers
-    @RequestMapping(value = "/all-department", method = RequestMethod.GET)
-    public List<Department> allDepartment() {
-        return employeeService.allDepartment();
+    
+    @RequestMapping(value = "/all-department/{company}", method = RequestMethod.GET)
+    public List<Department> findDepartmentByCompany(@PathVariable int company) {
+        return employeeService.findDepartmentByCompany(company);
     }
 
     @RequestMapping(value = "/delete-department/{indexNo}", method = RequestMethod.DELETE)
@@ -103,15 +104,16 @@ public class EmployeeController {
 
     @RequestMapping(value = "/save-department", method = RequestMethod.POST)
     public Department saveEmployee(@RequestBody Department department) {
+        System.out.println(department.toString());
         return employeeService.saveDepartment(department);
     }
     
-    @RequestMapping(value = "/send-mail", method = RequestMethod.POST)
-    public void sendMail(@RequestBody Mail mail) {  
-        employeeService.sendMail(mail);
+    @RequestMapping(value = "/send-mail/{company}", method = RequestMethod.POST)
+    public void sendMail(@RequestBody Mail mail,@PathVariable int company) {  
+        employeeService.sendMail(mail,company);
     }
-    @RequestMapping(value = "/send-mail-committee", method = RequestMethod.POST)
-    public void sendMailCommittee(@RequestBody Mail mail) {  
-        employeeService.sendMailCommittee(mail);
+    @RequestMapping(value = "/send-mail-committee/{company}", method = RequestMethod.POST)
+    public void sendMailCommittee(@RequestBody Mail mail,@PathVariable int company) {  
+        employeeService.sendMailCommittee(mail,company);
     }
 }

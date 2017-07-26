@@ -34,4 +34,8 @@ public class BranchService {
     public void deleteBranch(Integer indexNo) {
         branchRepository.delete(indexNo);
     }
+
+    public List<Branch> findByCompany(int company) {
+        return branchRepository.findByCompany(company);
+    }
 }

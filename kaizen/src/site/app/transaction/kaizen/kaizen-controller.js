@@ -8,8 +8,8 @@
 
 
                 //load employee
-                factory.loadEmployee = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/employee";
+                factory.loadEmployee = function (company, callback) {
+                    var url = systemConfig.apiUrl + "/api/employee/" + company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -65,7 +65,7 @@
 
     //-----------http controller---------
     angular.module("AppModule")
-            .controller("KaizenController", function ($http, kaizenFactory, systemConfig, $base64, $scope, $rootScope, $uibModal, $uibModalStack, Notification) {
+            .controller("KaizenController", function ($http, kaizenFactory, systemConfig, $base64, $rootScope, $scope, $uibModal, $uibModalStack, Notification) {
 
                 //data models 
                 $scope.model = {};
@@ -186,7 +186,7 @@
                     $scope.model.kaizen.employee = $rootScope.employee;
                     $scope.model.kaizen.type = $rootScope.type;
                     $scope.model.kaizen.actualCost = $rootScope.actualCost;
-
+                    $scope.model.kaizen.company = $rootScope.company;
                     var details = $scope.model.kaizen;
                     var detailJSON = JSON.stringify(details);
                     kaizenFactory.saveKaizen(
@@ -243,6 +243,7 @@
                         $rootScope.actualCost = Math.round(value * 100) / 100;
                     }
                     if ($scope.validateInput()) {
+                        console.log($rootScope.cost)
                         if ($rootScope.cost > 0 && $rootScope.actualCost === null) {
                             Notification.error("Actual cost empty.please enter actual cost");
                         } else {
@@ -547,7 +548,7 @@
                     }
                 };
 
-                //TODO
+                //select employee
                 $scope.ui.EmployeeByEpfNo = function (epfNo) {
                     $rootScope.employeeList = [];
                     angular.forEach($scope.model.employeeList, function (value) {
@@ -596,7 +597,6 @@
                 //select currency
                 $scope.selectCurrency = function (number) {
                     $rootScope.mode = 'enable';
-                    console.log(number)
                     if (number === 1) {
                         $rootScope.currency = '1';
                     } else {
@@ -606,12 +606,12 @@
 
                 $scope.ui.init = function () {
                     //load document
-                    kaizenFactory.loadEmployee(function (data) {
+                    kaizenFactory.loadEmployee($rootScope.company, function (data) {
                         $scope.employees = data;
                     });
 
                     //load employee
-                    kaizenFactory.loadEmployee(function (data) {
+                    kaizenFactory.loadEmployee($rootScope.company, function (data) {
                         if ($rootScope.UserMode === 'group_user') {
                             $scope.tempEmpList = [];
                             angular.forEach(data, function (val) {
@@ -670,6 +670,8 @@
                     if (!$rootScope.actualCost) {
                         $rootScope.actualCost = null;
                     }
+
+                    $rootScope.cost = 0;
 
                     if (!$rootScope.type) {
                         $rootScope.type = "Implemented";

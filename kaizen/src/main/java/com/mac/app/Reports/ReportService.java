@@ -30,12 +30,12 @@ public class ReportService {
     @Autowired
     private CurrencyRepository currencyRepository;
 
-    public List<Object[]> summary(String year) {
-        return reportRepository.AllSummary(year);
+    public List<Object[]> summary(String year,String company) {
+        return reportRepository.AllSummary(year,company);
     }
 
-    public List<Object[]> viewCountDetails(String year, String month) {
-        return reportRepository.viewCountDetails(year, month);
+    public List<Object[]> viewCountDetails(String year, String month,String company) {
+        return reportRepository.viewCountDetails(year, month,company);
     }
 
     public List<MonthWise> monthWiseDetailsByYear(String year) {
@@ -66,16 +66,16 @@ public class ReportService {
         return list;
     }
 
-    public List<Object[]> topKaizen(String year, String month) {
-        return reportRepository.topKaizen(year, month);
+    public List<Object[]> topKaizen(String year, String month,String company) {
+        return reportRepository.topKaizen(year, month,company);
     }
 
-    public List<Object[]> top10Kaizen(String year, String month) {
-        return reportRepository.top10Kaizen(year, month);
+    public List<Object[]> top10Kaizen(String year, String month,String company) {
+        return reportRepository.top10Kaizen(year, month,company);
     }
 
-    public List<Object[]> costSaving(String year, String month) {
-        return reportRepository.costSaving(year, month);
+    public List<Object[]> costSaving(String year, String month,String company) {
+        return reportRepository.costSaving(year, month,company);
     }
 
     // currency

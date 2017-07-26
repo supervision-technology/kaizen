@@ -18,6 +18,7 @@
                             $rootScope.loading = null;
                             AuthenticationService.SetCredentials($scope.username, $scope.password);
                             $rootScope.UserMode = response.type;
+                            $rootScope.company = response.company;
 //                            $rootScope.userName = response.name;
                             $rootScope.user = response;
                             if (response.type === 'admin') {
