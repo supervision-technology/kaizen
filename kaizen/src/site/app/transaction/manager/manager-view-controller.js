@@ -9,8 +9,8 @@
 
 
                 //load kaizen
-                factory.loadKaizen = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/kaizen";
+                factory.loadKaizen = function (company, callback) {
+                    var url = systemConfig.apiUrl + "/api/kaizen/" + company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -21,8 +21,8 @@
                 };
 
                 //load employee
-                factory.loadEmployee = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/employee";
+                factory.loadEmployee = function (company, callback) {
+                    var url = systemConfig.apiUrl + "/api/employee/" + company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -33,8 +33,8 @@
                 };
 
                 //load department
-                factory.loadDepartment = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/employee/all-department";
+                factory.loadDepartment = function (company, callback) {
+                    var url = systemConfig.apiUrl + "/api/employee/all-department/" + company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -174,6 +174,7 @@
                     $scope.empQuality = 0;
                     $rootScope.managerTotalScore = 0;
                     $scope.empTotalScore = 0;
+                    $rootScope.managerActualCost = "";
                 };
 
 
@@ -231,6 +232,7 @@
 
                 //--------------------pop up modal funtions-------------------
                 $scope.ui.modalOpenCost = function () {
+                    $rootScope.mode = 'disable';
                     $uibModal.open({
                         animation: true,
                         ariaLabelledBy: 'modal-title',
@@ -379,6 +381,7 @@
                             $scope.model.kaizen.employeeCreativity = value.employeeCreativity;
                             $scope.model.kaizen.employeeSafety = value.employeeSafety;
                             $scope.model.kaizen.employeeQuality = value.employeeQuality;
+                            $rootScope.managerActualCost = value.actualCost;
                             $scope.model.kaizen.actualCost = value.actualCost;
 
                             if (value.managerComplete === 'MANAGER_COMPLETE') {
@@ -387,6 +390,8 @@
                                 $rootScope.ManagerScoreCreativity = value.managerCreativity;
                                 $rootScope.ManagerScoreSafety = value.managerSafety;
                                 $rootScope.ManagerScoreQuality = value.managerQuality;
+                                $scope.model.kaizen.actualCost = value.managerActualCost;
+                                $rootScope.managerActualCost = value.managerActualCost;
                             } else {
                                 $rootScope.ManagerScoreCost = value.employeeCost;
                                 $rootScope.ManagerScoreUtilization = value.employeeUtilization;
@@ -452,7 +457,7 @@
                     angular.forEach($scope.model.employeeList, function (value) {
                         if (value.indexNo === indexNo) {
 //                          var url = systemConfig.apiUrl + "/api/document/download-image/" + value.epfNo + "/";
-                            var url = systemConfig.apiUrl + "/api/document/download-image/" + value.epfNo + "/" + value.branch.id+ "/";
+                            var url = systemConfig.apiUrl + "/api/document/download-image/" + value.epfNo + "/" + value.branch.id + "/";
                             $scope.imageUrl = url;
                             employee = value;
                             $rootScope.employeeName = employee.name;
@@ -464,6 +469,10 @@
                 };
 
                 $scope.ui.save = function () {
+                    if ($rootScope.currency === '2') {
+                        var value = $rootScope.managerActualCost / $rootScope.currentDollar;
+                        $rootScope.managerActualCost = Math.round(value * 100) / 100;
+                    }
                     if ($scope.validateInput()) {
 //                        $scope.http.saveKaizen();
                         $scope.sendAppreciationMail(1);
@@ -506,6 +515,7 @@
                                 $scope.emailModel.managerQuality = $rootScope.ManagerScoreQuality;
                                 $scope.emailModel.managerSafety = $rootScope.ManagerScoreSafety;
                                 $scope.emailModel.managerUtilization = $rootScope.ManagerScoreUtilization;
+                                $scope.emailModel.managerActualCost = $rootScope.managerActualCost;
 
 
                                 var url = systemConfig.apiUrl + "/api/kaizen/send-mail";
@@ -515,6 +525,7 @@
                                 $http.post(url, JsonDetail)
                                         .success(function (data, status, headers) {
                                             $rootScope.sendMode = null;
+                                            $scope.model.reset();
                                             var id = null;
                                             for (var i = 0; i < $scope.model.kaizenList.length; i++) {
                                                 if ($scope.model.kaizenList[i].indexNo === data.indexNo) {
@@ -553,7 +564,7 @@
                                 $scope.emailModel.managerQuality = $rootScope.ManagerScoreQuality;
                                 $scope.emailModel.managerSafety = $rootScope.ManagerScoreSafety;
                                 $scope.emailModel.managerUtilization = $rootScope.ManagerScoreUtilization;
-
+                                $scope.emailModel.managerActualCost = $rootScope.managerActualCost;
 
                                 var url = systemConfig.apiUrl + "/api/kaizen/send-appreciation-mail/" + $scope.ui.selectedDataIndex;
 
@@ -562,6 +573,7 @@
                                 $http.post(url, JsonDetail)
                                         .success(function (data, status, headers) {
                                             $rootScope.sendMode = null;
+                                            $scope.model.reset();
                                             var id = null;
                                             for (var i = 0; i < $scope.model.kaizenList.length; i++) {
                                                 if ($scope.model.kaizenList[i].indexNo === data.indexNo) {
@@ -592,7 +604,7 @@
                             $rootScope.sendMode = "loading2";
 //                        var introduceDate = $filter('date')($rootScope.introduceDate, 'yyyy-MM-dd');
                             var date = $filter('date')(new Date(), 'yyyy-MM-dd');
-                            $scope.emailModel.message = "Hi (" + $rootScope.employeeName + "),\n\nTHANK YOU !!! for your effort towards improving the continues improvement culture in Linea Aqua.\n\nWe have considered your suggestion in the " + date + " kaizen forum and found it as a valuable idea for Linea Aqua.\n\nYour support in making this suggestion as an implemented improvement is highly appreciated which will be then entitled as a kaizen for the \nmonthly Kaizen evaluation. If you need any support for the suggestion implementation please contact your immediate supervisor or manager.\n\n**Since this is a suggestion made by you, it won’t be considered as an implemented kaizen for the moment. Please do the needful and update the system.\n\nThanks & Regards,\n\Kaizen Committee";
+                            $scope.emailModel.message = "Hi (" + $rootScope.employeeName + "),\n\nTHANK YOU !!! for your effort towards improving the continues improvement culture in Linea Aqua.\n\nWe have considered your suggestion in the " + date + " kaizen forum and found it as a valuable idea for Linea Aqua.\n\nYour support in making this suggestion as an implemented improvement is highly appreciated whicostChange will be then entitled as a kaizen for the \nmonthly Kaizen evaluation. If you need any support for the suggestion implementation please contact your immediate supervisor or manager.\n\n**Since this is a suggestion made by you, it won’t be considered as an implemented kaizen for the moment. Please do the needful and update the system.\n\nThanks & Regards,\n\Kaizen Committee";
                             $scope.emailModel.subject = "Suggestion Note";
 
                             var url = systemConfig.apiUrl + "/api/kaizen/send-suggestion-mail/" + $scope.ui.selectedDataIndex;
@@ -624,6 +636,21 @@
                     }
                 };
 
+                //change cost
+                $scope.ui.changeActualCost = function (actualCost) {
+                    $rootScope.managerActualCost = actualCost;
+                };
+
+                //select currency
+                $scope.selectCurrency = function (number) {
+                    $rootScope.mode = 'enable';
+                    if (number === 1) {
+                        $rootScope.currency = '1';
+                    } else {
+                        $rootScope.currency = '2';
+                    }
+                };
+
                 //load scroll
                 $scope.showMore = function () {
                     $scope.numLimit += 5;
@@ -634,14 +661,14 @@
                     //set date
                     $scope.model.date = new Date();
 
-                    kaizenManagerViewFactory.loadEmployee(function (data) {
+                    kaizenManagerViewFactory.loadEmployee($rootScope.company, function (data) {
                         $scope.model.employeeList = data;
                     });
 
                     //load kaizen
-                    kaizenManagerViewFactory.loadEmployee(function (data) {
+                    kaizenManagerViewFactory.loadEmployee($rootScope.company, function (data) {
                         angular.forEach(data, function (val) {
-                            if (val.epfNo === $rootScope.user.epfNo) {
+                            if (val.epfNo === $rootScope.user.epfNo && val.name === $rootScope.user.name) {
                                 $rootScope.departmentIndex = val.department.indexNo;
                                 $scope.onSelect(val.department.indexNo);
                                 $scope.model.department = val.department.name;
@@ -652,7 +679,7 @@
                     });
 
                     //load Department
-                    kaizenManagerViewFactory.loadDepartment(function (data) {
+                    kaizenManagerViewFactory.loadDepartment($rootScope.company, function (data) {
                         $scope.model.departmentList = data;
                     });
 
