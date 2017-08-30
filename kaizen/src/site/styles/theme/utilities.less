@@ -895,3 +895,76 @@ body{
 #myDiv {
     display: none;
 }
+
+.fab-container {
+	position: fixed;
+	display: block;
+	right: 24px;
+	bottom: 24px;
+	margin: auto;
+	/*opacity: 0.3;*/
+}
+
+.fab-container:hover {
+	opacity: 1;
+}
+
+.fab {
+	display: block;
+	width: 48px;
+	height: 48px;
+	border-radius: 100%;
+	margin: 15px auto auto;
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.28);
+	position: relative !important;
+	overflow: hidden !important;
+	cursor: pointer;
+	overflow: hidden;
+	-webkit-filter:
+		url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
+}
+
+.fab-primary {
+	background-color: #006699;
+}
+
+.fab-success {
+	background-color: #17a81f;
+}
+
+.fab-lg {
+	width: 64px;
+	height: 64px;
+}
+
+.fab i {
+	color: #FFFFFF;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.fab.show-start {
+	display: none;
+}
+
+.fab.show-active {
+	display: block;
+	animation: fab-show 0.25s linear;
+}
+
+.fab.show {
+	display: block;
+}
+
+.fab.hide-start {
+	display: block;
+}
+
+.fab.hide-active {
+	animation: fab-hide 0.25s linear;
+}
+
+.fab.hide {
+	display: none;
+}

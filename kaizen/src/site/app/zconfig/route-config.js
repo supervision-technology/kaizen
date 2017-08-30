@@ -24,6 +24,11 @@
                             templateUrl: "app/system/home/home.html"
                         })
 
+                        .when("/news", {
+                            templateUrl: "app/system/home/news.html"
+//                            controller: "newsFeedController"
+                        })
+
                         //  Transaction
                         .when("/transaction/job", {
                             templateUrl: "app/transaction/job/job.html",
@@ -83,6 +88,11 @@
                             templateUrl: "app/master/currency/currency.html",
                             controller: "currencyController"
                         })
+                        .when("/master/news", {
+                            templateUrl: "app/master/newsFeed/news-feed.html",
+                            controller: "newsFeedController"
+                        })
+
 
 
                         //reports
@@ -142,7 +152,7 @@
             });
 
     angular.module("AppModule")
-            .controller("IndexController", function ($scope, $rootScope, $location) {
+            .controller("IndexController", function ($scope, $rootScope, $location, systemConfig, $http) {
                 // log out when refresh
                 $scope.$watch('UserMode', function (mode) {
                     if (!mode) {
@@ -155,6 +165,20 @@
                 $scope.logout = function () {
                     $rootScope.value = null;
                     $location.path("/");
+                };
+
+                var url = systemConfig.apiUrl + "/api/news";
+                $http.get(url)
+                        .success(function (data, status, headers) {
+                            $rootScope.newsFeeds = data;
+                        })
+                        .error(function (data, status, headers) {
+
+                        });
+
+                $scope.selectNews = function (news) {
+//                    var url = systemConfig.apiUrl + "/api/document/news-image/" + news.file;
+                    $scope.file = "./images/" + news.file;
                 };
 
 

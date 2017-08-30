@@ -16,6 +16,7 @@ public class MonthWise {
     private String target;
     private String achieved;
     private String targetYear;
+    private String company;
 
     public MonthWise() {
     }
@@ -59,14 +60,21 @@ public class MonthWise {
     public void setTargetYear(String targetYear) {
         this.targetYear = targetYear;
     }
+    
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+    
 
     @Override
     public String toString() {
         return "MonthWise{" + "date=" + date + ", department=" + department + ", target=" + target + ", achieved=" + achieved + ", targetYear=" + targetYear + '}';
     }
-    
-    
-
     
 
 }

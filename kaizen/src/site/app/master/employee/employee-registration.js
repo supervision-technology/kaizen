@@ -4,8 +4,8 @@
                 var factory = {};
 
                 //load employee
-                factory.loadEmployee = function (company,callback) {
-                    var url = systemConfig.apiUrl + "/api/employee/"+company;
+                factory.loadEmployee = function (company, callback) {
+                    var url = systemConfig.apiUrl + "/api/employee/" + company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -15,8 +15,8 @@
                             });
                 };
                 //load branch
-                factory.loadBranch = function (company,callback) {
-                    var url = systemConfig.apiUrl + "/api/branch/"+company;
+                factory.loadBranch = function (company, callback) {
+                    var url = systemConfig.apiUrl + "/api/branch/" + company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -27,8 +27,8 @@
                 };
 
                 //load department
-                factory.loadDepartment = function (company,callback) {
-                    var url = systemConfig.apiUrl + "/api/employee/all-department/"+company;
+                factory.loadDepartment = function (company, callback) {
+                    var url = systemConfig.apiUrl + "/api/employee/all-department/" + company;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -68,7 +68,7 @@
 
 
     angular.module("AppModule")
-            .controller("employeeController", function (ConfirmPane, systemConfig, $rootScope,$scope, employeeFactory, Notification) {
+            .controller("employeeController", function (ConfirmPane, systemConfig, $rootScope, $scope, employeeFactory, Notification) {
 
                 //data models 
                 $scope.model = {};
@@ -98,7 +98,8 @@
                         epfNo: "",
                         department: null,
                         branch: null,
-                        email: ""
+                        email: "",
+                        company: null
                     };
 
                 };
@@ -106,7 +107,7 @@
                 //validate model
                 $scope.validateInput = function () {
                     if ($scope.model.name && $scope.model.type
-                            && $scope.model.epfNo && $scope.model.department && $scope.model.email 
+                            && $scope.model.epfNo && $scope.model.department && $scope.model.email
                             && $scope.model.branch) {
                         return true;
                     } else {
@@ -118,7 +119,7 @@
 
                 //save employee 
                 $scope.http.saveEmployee = function () {
-
+                    $scope.model.company = $rootScope.company;
 //                    var file = document.getElementById('file-upload').files[0];
                     var json = JSON.stringify($scope.model);
 
@@ -244,18 +245,18 @@
 
                 $scope.init = function () {
                     $scope.numLimit = 15;
-                    
+
                     //load employee
-                    employeeFactory.loadEmployee($rootScope.company,function (data) {
+                    employeeFactory.loadEmployee($rootScope.company, function (data) {
                         $scope.employeeList = data;
                     });
 
                     //load department
-                    employeeFactory.loadDepartment($rootScope.company,function (data) {
+                    employeeFactory.loadDepartment($rootScope.company, function (data) {
                         $scope.departmentList = data;
                     });
                     //load branch
-                    employeeFactory.loadBranch($rootScope.company,function (data) {
+                    employeeFactory.loadBranch($rootScope.company, function (data) {
                         $scope.branchList = data;
                     });
 

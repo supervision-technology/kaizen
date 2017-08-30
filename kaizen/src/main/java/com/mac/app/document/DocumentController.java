@@ -144,7 +144,7 @@ public class DocumentController {
             } catch (IOException ex) {
                 Logger.getLogger(DocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else if (branch == 3) {
+        } else if (branch == 3) {
             File file = new File("./files3/" + path + ".jpg");
 
             System.out.println(file.getAbsolutePath());
@@ -193,5 +193,17 @@ public class DocumentController {
             Logger.getLogger(DocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+//    @RequestMapping(value = "/news-image/{path}", method = RequestMethod.GET,produces = MediaType.APPLICATION_PDF_VALUE)
+//    public String loadNewsImage(@PathVariable String path) {
+//        System.out.println(path);
+//
+//        File file = new File("./files/" + path + ".pdf");
+//
+//        String filePath = file.getAbsolutePath();
+//        System.out.println(file.getAbsolutePath());
+//
+//        return filePath;
+//    }
 
 }

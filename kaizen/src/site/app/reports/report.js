@@ -186,13 +186,13 @@
                 $scope.getMonthWiseDetails = function (year) {
                     SummaryFactory.getMonthWiseDetails(year
                             , function (data) {
-                                $scope.monthWiseList = data;
-//                                angular.forEach(data, function (value){
-//                                    if(value.targetYear === year){
-//                                        console.log("success")
-//                                        $scope.monthWiseList = value;
-//                                    }
-//                                });
+                                $scope.monthWiseList = [];
+                                angular.forEach(data, function (value){
+                                    var company = parseInt(value.company);
+                                    if(company === $rootScope.company){
+                                        $scope.monthWiseList.push(value);
+                                    }
+                                });
                                 $scope.showMode = 'selectyear';
                             }
                     , function (data) {

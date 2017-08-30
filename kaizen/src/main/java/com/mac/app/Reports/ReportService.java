@@ -55,6 +55,7 @@ public class ReportService {
             monthWise.setTarget(objects[2].toString());
             monthWise.setAchieved(objects[3].toString());
             monthWise.setTargetYear(objects[4].toString());
+            monthWise.setCompany(objects[5].toString());
 
 //            System.out.println(year + "this is target year");
 //            if (year.equals(monthWise.getTargetYear())) {
