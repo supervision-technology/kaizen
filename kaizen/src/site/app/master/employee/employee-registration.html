@@ -48,12 +48,12 @@
                         <td class="col-sm-8"> 
                             <input type="text" ng-model="model.branch"  class="form-control" id="branch" uib-typeahead="branch as (branch.name) for branch in branchList|filter:$viewValue|limitTo:10">
                         </td>
-<!--                        <td class="col-sm-8">
-                            {{model.branch}}
-                            <select class="form-control" ng-model="model.branch">
-                                <option ng-repeat="branch in branchList">{{branch.name}}</option>
-                            </select>
-                        </td> -->
+                        <!--                        <td class="col-sm-8">
+                                                    {{model.branch}}
+                                                    <select class="form-control" ng-model="model.branch">
+                                                        <option ng-repeat="branch in branchList">{{branch.name}}</option>
+                                                    </select>
+                                                </td> -->
                     </tr>
                     <tr>
                         <td class="col-sm-4">
@@ -87,12 +87,19 @@
     <div class="col-sm-8 bg-white ">
 
         <div style="margin-top: 15px">
-            <div class="col-sm-1" style="margin-right: 10px;">
-                <label class="control-label" style="margin-top: 9px;">Employee</label>
+            <!--            <div class="col-sm-1" style="margin-right: 10px;">
+                            <label class="control-label" style="margin-top: 9px;">Employee</label>
+                        </div>-->
+            <div class="col-sm-3">
+                <input class="form-control" ng-model="searchName" placeholder="Search by name"><br>
             </div>
-            <div class="col-sm-5">
-                <input class="form-control" ng-model="searchName" placeholder="Search employee...."><br>
+            <div class="col-sm-3">
+                <input class="form-control" ng-model="searchType" placeholder="Search by type"><br>
             </div>
+            <div class="col-sm-3">
+                <input class="form-control" ng-model="searchEpfNo" placeholder="Search by epf no"><br>
+            </div>
+
         </div>
 
         <table class="table" style="margin-bottom: 0px;">
@@ -123,7 +130,7 @@
                 <col style="width: 15%">
                 <col style="width: 20%">
                 <tbody>
-                    <tr ng-repeat="employee in employeeList| filter : searchName | limitTo: numLimit">
+                    <tr ng-repeat="employee in employeeList| filter : {'name':searchName} | filter : {'epfNo':searchEpfNo} | filter : {'type':searchType} | limitTo: numLimit">
                         <td>{{employee.name}}</td>
                         <td>{{employee.type}}</td>
                         <td>{{employee.epfNo}}</td>

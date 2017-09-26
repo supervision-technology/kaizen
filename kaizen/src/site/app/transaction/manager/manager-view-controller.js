@@ -543,7 +543,7 @@
                                 Notification.error("Email is null");
                             }
                         } else {
-                            Notification.error("Selected kaizen should be less than 70%");
+                            Notification.error("Selected kaizen should be greater than 70%");
                         }
                     } else {
                         Notification.error("Please select kaizen ");

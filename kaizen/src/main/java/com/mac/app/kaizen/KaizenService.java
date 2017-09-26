@@ -80,18 +80,55 @@ public class KaizenService {
 
     @Transactional
     public TKaizen saveKazen(TKaizen kaizen) {
-        kaizen.setIntroduceDate(new Date());
-        kaizen.setReviewStatus(KAIZEN_PENDING);
-        kaizen.setEmployeeComplete(EMPLOYEE_COMPLETE);
+//        System.out.println(kaizen.toString());
+        int avg = (30 / 5 * Integer.parseInt(kaizen.getEmployeeCost())) + (20 / 5 * Integer.parseInt(kaizen.getEmployeeCreativity()))
+                + (15 / 5 * Integer.parseInt(kaizen.getEmployeeQuality())) + (20 / 5 * Integer.parseInt(kaizen.getEmployeeSafety()))
+                + (15 / 5 * Integer.parseInt(kaizen.getEmployeeUtilization()));
 
-        //if manager kaizen then automatically manager approve
+        kaizen.setIntroduceDate(new Date());
+
+//        //if manager kaizen then automatically manager approve
         Employee employee = employeeRepository.findOne(kaizen.getEmployee());
-        if (employee.getType().equalsIgnoreCase("Manager")) {
+        if (employee.getType().equalsIgnoreCase("Manager") && avg >= 70) {
+            kaizen.setEmployeeComplete(EMPLOYEE_COMPLETE);
             kaizen.setReviewStatus(MANAGER_VIEW);
             kaizen.setManagerComplete(MANAGER_COMPLETE);
+            kaizen.setManagerCost(kaizen.getEmployeeCost());
+            kaizen.setManagerCreativity(kaizen.getEmployeeCreativity());
+            kaizen.setManagerQuality(kaizen.getEmployeeQuality());
+            kaizen.setManagerSafety(kaizen.getEmployeeSafety());
+            kaizen.setManagerUtilization(kaizen.getEmployeeUtilization());
+        } else if (employee.getType().equalsIgnoreCase("Manager") && avg < 70) {
+            kaizen.setAppreciation("appreciation");
+//            kaizen.setReviewStatus(MANAGER_VIEW);
+            kaizen.setEmployeeComplete(EMPLOYEE_COMPLETE);
+            kaizen.setManagerComplete(MANAGER_COMPLETE);
+
+            if (employee.getEmail() != null || employee.getEmail() != "") {
+                try {
+                    MimeMessagePreparator messagePreparator = mimeMessage -> {
+                        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+                        messageHelper.setFrom("kaizencommittee1@gmail.com");
+                        messageHelper.setTo(employee.getEmail());
+//                        messageHelper.setTo("niduraprageeth@gmail.com");
+                        messageHelper.setSubject("Kaizen Appreciation");
+                        messageHelper.setText("Hi (" + employee.getName() + "),\n\nTHANK YOU !!! for your effort towards improving the continues improvement culture in Linea Aqua.\n\nWe have considered your Kaizen in the " + new Date() + " kaizen forum and found it as a valuable idea for Linea Aqua.\n\nWe hope you will keep doing Kaizens to bring Linea Aqua to the next level.\n\nThanks & Regards,\nKaizen Committee");
+                    };
+                    mailSender.send(messagePreparator);
+                } catch (MailException e) {
+                    System.out.println(e);
+                }
+            }
+        } else {
+            kaizen.setReviewStatus(KAIZEN_PENDING);
+            kaizen.setEmployeeComplete(EMPLOYEE_COMPLETE);
         }
 
-        return kaizenRepository.save(kaizen);
+        List<TKaizen> list = kaizenRepository.findByEmployeeAndCompanyAndDescription(kaizen.getEmployee(), kaizen.getCompany(), kaizen.getDescription());
+        if (list.size() == 0) {
+            return kaizenRepository.save(kaizen);
+        }
+        return null;
     }
 
     @Transactional
@@ -108,18 +145,20 @@ public class KaizenService {
         kaizen1.setManagerActualCost(mail.getManagerActualCost());
         TKaizen save = kaizenRepository.save(kaizen1);
         if (save != null) {
-            try {
-                MimeMessagePreparator messagePreparator = mimeMessage -> {
-                    MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-                    messageHelper.setFrom("kaizencommittee1@gmail.com");
-                    messageHelper.setTo(mail.getEmail());
+            if (mail.getEmail() != null || mail.getEmail() != "") {
+                try {
+                    MimeMessagePreparator messagePreparator = mimeMessage -> {
+                        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+                        messageHelper.setFrom("kaizencommittee1@gmail.com");
+                        messageHelper.setTo(mail.getEmail());
 //                messageHelper.setTo("niduraprageeth@gmail.com");
-                    messageHelper.setSubject(mail.getSubject());
-                    messageHelper.setText(mail.getMessage());
-                };
-                mailSender.send(messagePreparator);
-            } catch (MailException e) {
-                System.out.println(e);
+                        messageHelper.setSubject(mail.getSubject());
+                        messageHelper.setText(mail.getMessage());
+                    };
+                    mailSender.send(messagePreparator);
+                } catch (MailException e) {
+                    System.out.println(e);
+                }
             }
             return save;
         }
@@ -153,18 +192,20 @@ public class KaizenService {
         kaizen.setManagerComplete(MANAGER_COMPLETE);
         TKaizen save = kaizenRepository.save(kaizen);
         if (save != null) {
-            try {
-                MimeMessagePreparator messagePreparator = mimeMessage -> {
-                    MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-                    messageHelper.setFrom("kaizencommittee1@gmail.com");
-                    messageHelper.setTo(mail.getEmail());
+            if (mail.getEmail() != null || mail.getEmail() != "") {
+                try {
+                    MimeMessagePreparator messagePreparator = mimeMessage -> {
+                        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+                        messageHelper.setFrom("kaizencommittee1@gmail.com");
+                        messageHelper.setTo(mail.getEmail());
 //                    messageHelper.setTo("niduraprageeth@gmail.com");
-                    messageHelper.setSubject(mail.getSubject());
-                    messageHelper.setText(mail.getMessage());
-                };
-                mailSender.send(messagePreparator);
-            } catch (MailException e) {
-                System.out.println(e);
+                        messageHelper.setSubject(mail.getSubject());
+                        messageHelper.setText(mail.getMessage());
+                    };
+                    mailSender.send(messagePreparator);
+                } catch (MailException e) {
+                    System.out.println(e);
+                }
             }
             return save;
         }
@@ -185,18 +226,20 @@ public class KaizenService {
         kaizen.setManagerActualCost(mail.getManagerActualCost());
         TKaizen save = kaizenRepository.save(kaizen);
         if (save != null) {
-            try {
-                MimeMessagePreparator messagePreparator = mimeMessage -> {
-                    MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-                    messageHelper.setFrom("kaizencommittee1@gmail.com");
-                    messageHelper.setTo(mail.getEmail());
+            if (mail.getEmail() != null || mail.getEmail() != "") {
+                try {
+                    MimeMessagePreparator messagePreparator = mimeMessage -> {
+                        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+                        messageHelper.setFrom("kaizencommittee1@gmail.com");
+                        messageHelper.setTo(mail.getEmail());
 //                    messageHelper.setTo("niduraprageeth@gmail.com");
-                    messageHelper.setSubject(mail.getSubject());
-                    messageHelper.setText(mail.getMessage());
-                };
-                mailSender.send(messagePreparator);
-            } catch (MailException e) {
-                System.out.println(e);
+                        messageHelper.setSubject(mail.getSubject());
+                        messageHelper.setText(mail.getMessage());
+                    };
+                    mailSender.send(messagePreparator);
+                } catch (MailException e) {
+                    System.out.println(e);
+                }
             }
             return save;
         }
@@ -208,35 +251,39 @@ public class KaizenService {
         List<Document> document = documentRepository.findByKaizen(IndexNo);
 
         if (document != null) {
-            try {
-                MimeMessagePreparator messagePreparator = mimeMessage -> {
-                    MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-                    messageHelper.setFrom("kaizencommittee1@gmail.com");
-                    messageHelper.setTo(mail.getEmail());
+            if (mail.getEmail() != null || mail.getEmail() != "") {
+                try {
+                    MimeMessagePreparator messagePreparator = mimeMessage -> {
+                        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+                        messageHelper.setFrom("kaizencommittee1@gmail.com");
+                        messageHelper.setTo(mail.getEmail());
 //                    messageHelper.setTo("niduraprageeth@gmail.com");
-                    messageHelper.setSubject("Kaizen Deleted..");
-                    messageHelper.setText("Your kaizen deleted by admin");
-                };
-                mailSender.send(messagePreparator);
-            } catch (MailException e) {
-                System.out.println(e);
+                        messageHelper.setSubject("Kaizen Deleted..");
+                        messageHelper.setText("Your kaizen deleted by admin");
+                    };
+                    mailSender.send(messagePreparator);
+                } catch (MailException e) {
+                    System.out.println(e);
+                }
             }
             documentRepository.delete(document);
             kaizenRepository.delete(IndexNo);
 
         } else {
-            try {
-                MimeMessagePreparator messagePreparator = mimeMessage -> {
-                    MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-                    messageHelper.setFrom("kaizencommittee1@gmail.com");
-                    messageHelper.setTo(mail.getEmail());
+            if (mail.getEmail() != null || mail.getEmail() != "") {
+                try {
+                    MimeMessagePreparator messagePreparator = mimeMessage -> {
+                        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+                        messageHelper.setFrom("kaizencommittee1@gmail.com");
+                        messageHelper.setTo(mail.getEmail());
 //                    messageHelper.setTo("niduraprageeth@gmail.com");
-                    messageHelper.setSubject("Kaizen Deleted..");
-                    messageHelper.setText("Your kaizen deleted by admin");
-                };
-                mailSender.send(messagePreparator);
-            } catch (MailException e) {
-                System.out.println(e);
+                        messageHelper.setSubject("Kaizen Deleted..");
+                        messageHelper.setText("Your kaizen deleted by admin");
+                    };
+                    mailSender.send(messagePreparator);
+                } catch (MailException e) {
+                    System.out.println(e);
+                }
             }
             kaizenRepository.delete(IndexNo);
         }

@@ -26,7 +26,6 @@
                 $scope.save = function () {
                     var formData = new FormData();
                     var file = document.getElementById('uploadPDF').files[0];
-                    $scope.news.remark = "News Feed";
                     var json = JSON.stringify($scope.news);
 
                     if (file) {
@@ -42,6 +41,7 @@
                                 var url = systemConfig.apiUrl + "/api/news";
                                 $http.get(url)
                                         .success(function (data, status, headers) {
+                                            $scope.news = {};
                                             $rootScope.newsFeeds = data;
                                         })
                                         .error(function (data, status, headers) {

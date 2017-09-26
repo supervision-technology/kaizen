@@ -411,6 +411,11 @@ public class TKaizen implements Serializable {
     public void setCommitteeActualCost(Double committeeActualCost) {
         this.committeeActualCost = committeeActualCost;
     }
+
+    @Override
+    public String toString() {
+        return "TKaizen{" + "indexNo=" + indexNo + ", title=" + title + ", description=" + description + ", introduceDate=" + introduceDate + ", type=" + type + ", reviewStatus=" + reviewStatus + ", employeeComplete=" + employeeComplete + ", managerComplete=" + managerComplete + ", committeeComplete=" + committeeComplete + ", appreciation=" + appreciation + ", suggestion=" + suggestion + ", employee=" + employee + ", employeeCost=" + employeeCost + ", employeeUtilization=" + employeeUtilization + ", employeeCreativity=" + employeeCreativity + ", employeeSafety=" + employeeSafety + ", employeeQuality=" + employeeQuality + ", managerCost=" + managerCost + ", managerUtilization=" + managerUtilization + ", managerCreativity=" + managerCreativity + ", managerSafety=" + managerSafety + ", managerQuality=" + managerQuality + ", committeeCost=" + committeeCost + ", committeeUtilization=" + committeeUtilization + ", committeeCreativity=" + committeeCreativity + ", committeeSafety=" + committeeSafety + ", committeeQuality=" + committeeQuality + ", actualCost=" + actualCost + ", company=" + company + ", managerActualCost=" + managerActualCost + ", committeeActualCost=" + committeeActualCost + '}';
+    }
    
     
     

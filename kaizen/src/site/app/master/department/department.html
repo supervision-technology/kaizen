@@ -6,10 +6,10 @@
                 <tbody>
                     <tr>
                         <td class="col-sm-4">
-                            <label for="empname" class="control-label" style="margin-top: 9px">Name :</label>
+                            <label for="depname" class="control-label" style="margin-top: 9px">Name :</label>
                         </td>
                         <td class="col-sm-8"> 
-                            <input type="text" ng-model="model.name" class="form-control" id="empname">
+                            <input type="text" ng-model="model.name" class="form-control" id="depname">
                         </td>
                     </tr>
                 </tbody>
@@ -46,7 +46,7 @@
                 <col style="width: 50%">
                 <col style="width: 25%">
                 <tbody>
-                    <tr ng-repeat="department in departmentList| filter : searchName">
+                    <tr ng-repeat="department in departmentList| filter : {'name' :searchName} ">
                         <td>{{department.indexNo}}</td>
                         <td>{{department.name}}</td>
                         <td><button style="margin-left: 5px" class="btn btn-xs btn-danger pull-right" ng-click="http.deleteDepartment(department.indexNo)"><span class="glyphicon glyphicon-trash"></span></button>

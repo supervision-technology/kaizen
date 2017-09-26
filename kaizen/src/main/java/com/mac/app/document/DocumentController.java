@@ -194,16 +194,31 @@ public class DocumentController {
         }
     }
 
-//    @RequestMapping(value = "/news-image/{path}", method = RequestMethod.GET,produces = MediaType.APPLICATION_PDF_VALUE)
-//    public String loadNewsImage(@PathVariable String path) {
-//        System.out.println(path);
-//
-//        File file = new File("./files/" + path + ".pdf");
-//
-//        String filePath = file.getAbsolutePath();
-//        System.out.println(file.getAbsolutePath());
-//
-//        return filePath;
-//    }
+    @RequestMapping(value = "/news-image/{path}", method = RequestMethod.GET,produces = MediaType.APPLICATION_PDF_VALUE)
+    public void loadNewsImage(@PathVariable String path,HttpServletResponse response) {
+        System.out.println(path);
+
+        File file = new File("./news/" + path + ".pdf");
+
+        System.out.println(file.getAbsolutePath());
+
+        try {
+//            response.setHeader("Content-Disposition:", "attachment; filename=\"my-file\"");
+            OutputStream outputStream = response.getOutputStream();
+
+            FileInputStream inputStream = new FileInputStream(file);
+            byte[] read = new byte[8196];
+            int c = 0;
+            while ((c = inputStream.read(read, 0, read.length)) > 0) {
+                outputStream.write(read, 0, c);
+                outputStream.flush();
+            }
+            inputStream.close();
+            outputStream.close();
+
+        } catch (IOException ex) {
+            Logger.getLogger(DocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }

@@ -25,8 +25,8 @@
                         })
 
                         .when("/news", {
-                            templateUrl: "app/system/home/news.html"
-//                            controller: "newsFeedController"
+                            templateUrl: "app/system/home/news.html",
+                            controller: "IndexController"
                         })
 
                         //  Transaction
@@ -152,14 +152,18 @@
             });
 
     angular.module("AppModule")
-            .controller("IndexController", function ($scope, $rootScope, $location, systemConfig, $http) {
+            .controller("IndexController", function ($scope, $rootScope, $location, systemConfig, $http, $base64) {
                 // log out when refresh
                 $scope.$watch('UserMode', function (mode) {
                     if (!mode) {
+                        window.onbeforeunload = function () {
+                            return 'Want to unload?';
+                        };
                         $location.path("/");
                         $rootScope.error = null;
                     }
                 });
+
 
                 //log out 
                 $scope.logout = function () {
@@ -177,8 +181,8 @@
                         });
 
                 $scope.selectNews = function (news) {
-//                    var url = systemConfig.apiUrl + "/api/document/news-image/" + news.file;
                     $scope.file = "./images/" + news.file;
+                    window.open($scope.file);
                 };
 
 
